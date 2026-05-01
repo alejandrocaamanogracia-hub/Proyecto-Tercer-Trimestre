@@ -1,4 +1,4 @@
-package com.concesionario.proyectoTercerTrimestre.services;
+package services;
 
 public class UsuarioService {
 }
