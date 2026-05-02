@@ -1,4 +1,4 @@
-package controller;
+package com.concesionario.proyectoTercerTrimestre.controller;
 
 public class UsuarioController {
 }

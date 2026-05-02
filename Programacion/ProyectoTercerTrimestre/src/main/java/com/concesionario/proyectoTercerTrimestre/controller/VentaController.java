@@ -1,4 +1,4 @@
-package com.concesionario.proyectoTercerTrimestre.controllers;
+package com.concesionario.proyectoTercerTrimestre.controller;
 
 public class VentaController {
 }

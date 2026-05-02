@@ -1,4 +1,4 @@
-package repositories.impl;
+package com.concesionario.proyectoTercerTrimestre.repositories.impl;
 
 public class ClienteRepositoryImpl {
 }
