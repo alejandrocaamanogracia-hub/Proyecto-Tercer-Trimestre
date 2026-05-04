@@ -4,6 +4,7 @@ import com.concesionario.proyectoTercerTrimestre.entities.Cliente;
 import com.concesionario.proyectoTercerTrimestre.services.ClienteService;
 
 import java.util.List;
+import java.util.Optional;
 
 public class ClienteController {
 
@@ -28,5 +29,9 @@ public class ClienteController {
 
     public void exportarClientesTxt() {
         clienteService.exportarClientesTxt();
+    }
+
+    public Optional<Cliente> buscarCliente(int id) {
+        return clienteService.buscarCliente(id);
     }
 }

@@ -1,5 +1,6 @@
 package com.concesionario.proyectoTercerTrimestre.services;
 
+import com.concesionario.proyectoTercerTrimestre.entities.Cliente;
 import com.concesionario.proyectoTercerTrimestre.entities.Coche;
 import com.concesionario.proyectoTercerTrimestre.repositories.CocheRepository;
 import com.concesionario.proyectoTercerTrimestre.repositories.impl.CocheRepositoryImpl;
@@ -8,6 +9,7 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 public class CocheService {
 
@@ -128,4 +130,17 @@ public class CocheService {
             e.printStackTrace();
         }
     }
+
+    public Optional<Coche> buscarCoche(int id) {
+
+        Coche coche = cocheRepository.buscarCoche(id);
+
+        if (coche == null) {
+            return Optional.empty();
+        }
+
+        return Optional.ofNullable(coche);
+
+    }
+
 }

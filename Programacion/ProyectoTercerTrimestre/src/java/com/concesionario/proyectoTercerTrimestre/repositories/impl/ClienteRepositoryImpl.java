@@ -83,4 +83,32 @@ public class ClienteRepositoryImpl implements ClienteRepository {
 
         return clientes;
     }
+
+    @Override
+    public Cliente buscarCliente(int id) {
+
+        String sql = "SELECT * FROM clientes WHERE id = ?";
+        Cliente cliente = null;
+
+        try (Connection connection = DataBaseConnection.getConnection();){
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+
+                cliente = new Cliente(resultSet.getInt("id"), resultSet.getString("nombre"), resultSet.getString("email"), resultSet.getString("telefono"), resultSet.getString("direccion"));
+
+            }
+
+        }catch (SQLException e){
+            System.out.println("Error al buscar el cliente.");
+            e.printStackTrace();
+        }
+
+        return cliente;
+
+    }
+
 }

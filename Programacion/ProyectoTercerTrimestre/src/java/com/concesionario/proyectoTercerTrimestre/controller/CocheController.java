@@ -1,9 +1,11 @@
 package com.concesionario.proyectoTercerTrimestre.controller;
 
+import com.concesionario.proyectoTercerTrimestre.entities.Cliente;
 import com.concesionario.proyectoTercerTrimestre.entities.Coche;
 import com.concesionario.proyectoTercerTrimestre.services.CocheService;
 
 import java.util.List;
+import java.util.Optional;
 
 public class CocheController {
 
@@ -45,5 +47,9 @@ public class CocheController {
 
     public void exportarCochesTxt() {
         cocheService.exportarCochesTxt();
+    }
+
+    public Optional<Coche> buscarCoche(int id) {
+        return cocheService.buscarCoche(id);
     }
 }

@@ -1,6 +1,7 @@
 package com.concesionario.proyectoTercerTrimestre.repositories.impl;
 
 import com.concesionario.proyectoTercerTrimestre.database.DataBaseConnection;
+import com.concesionario.proyectoTercerTrimestre.entities.Cliente;
 import com.concesionario.proyectoTercerTrimestre.entities.Usuario;
 import com.concesionario.proyectoTercerTrimestre.repositories.UsuarioRepository;
 
@@ -83,5 +84,32 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
         }
 
         return usuarios;
+    }
+
+    @Override
+    public Usuario buscarUsuario(int id) {
+
+        String sql = "SELECT * FROM usuarios WHERE id = ?";
+        Usuario usuario = null;
+
+        try (Connection connection = DataBaseConnection.getConnection();){
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+
+                usuario = new Usuario(resultSet.getInt("id"), resultSet.getString("nombre"), resultSet.getString("email"), resultSet.getString("rol"), resultSet.getString("password_hash"));
+
+            }
+
+        }catch (SQLException e){
+            System.out.println("Error al buscar el cliente.");
+            e.printStackTrace();
+        }
+
+        return usuario;
+
     }
 }
