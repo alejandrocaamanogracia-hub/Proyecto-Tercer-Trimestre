@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class DataBaseConnection {
 
-    private static Connection connection;
+    private Connection connection;
     private static String url =  "jdbc:mysql://localhost:3306/crm_coches";
     private static String user = "root";
     private static String password = "1234";
@@ -15,13 +15,7 @@ public class DataBaseConnection {
 
     public static Connection getConnection() throws SQLException {
 
-        if (connection == null) {
-
-            connection = DriverManager.getConnection(url, user, password);
-
-        }
-
-        return connection;
+        return DriverManager.getConnection(url, user, password);
 
     }
 
