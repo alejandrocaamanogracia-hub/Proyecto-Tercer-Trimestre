@@ -1,0 +1,32 @@
+package com.concesionario.proyectoTercerTrimestre.controller;
+
+import com.concesionario.proyectoTercerTrimestre.entities.Usuario;
+import com.concesionario.proyectoTercerTrimestre.services.UsuarioService;
+
+import java.util.List;
+
+public class UsuarioController {
+
+    private final UsuarioService usuarioService;
+
+    public UsuarioController() {
+        this.usuarioService = new UsuarioService();
+    }
+
+    public void crearUsuario(String nombre, String email, String rol, String passwordHash) {
+        Usuario usuario = new Usuario(nombre, email, rol, passwordHash);
+        usuarioService.crearUsuario(usuario);
+    }
+
+    public void eliminarUsuario(int id) {
+        usuarioService.eliminarUsuario(id);
+    }
+
+    public List<Usuario> listarUsuarios() {
+        return usuarioService.listarUsuarios();
+    }
+
+    public void exportarUsuariosTxt() {
+        usuarioService.exportarUsuariosTxt();
+    }
+}
