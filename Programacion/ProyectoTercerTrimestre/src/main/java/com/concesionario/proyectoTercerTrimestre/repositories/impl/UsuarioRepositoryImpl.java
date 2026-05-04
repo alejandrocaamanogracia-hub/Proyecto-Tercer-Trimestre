@@ -1,7 +1,6 @@
 package com.concesionario.proyectoTercerTrimestre.repositories.impl;
 
 import com.concesionario.proyectoTercerTrimestre.database.DataBaseConnection;
-import com.concesionario.proyectoTercerTrimestre.entities.Cliente;
 import com.concesionario.proyectoTercerTrimestre.entities.RolUsuario;
 import com.concesionario.proyectoTercerTrimestre.entities.Usuario;
 import com.concesionario.proyectoTercerTrimestre.repositories.UsuarioRepository;
