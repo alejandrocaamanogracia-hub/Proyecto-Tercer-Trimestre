@@ -28,6 +28,7 @@ public class CocheMenu {
             System.out.println("2. Eliminar coche");
             System.out.println("3. Listar coches");
             System.out.println("4. Exportar coches a TXT");
+            System.out.println("5. Mostrar un coche en específico");
             System.out.println("0. Volver");
             System.out.print("Elige una opcion: ");
 
@@ -45,6 +46,9 @@ public class CocheMenu {
                     break;
                 case 4:
                     exportarCochesTxt();
+                    break;
+                case 5:
+                    mostrarCocheEspecifico();
                     break;
                 case 0:
                     System.out.println("Volviendo al menu principal...");
@@ -205,4 +209,14 @@ public class CocheMenu {
     private void exportarCochesTxt() {
         cocheController.exportarCochesTxt();
     }
+
+    private void mostrarCocheEspecifico(){
+
+        System.out.println("Introduzca un id: ");
+        int id = Integer.parseInt(scanner.nextLine());
+
+        cocheController.buscarCoche(id).ifPresentOrElse(coche -> System.out.println(coche.toString()), () -> System.out.println("Coche no encontrado."));
+
+    }
+
 }

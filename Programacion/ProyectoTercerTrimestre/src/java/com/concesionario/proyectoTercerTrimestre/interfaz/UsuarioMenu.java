@@ -26,6 +26,7 @@ public class UsuarioMenu {
             System.out.println("2. Eliminar usuario");
             System.out.println("3. Listar usuarios");
             System.out.println("4. Exportar usuarios a TXT");
+            System.out.println("5. Mostrar un usuario específico");
             System.out.println("0. Volver");
             System.out.print("Elige una opcion: ");
 
@@ -43,6 +44,9 @@ public class UsuarioMenu {
                     break;
                 case 4:
                     exportarUsuariosTxt();
+                    break;
+                case 5:
+                    mostrarUsuarioEspecifico();
                     break;
                 case 0:
                     System.out.println("Volviendo al menu principal...");
@@ -122,5 +126,14 @@ public class UsuarioMenu {
 
     private void exportarUsuariosTxt() {
         usuarioController.exportarUsuariosTxt();
+    }
+
+    private void mostrarUsuarioEspecifico(){
+
+        System.out.println("Introduzca un id: ");
+        int id = Integer.parseInt(scanner.nextLine());
+
+        usuarioController.buscarUsuario(id).ifPresentOrElse(usuario -> System.out.println(usuario.toString()), () -> System.out.println("Usuario no encontrado."));
+
     }
 }

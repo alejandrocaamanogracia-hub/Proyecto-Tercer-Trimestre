@@ -11,4 +11,7 @@ public interface ClienteRepository {
     void eliminarCliente(int id);
 
     List<Cliente> listarClientes();
+
+    Cliente buscarCliente(int id);
+
 }

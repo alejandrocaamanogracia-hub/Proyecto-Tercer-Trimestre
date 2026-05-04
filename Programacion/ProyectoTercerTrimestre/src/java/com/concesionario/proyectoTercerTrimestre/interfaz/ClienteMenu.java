@@ -25,6 +25,7 @@ public class ClienteMenu {
             System.out.println("2. Eliminar cliente");
             System.out.println("3. Listar clientes");
             System.out.println("4. Exportar clientes a TXT");
+            System.out.println("5. Mostrar un cliente en especifico");
             System.out.println("0. Volver");
             System.out.print("Elige una opcion: ");
 
@@ -42,6 +43,9 @@ public class ClienteMenu {
                     break;
                 case 4:
                     exportarClientesTxt();
+                    break;
+                case 5:
+                    mostrarClienteEspecifico();
                     break;
                 case 0:
                     System.out.println("Volviendo al menu principal...");
@@ -98,5 +102,14 @@ public class ClienteMenu {
 
     private void exportarClientesTxt() {
         clienteController.exportarClientesTxt();
+    }
+
+    private void mostrarClienteEspecifico(){
+
+        System.out.println("Introduzca un id: ");
+        int id = Integer.parseInt(scanner.nextLine());
+
+        clienteController.buscarCliente(id).ifPresentOrElse(cliente -> System.out.println(cliente.toString()), () -> System.out.println("Cliente no encontrado."));
+
     }
 }
