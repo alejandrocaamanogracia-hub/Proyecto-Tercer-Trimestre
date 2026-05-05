@@ -10,18 +10,18 @@ public class Coche {
     private String bastidor;
     private int anio;
     private int kilometros;
-    private String combustible;
-    private String cambio;
+    private Combustible combustible;
+    private TipoCambio cambio;
     private String color;
     private double precio;
-    private String estado;
+    private EstadoCoche estado;
 
     public Coche() {
     }
 
     public Coche(String marca, String modelo, String version, String matricula,
-                 String bastidor, int anio, int kilometros, String combustible,
-                 String cambio, String color, double precio, String estado) {
+                 String bastidor, int anio, int kilometros, Combustible combustible,
+                 TipoCambio cambio, String color, double precio, EstadoCoche estado) {
         this.marca = marca;
         this.modelo = modelo;
         this.version = version;
@@ -37,8 +37,8 @@ public class Coche {
     }
 
     public Coche(int id, String marca, String modelo, String version, String matricula,
-                 String bastidor, int anio, int kilometros, String combustible,
-                 String cambio, String color, double precio, String estado) {
+                 String bastidor, int anio, int kilometros, Combustible combustible,
+                 TipoCambio cambio, String color, double precio, EstadoCoche estado) {
         this.id = id;
         this.marca = marca;
         this.modelo = modelo;
@@ -126,20 +126,20 @@ public class Coche {
     }
 
 
-    public String getCombustible() {
+    public Combustible getCombustible() {
         return combustible;
     }
 
-    public void setCombustible(String combustible) {
+    public void setCombustible(Combustible combustible) {
         this.combustible = combustible;
     }
 
 
-    public String getCambio() {
+    public TipoCambio getCambio() {
         return cambio;
     }
 
-    public void setCambio(String cambio) {
+    public void setCambio(TipoCambio cambio) {
         this.cambio = cambio;
     }
 
@@ -162,11 +162,11 @@ public class Coche {
     }
 
 
-    public String getEstado() {
+    public EstadoCoche getEstado() {
         return estado;
     }
 
-    public void setEstado(String estado) {
+    public void setEstado(EstadoCoche estado) {
         this.estado = estado;
     }
 
@@ -182,11 +182,11 @@ public class Coche {
                 ", bastidor='" + bastidor + '\'' +
                 ", anio=" + anio +
                 ", kilometros=" + kilometros +
-                ", combustible='" + combustible + '\'' +
-                ", cambio='" + cambio + '\'' +
+                ", combustible=" + combustible +
+                ", cambio=" + cambio +
                 ", color='" + color + '\'' +
                 ", precio=" + precio +
-                ", estado='" + estado + '\'' +
+                ", estado=" + estado +
                 '}';
     }
 }

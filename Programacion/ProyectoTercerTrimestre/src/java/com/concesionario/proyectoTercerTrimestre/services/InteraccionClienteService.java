@@ -1,4 +1,115 @@
 package com.concesionario.proyectoTercerTrimestre.services;
 
+import com.concesionario.proyectoTercerTrimestre.entities.InteraccionCliente;
+import com.concesionario.proyectoTercerTrimestre.repositories.InteraccionClienteRepository;
+import com.concesionario.proyectoTercerTrimestre.repositories.impl.InteraccionClienteRepositoryImpl;
+
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.List;
+
 public class InteraccionClienteService {
+
+    private final InteraccionClienteRepository interaccionClienteRepository;
+
+    public InteraccionClienteService() {
+        this.interaccionClienteRepository = new InteraccionClienteRepositoryImpl();
+    }
+
+    public void crearInteraccionCliente(InteraccionCliente interaccionCliente) {
+        if (interaccionCliente == null) {
+            System.out.println("La interaccion no puede ser nula.");
+            return;
+        }
+
+        if (interaccionCliente.getClienteId() <= 0) {
+            System.out.println("El ID del cliente no es valido.");
+            return;
+        }
+
+        if (interaccionCliente.getUsuarioId() <= 0) {
+            System.out.println("El ID del usuario no es valido.");
+            return;
+        }
+
+        if (interaccionCliente.getTipo() == null) {
+            System.out.println("El tipo de interaccion es obligatorio.");
+            return;
+        }
+
+        if (interaccionCliente.getFecha() == null) {
+            System.out.println("La fecha de la interaccion es obligatoria.");
+            return;
+        }
+
+        if (interaccionCliente.getAsunto() == null || interaccionCliente.getAsunto().isBlank()) {
+            System.out.println("El asunto de la interaccion es obligatorio.");
+            return;
+        }
+
+        interaccionClienteRepository.crearInteraccionCliente(interaccionCliente);
+        System.out.println("Interaccion creada correctamente.");
+    }
+
+    public void eliminarInteraccionCliente(int id) {
+        if (id <= 0) {
+            System.out.println("El ID de la interaccion no es valido.");
+            return;
+        }
+
+        interaccionClienteRepository.eliminarInteraccionCliente(id);
+        System.out.println("Interaccion eliminada correctamente.");
+    }
+
+    public List<InteraccionCliente> listarInteraccionesCliente() {
+        return interaccionClienteRepository.listarInteraccionesCliente();
+    }
+
+    public void exportarInteraccionesClienteTxt() {
+        List<InteraccionCliente> interacciones = interaccionClienteRepository.listarInteraccionesCliente();
+
+        if (interacciones.isEmpty()) {
+            System.out.println("No hay interacciones para exportar.");
+            return;
+        }
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("interacciones_cliente.txt"))) {
+
+            writer.write("===== LISTADO DE INTERACCIONES CON CLIENTES =====");
+            writer.newLine();
+            writer.newLine();
+
+            for (InteraccionCliente interaccion : interacciones) {
+                writer.write("ID: " + interaccion.getId());
+                writer.newLine();
+                writer.write("ID Cliente: " + interaccion.getClienteId());
+                writer.newLine();
+                writer.write("ID Usuario: " + interaccion.getUsuarioId());
+                writer.newLine();
+                writer.write("Tipo: " + interaccion.getTipo().getValorDb());
+                writer.newLine();
+                writer.write("Fecha: " + interaccion.getFecha());
+                writer.newLine();
+                writer.write("Asunto: " + interaccion.getAsunto());
+                writer.newLine();
+                writer.write("Descripcion: " + interaccion.getDescripcion());
+                writer.newLine();
+                writer.write("Resultado: " + interaccion.getResultado());
+                writer.newLine();
+                writer.write("Proxima accion: " + interaccion.getProximaAccion());
+                writer.newLine();
+                writer.write("Fecha proxima: " + interaccion.getFechaProxima());
+                writer.newLine();
+                writer.write("----------------------------------");
+                writer.newLine();
+            }
+
+            System.out.println("Interacciones exportadas correctamente a interacciones_cliente.txt");
+
+        } catch (IOException e) {
+            System.out.println("Error al exportar las interacciones.");
+            e.printStackTrace();
+        }
+    }
 }

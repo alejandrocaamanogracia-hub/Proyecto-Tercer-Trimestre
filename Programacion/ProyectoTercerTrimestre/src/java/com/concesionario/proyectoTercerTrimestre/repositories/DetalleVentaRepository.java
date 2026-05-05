@@ -1,4 +1,14 @@
 package com.concesionario.proyectoTercerTrimestre.repositories;
 
+import com.concesionario.proyectoTercerTrimestre.entities.DetalleVenta;
+
+import java.util.List;
+
 public interface DetalleVentaRepository {
+
+    void crearDetalleVenta(DetalleVenta detalleVenta);
+
+    void eliminarDetalleVenta(int id);
+
+    List<DetalleVenta> listarDetallesVenta();
 }

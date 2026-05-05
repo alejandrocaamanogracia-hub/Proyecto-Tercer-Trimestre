@@ -2,6 +2,9 @@ package com.concesionario.proyectoTercerTrimestre.controller;
 
 import com.concesionario.proyectoTercerTrimestre.entities.Cliente;
 import com.concesionario.proyectoTercerTrimestre.entities.Coche;
+import com.concesionario.proyectoTercerTrimestre.entities.Combustible;
+import com.concesionario.proyectoTercerTrimestre.entities.EstadoCoche;
+import com.concesionario.proyectoTercerTrimestre.entities.TipoCambio;
 import com.concesionario.proyectoTercerTrimestre.services.CocheService;
 
 import java.util.List;
@@ -16,8 +19,9 @@ public class CocheController {
     }
 
     public void crearCoche(String marca, String modelo, String version, String matricula,
-                           String bastidor, int anio, int kilometros, String combustible,
-                           String cambio, String color, double precio, String estado) {
+                           String bastidor, int anio, int kilometros,
+                           Combustible combustible, TipoCambio cambio,
+                           String color, double precio, EstadoCoche estado) {
 
         Coche coche = new Coche(
                 marca,

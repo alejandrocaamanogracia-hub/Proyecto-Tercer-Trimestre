@@ -1,4 +1,14 @@
 package com.concesionario.proyectoTercerTrimestre.repositories;
 
+import com.concesionario.proyectoTercerTrimestre.entities.InteraccionCliente;
+
+import java.util.List;
+
 public interface InteraccionClienteRepository {
+
+    void crearInteraccionCliente(InteraccionCliente interaccionCliente);
+
+    void eliminarInteraccionCliente(int id);
+
+    List<InteraccionCliente> listarInteraccionesCliente();
 }
