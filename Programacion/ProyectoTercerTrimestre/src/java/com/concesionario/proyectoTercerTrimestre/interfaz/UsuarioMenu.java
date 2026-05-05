@@ -2,6 +2,7 @@ package com.concesionario.proyectoTercerTrimestre.interfaz;
 
 import com.concesionario.proyectoTercerTrimestre.controller.UsuarioController;
 import com.concesionario.proyectoTercerTrimestre.entities.Usuario;
+import com.concesionario.proyectoTercerTrimestre.entities.RolUsuario;
 
 import java.util.List;
 import java.util.Scanner;
@@ -67,8 +68,31 @@ public class UsuarioMenu {
         System.out.print("Email: ");
         String email = scanner.nextLine();
 
-        System.out.print("Rol: ");
-        String rol = scanner.nextLine();
+        System.out.println("Rol:");
+        System.out.println("1. Administrador");
+        System.out.println("2. Comercial");
+        System.out.println("3. Gestor");
+        System.out.print("Elige una opcion: ");
+
+        int opcionRol = Integer.parseInt(scanner.nextLine());
+
+        RolUsuario rol;
+
+        switch (opcionRol) {
+            case 1:
+                rol = RolUsuario.ADMINISTRADOR;
+                break;
+            case 2:
+                rol = RolUsuario.COMERCIAL;
+                break;
+            case 3:
+                rol = RolUsuario.GESTOR;
+                break;
+            default:
+                System.out.println("Rol no valido. Se asigna Comercial por defecto.");
+                rol = RolUsuario.COMERCIAL;
+                break;
+        }
 
         System.out.print("Password hash: ");
         String passwordHash = scanner.nextLine();

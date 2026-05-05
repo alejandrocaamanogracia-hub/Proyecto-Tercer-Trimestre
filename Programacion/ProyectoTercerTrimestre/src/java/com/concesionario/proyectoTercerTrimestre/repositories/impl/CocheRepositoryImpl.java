@@ -4,6 +4,9 @@ import com.concesionario.proyectoTercerTrimestre.database.DataBaseConnection;
 import com.concesionario.proyectoTercerTrimestre.entities.Cliente;
 import com.concesionario.proyectoTercerTrimestre.entities.Coche;
 import com.concesionario.proyectoTercerTrimestre.repositories.CocheRepository;
+import com.concesionario.proyectoTercerTrimestre.entities.Combustible;
+import com.concesionario.proyectoTercerTrimestre.entities.EstadoCoche;
+import com.concesionario.proyectoTercerTrimestre.entities.TipoCambio;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -33,11 +36,11 @@ public class CocheRepositoryImpl implements CocheRepository {
             preparedStatement.setString(5, coche.getBastidor());
             preparedStatement.setInt(6, coche.getAnio());
             preparedStatement.setInt(7, coche.getKilometros());
-            preparedStatement.setString(8, coche.getCombustible());
-            preparedStatement.setString(9, coche.getCambio());
+            preparedStatement.setString(8, coche.getCombustible().getValorDb());
+            preparedStatement.setString(9, coche.getCambio().getValorDb());
             preparedStatement.setString(10, coche.getColor());
             preparedStatement.setDouble(11, coche.getPrecio());
-            preparedStatement.setString(12, coche.getEstado());
+            preparedStatement.setString(12, coche.getEstado().getValorDb());
 
             preparedStatement.executeUpdate();
 
@@ -91,11 +94,11 @@ public class CocheRepositoryImpl implements CocheRepository {
                 coche.setBastidor(resultSet.getString("bastidor"));
                 coche.setAnio(resultSet.getInt("anio"));
                 coche.setKilometros(resultSet.getInt("kilometros"));
-                coche.setCombustible(resultSet.getString("combustible"));
-                coche.setCambio(resultSet.getString("cambio"));
+                coche.setCombustible(Combustible.fromDb(resultSet.getString("combustible")));
+                coche.setCambio(TipoCambio.fromDb(resultSet.getString("cambio")));
                 coche.setColor(resultSet.getString("color"));
                 coche.setPrecio(resultSet.getDouble("precio"));
-                coche.setEstado(resultSet.getString("estado"));
+                coche.setEstado(EstadoCoche.fromDb(resultSet.getString("estado")));
 
                 coches.add(coche);
             }
