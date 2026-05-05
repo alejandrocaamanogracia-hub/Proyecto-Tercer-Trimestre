@@ -5,7 +5,6 @@ import com.concesionario.proyectoTercerTrimestre.entities.Usuario;
 import com.concesionario.proyectoTercerTrimestre.services.UsuarioService;
 
 import java.util.List;
-import java.util.Optional;
 
 public class UsuarioController {
 
@@ -31,9 +30,4 @@ public class UsuarioController {
     public void exportarUsuariosTxt() {
         usuarioService.exportarUsuariosTxt();
     }
-
-    public Optional<Usuario> buscarUsuario(int id) {
-        return usuarioService.busarUsuario(id);
-    }
-
 }

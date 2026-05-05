@@ -1,7 +1,6 @@
 package com.concesionario.proyectoTercerTrimestre.repositories.impl;
 
 import com.concesionario.proyectoTercerTrimestre.database.DataBaseConnection;
-import com.concesionario.proyectoTercerTrimestre.entities.Cliente;
 import com.concesionario.proyectoTercerTrimestre.entities.Coche;
 import com.concesionario.proyectoTercerTrimestre.repositories.CocheRepository;
 import com.concesionario.proyectoTercerTrimestre.entities.Combustible;
@@ -110,31 +109,4 @@ public class CocheRepositoryImpl implements CocheRepository {
 
         return coches;
     }
-
-    @Override
-    public Coche buscarCoche(int id){
-
-        String sql = "SELECT * FROM coches WHERE id = ?";
-        Coche coche = null;
-
-        try (Connection connection = DataBaseConnection.getConnection();){
-
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setInt(1, id);
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()) {
-
-                coche = new Coche(resultSet.getInt("id"), resultSet.getString("marca"), resultSet.getString("modelo"), resultSet.getString("version"), resultSet.getString("matricula"), resultSet.getString("bastidor"), resultSet.getInt("anio"), resultSet.getInt("kilometros"), resultSet.getString("combustible"), resultSet.getString("cambio"), resultSet.getString("color"), resultSet.getDouble("precio"), resultSet.getString("estado"));
-            }
-
-        }catch (SQLException e){
-            System.out.println("Error al buscar el cliente.");
-            e.printStackTrace();
-        }
-
-        return coche;
-
-    }
-
 }

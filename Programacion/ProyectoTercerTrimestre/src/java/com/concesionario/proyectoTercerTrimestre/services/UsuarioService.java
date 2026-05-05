@@ -1,6 +1,5 @@
 package com.concesionario.proyectoTercerTrimestre.services;
 
-import com.concesionario.proyectoTercerTrimestre.entities.Cliente;
 import com.concesionario.proyectoTercerTrimestre.entities.Usuario;
 import com.concesionario.proyectoTercerTrimestre.repositories.UsuarioRepository;
 import com.concesionario.proyectoTercerTrimestre.repositories.impl.UsuarioRepositoryImpl;
@@ -9,7 +8,6 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 
 public class UsuarioService {
 
@@ -99,17 +97,4 @@ public class UsuarioService {
             e.printStackTrace();
         }
     }
-
-    public Optional<Usuario> busarUsuario(int id) {
-
-        Usuario usuario = usuarioRepository.buscarUsuario(id);
-
-        if (usuario == null) {
-            return Optional.empty();
-        }
-
-        return Optional.ofNullable(usuario);
-
-    }
-
 }

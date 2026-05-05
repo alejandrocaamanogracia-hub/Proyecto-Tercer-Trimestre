@@ -8,7 +8,6 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 
 public class ClienteService {
 
@@ -89,17 +88,4 @@ public class ClienteService {
             e.printStackTrace();
         }
     }
-
-    public Optional<Cliente> buscarCliente(int id) {
-
-        Cliente cliente = clienteRepository.buscarCliente(id);
-
-        if (cliente == null) {
-            return Optional.empty();
-        }
-
-        return Optional.ofNullable(cliente);
-
-    }
-
 }
