@@ -7,7 +7,7 @@ public class InteraccionCliente {
     private int id;
     private int clienteId;
     private int usuarioId;
-    private String tipo;
+    private TipoInteraccion tipo;
     private LocalDateTime fecha;
     private String asunto;
     private String descripcion;
@@ -18,7 +18,7 @@ public class InteraccionCliente {
     public InteraccionCliente() {
     }
 
-    public InteraccionCliente(int clienteId, int usuarioId, String tipo, LocalDateTime fecha,
+    public InteraccionCliente(int clienteId, int usuarioId, TipoInteraccion tipo, LocalDateTime fecha,
                               String asunto, String descripcion, String resultado,
                               String proximaAccion, LocalDateTime fechaProxima) {
         this.clienteId = clienteId;
@@ -32,7 +32,7 @@ public class InteraccionCliente {
         this.fechaProxima = fechaProxima;
     }
 
-    public InteraccionCliente(int id, int clienteId, int usuarioId, String tipo, LocalDateTime fecha,
+    public InteraccionCliente(int id, int clienteId, int usuarioId, TipoInteraccion tipo, LocalDateTime fecha,
                               String asunto, String descripcion, String resultado,
                               String proximaAccion, LocalDateTime fechaProxima) {
         this.id = id;
@@ -74,11 +74,11 @@ public class InteraccionCliente {
     }
 
 
-    public String getTipo() {
+    public TipoInteraccion getTipo() {
         return tipo;
     }
 
-    public void setTipo(String tipo) {
+    public void setTipo(TipoInteraccion tipo) {
         this.tipo = tipo;
     }
 
@@ -143,7 +143,7 @@ public class InteraccionCliente {
                 "id=" + id +
                 ", clienteId=" + clienteId +
                 ", usuarioId=" + usuarioId +
-                ", tipo='" + tipo + '\'' +
+                ", tipo=" + tipo +
                 ", fecha=" + fecha +
                 ", asunto='" + asunto + '\'' +
                 ", descripcion='" + descripcion + '\'' +

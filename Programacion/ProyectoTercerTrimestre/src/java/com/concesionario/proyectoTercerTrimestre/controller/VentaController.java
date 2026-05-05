@@ -1,5 +1,6 @@
 package com.concesionario.proyectoTercerTrimestre.controller;
 
+import com.concesionario.proyectoTercerTrimestre.entities.EstadoVenta;
 import com.concesionario.proyectoTercerTrimestre.entities.Venta;
 import com.concesionario.proyectoTercerTrimestre.services.VentaService;
 
@@ -14,7 +15,7 @@ public class VentaController {
         this.ventaService = new VentaService();
     }
 
-    public void crearVenta(int clienteId, int usuarioId, LocalDate fecha, String estado, double total) {
+    public void crearVenta(int clienteId, int usuarioId, LocalDate fecha, EstadoVenta estado, double total) {
         Venta venta = new Venta(clienteId, usuarioId, fecha, estado, total);
         ventaService.crearVenta(venta);
     }

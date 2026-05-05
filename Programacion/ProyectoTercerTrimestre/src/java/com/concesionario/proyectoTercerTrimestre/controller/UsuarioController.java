@@ -1,5 +1,6 @@
 package com.concesionario.proyectoTercerTrimestre.controller;
 
+import com.concesionario.proyectoTercerTrimestre.entities.RolUsuario;
 import com.concesionario.proyectoTercerTrimestre.entities.Usuario;
 import com.concesionario.proyectoTercerTrimestre.services.UsuarioService;
 
@@ -13,7 +14,7 @@ public class UsuarioController {
         this.usuarioService = new UsuarioService();
     }
 
-    public void crearUsuario(String nombre, String email, String rol, String passwordHash) {
+    public void crearUsuario(String nombre, String email, RolUsuario rol, String passwordHash) {
         Usuario usuario = new Usuario(nombre, email, rol, passwordHash);
         usuarioService.crearUsuario(usuario);
     }

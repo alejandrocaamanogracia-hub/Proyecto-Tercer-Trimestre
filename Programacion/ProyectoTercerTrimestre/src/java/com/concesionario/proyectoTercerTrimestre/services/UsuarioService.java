@@ -33,7 +33,7 @@ public class UsuarioService {
             return;
         }
 
-        if (usuario.getRol() == null || usuario.getRol().isBlank()) {
+        if (usuario.getRol() == null) {
             System.out.println("El rol del usuario es obligatorio.");
             return;
         }
@@ -82,7 +82,7 @@ public class UsuarioService {
                 writer.newLine();
                 writer.write("Email: " + usuario.getEmail());
                 writer.newLine();
-                writer.write("Rol: " + usuario.getRol());
+                writer.write("Rol: " + usuario.getRol().getValorDb());
                 writer.newLine();
                 writer.write("Password Hash: " + usuario.getPasswordHash());
                 writer.newLine();

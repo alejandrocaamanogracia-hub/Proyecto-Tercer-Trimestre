@@ -8,13 +8,13 @@ public class Venta {
     private int clienteId;
     private int usuarioId;
     private LocalDate fecha;
-    private String estado;
+    private EstadoVenta estado;
     private double total;
 
     public Venta() {
     }
 
-    public Venta(int clienteId, int usuarioId, LocalDate fecha, String estado, double total) {
+    public Venta(int clienteId, int usuarioId, LocalDate fecha, EstadoVenta estado, double total) {
         this.clienteId = clienteId;
         this.usuarioId = usuarioId;
         this.fecha = fecha;
@@ -22,7 +22,7 @@ public class Venta {
         this.total = total;
     }
 
-    public Venta(int id, int clienteId, int usuarioId, LocalDate fecha, String estado, double total) {
+    public Venta(int id, int clienteId, int usuarioId, LocalDate fecha, EstadoVenta estado, double total) {
         this.id = id;
         this.clienteId = clienteId;
         this.usuarioId = usuarioId;
@@ -67,11 +67,11 @@ public class Venta {
     }
 
 
-    public String getEstado() {
+    public EstadoVenta getEstado() {
         return estado;
     }
 
-    public void setEstado(String estado) {
+    public void setEstado(EstadoVenta estado) {
         this.estado = estado;
     }
 
@@ -92,7 +92,7 @@ public class Venta {
                 ", clienteId=" + clienteId +
                 ", usuarioId=" + usuarioId +
                 ", fecha=" + fecha +
-                ", estado='" + estado + '\'' +
+                ", estado=" + estado +
                 ", total=" + total +
                 '}';
     }

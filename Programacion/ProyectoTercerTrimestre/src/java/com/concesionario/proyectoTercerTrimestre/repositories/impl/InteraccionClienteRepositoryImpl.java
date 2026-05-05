@@ -3,6 +3,7 @@ package com.concesionario.proyectoTercerTrimestre.repositories.impl;
 import com.concesionario.proyectoTercerTrimestre.database.DataBaseConnection;
 import com.concesionario.proyectoTercerTrimestre.entities.InteraccionCliente;
 import com.concesionario.proyectoTercerTrimestre.repositories.InteraccionClienteRepository;
+import com.concesionario.proyectoTercerTrimestre.entities.TipoInteraccion;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -26,7 +27,7 @@ public class InteraccionClienteRepositoryImpl implements InteraccionClienteRepos
 
             preparedStatement.setInt(1, interaccionCliente.getClienteId());
             preparedStatement.setInt(2, interaccionCliente.getUsuarioId());
-            preparedStatement.setString(3, interaccionCliente.getTipo());
+            preparedStatement.setString(3, interaccionCliente.getTipo().getValorDb());
             preparedStatement.setTimestamp(4, Timestamp.valueOf(interaccionCliente.getFecha()));
             preparedStatement.setString(5, interaccionCliente.getAsunto());
             preparedStatement.setString(6, interaccionCliente.getDescripcion());
@@ -83,7 +84,7 @@ public class InteraccionClienteRepositoryImpl implements InteraccionClienteRepos
                 interaccionCliente.setId(resultSet.getInt("id"));
                 interaccionCliente.setClienteId(resultSet.getInt("cliente_id"));
                 interaccionCliente.setUsuarioId(resultSet.getInt("usuario_id"));
-                interaccionCliente.setTipo(resultSet.getString("tipo"));
+                interaccionCliente.setTipo(TipoInteraccion.fromDb(resultSet.getString("tipo")));
 
                 Timestamp fecha = resultSet.getTimestamp("fecha");
                 if (fecha != null) {

@@ -2,6 +2,7 @@ package com.concesionario.proyectoTercerTrimestre.interfaz;
 
 import com.concesionario.proyectoTercerTrimestre.controller.VentaController;
 import com.concesionario.proyectoTercerTrimestre.entities.Venta;
+import com.concesionario.proyectoTercerTrimestre.entities.EstadoVenta;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -78,13 +79,37 @@ public class VentaMenu {
             fecha = LocalDate.parse(fechaTexto, formatter);
         }
 
-        System.out.print("Estado (Pendiente, Completada, Presupuesto, Cancelada): ");
-        String estado = scanner.nextLine();
+        EstadoVenta estado = seleccionarEstadoVenta();
 
         System.out.print("Total: ");
         double total = Double.parseDouble(scanner.nextLine());
 
         ventaController.crearVenta(clienteId, usuarioId, fecha, estado, total);
+    }
+
+    private EstadoVenta seleccionarEstadoVenta() {
+        System.out.println("Estado de la venta:");
+        System.out.println("1. Pendiente");
+        System.out.println("2. Completada");
+        System.out.println("3. Presupuesto");
+        System.out.println("4. Cancelada");
+        System.out.print("Elige una opcion: ");
+
+        int opcion = Integer.parseInt(scanner.nextLine());
+
+        switch (opcion) {
+            case 1:
+                return EstadoVenta.PENDIENTE;
+            case 2:
+                return EstadoVenta.COMPLETADA;
+            case 3:
+                return EstadoVenta.PRESUPUESTO;
+            case 4:
+                return EstadoVenta.CANCELADA;
+            default:
+                System.out.println("Opcion no valida. Se asigna Pendiente por defecto.");
+                return EstadoVenta.PENDIENTE;
+        }
     }
 
     private void eliminarVenta() {

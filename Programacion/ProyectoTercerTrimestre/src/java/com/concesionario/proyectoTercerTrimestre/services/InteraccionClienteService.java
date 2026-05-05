@@ -33,7 +33,7 @@ public class InteraccionClienteService {
             return;
         }
 
-        if (interaccionCliente.getTipo() == null || interaccionCliente.getTipo().isBlank()) {
+        if (interaccionCliente.getTipo() == null) {
             System.out.println("El tipo de interaccion es obligatorio.");
             return;
         }
@@ -87,7 +87,7 @@ public class InteraccionClienteService {
                 writer.newLine();
                 writer.write("ID Usuario: " + interaccion.getUsuarioId());
                 writer.newLine();
-                writer.write("Tipo: " + interaccion.getTipo());
+                writer.write("Tipo: " + interaccion.getTipo().getValorDb());
                 writer.newLine();
                 writer.write("Fecha: " + interaccion.getFecha());
                 writer.newLine();
