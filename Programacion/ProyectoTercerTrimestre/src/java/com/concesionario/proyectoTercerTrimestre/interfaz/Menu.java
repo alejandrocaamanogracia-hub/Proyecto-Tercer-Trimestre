@@ -8,12 +8,18 @@ public class Menu {
     private final ClienteMenu clienteMenu;
     private final CocheMenu cocheMenu;
     private final UsuarioMenu usuarioMenu;
+    private final InteraccionClienteMenu interaccionClienteMenu;
+    private final VentaMenu ventaMenu;
+    private final DetalleVentaMenu detalleVentaMenu;
 
     public Menu() {
         this.scanner = new Scanner(System.in);
         this.clienteMenu = new ClienteMenu();
         this.cocheMenu = new CocheMenu();
         this.usuarioMenu = new UsuarioMenu();
+        this.interaccionClienteMenu = new InteraccionClienteMenu();
+        this.ventaMenu = new VentaMenu();
+        this.detalleVentaMenu = new DetalleVentaMenu();
     }
 
     public void mostrarMenuPrincipal() {
@@ -24,6 +30,9 @@ public class Menu {
             System.out.println("1. Gestionar clientes");
             System.out.println("2. Gestionar coches");
             System.out.println("3. Gestionar usuarios");
+            System.out.println("4. Gestionar interacciones cliente");
+            System.out.println("5. Gestionar ventas");
+            System.out.println("6. Gestionar detalles de venta");
             System.out.println("0. Salir");
             System.out.print("Elige una opcion: ");
 
@@ -38,6 +47,15 @@ public class Menu {
                     break;
                 case 3:
                     usuarioMenu.mostrarMenuUsuarios();
+                    break;
+                case 4:
+                    interaccionClienteMenu.mostrarMenuInteraccionesCliente();
+                    break;
+                case 5:
+                    ventaMenu.mostrarMenuVentas();
+                    break;
+                case 6:
+                    detalleVentaMenu.mostrarMenuDetalleVenta();
                     break;
                 case 0:
                     System.out.println("Saliendo de la aplicacion...");
