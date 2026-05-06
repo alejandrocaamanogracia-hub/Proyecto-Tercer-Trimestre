@@ -11,4 +11,7 @@ public interface CocheRepository {
     void eliminarCoche(int id);
 
     List<Coche> listarCoches();
+
+    void modificarCoche(int id, Coche coche);
+
 }

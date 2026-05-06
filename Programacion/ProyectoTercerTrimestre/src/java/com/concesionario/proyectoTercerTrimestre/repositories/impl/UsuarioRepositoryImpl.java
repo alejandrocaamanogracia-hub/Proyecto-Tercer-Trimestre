@@ -85,4 +85,61 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
 
         return usuarios;
     }
+
+    @Override
+    public void modificarUsuario(int id, Usuario usuario){
+
+        String sql = "UPDATE usuarios SET nombre = ? WHERE id = ?";
+
+        try (Connection connection = DataBaseConnection.getConnection()){
+
+            if (usuario.getNombre() != null){
+
+                PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setString(1, usuario.getNombre());
+                preparedStatement.setInt(2, id);
+                preparedStatement.executeUpdate();
+
+            }
+
+            sql = "UPDATE usuarios SET email = ? WHERE id = ?";
+
+            if (usuario.getEmail() != null){
+
+                PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setString(1, usuario.getEmail());
+                preparedStatement.setInt(2, id);
+                preparedStatement.executeUpdate();
+
+            }
+
+            sql = "UPDATE usuarios SET password_hash = ? WHERE id = ?";
+
+            if (usuario.getPasswordHash() != null){
+
+                PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setString(1, usuario.getPasswordHash());
+                preparedStatement.setInt(2, id);
+                preparedStatement.executeUpdate();
+
+            }
+
+            sql = "UPDATE usuarios SET rol = ? WHERE id = ?";
+
+            if (usuario.getRol() != null){
+
+                PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setString(1, usuario.getRol().getValorDb());
+                preparedStatement.setInt(2, id);
+                preparedStatement.executeUpdate();
+
+            }
+
+        }catch (SQLException e){
+            System.out.println("Error al modificar el usuario.");
+            e.printStackTrace();
+        }
+
+    }
+
 }

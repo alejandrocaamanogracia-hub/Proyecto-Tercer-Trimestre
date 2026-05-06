@@ -11,4 +11,7 @@ public interface InteraccionClienteRepository {
     void eliminarInteraccionCliente(int id);
 
     List<InteraccionCliente> listarInteraccionesCliente();
+
+    void modificarInteraccionCliente(int id, InteraccionCliente interaccionCliente);
+
 }

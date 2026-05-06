@@ -1,11 +1,17 @@
 package com.concesionario.proyectoTercerTrimestre.interfaz;
 
+import com.concesionario.proyectoTercerTrimestre.controller.ClienteController;
+import com.concesionario.proyectoTercerTrimestre.controller.UsuarioController;
 import com.concesionario.proyectoTercerTrimestre.controller.VentaController;
+import com.concesionario.proyectoTercerTrimestre.entities.Cliente;
+import com.concesionario.proyectoTercerTrimestre.entities.Usuario;
 import com.concesionario.proyectoTercerTrimestre.entities.Venta;
 import com.concesionario.proyectoTercerTrimestre.entities.EstadoVenta;
+import com.concesionario.proyectoTercerTrimestre.utils.ComprobacionOpcion;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -30,6 +36,7 @@ public class VentaMenu {
             System.out.println("2. Eliminar venta");
             System.out.println("3. Listar ventas");
             System.out.println("4. Exportar ventas a TXT");
+            System.out.println("5. Modificar venta");
             System.out.println("0. Volver");
             System.out.print("Elige una opcion: ");
 
@@ -47,6 +54,9 @@ public class VentaMenu {
                     break;
                 case 4:
                     exportarVentasTxt();
+                    break;
+                case 5:
+                    modificarVenta();
                     break;
                 case 0:
                     System.out.println("Volviendo al menu principal...");
@@ -139,4 +149,152 @@ public class VentaMenu {
     private void exportarVentasTxt() {
         ventaController.exportarVentasTxt();
     }
+
+    private void modificarVenta() {
+
+        Venta venta = new Venta();
+
+        System.out.println("Que venta quieres modificar: ");
+        List<Venta> ventas = ventaController.listarVentas();
+        int iterador = 1;
+        for (Venta venta1 : ventas) {
+            System.out.println( iterador++ + ". " + venta1);
+        }
+
+        int opcion;
+        int opcion2;
+
+        opcion = ComprobacionOpcion.leerOpcion(1, ventas.size());
+
+        System.out.println("Modificar id del cliente");
+        System.out.println("1. Si");
+        System.out.println("2. No");
+
+        opcion2 = ComprobacionOpcion.leerOpcion(1, 2);
+
+        switch (opcion2) {
+
+            case 1 ->{
+                System.out.println("Cual de los cliente desea seleccionar");
+                ClienteController clienteController = new ClienteController();
+                List <Cliente> clientes = clienteController.listarClientes();
+                iterador = 1;
+                for (Cliente cliente : clientes) {
+                    System.out.println( iterador++ + ". " + cliente.getNombre());
+                }
+                opcion2 = 0;
+                while (opcion2 < 1 || opcion2 > clientes.size()) {
+                    opcion2 = Integer.parseInt(scanner.nextLine());
+                }
+
+                venta.setClienteId(opcion2);
+
+            }case 2 ->{
+                venta.setClienteId(-1);
+            }
+
+        }
+
+        System.out.println("Modificar id del usuario");
+        System.out.println("1. Si");
+        System.out.println("2. No");
+
+        opcion2 = ComprobacionOpcion.leerOpcion(1, 2);
+
+        switch (opcion2) {
+
+            case 1 ->{
+                System.out.println("Cual de los usuarios desea seleccionar");
+                UsuarioController usuarioController = new UsuarioController();
+                List <Usuario> usuarios = usuarioController.listarUsuarios();
+                iterador = 1;
+                for (Usuario usuario : usuarios) {
+                    System.out.println( iterador++ + ". " + usuario.getNombre());
+                }
+                opcion2 = 0;
+                while (opcion2 < 1 || opcion2 > usuarios.size()) {
+                    opcion2 = Integer.parseInt(scanner.nextLine());
+                }
+
+                venta.setUsuarioId(opcion2);
+
+            }case 2 ->{
+                venta.setUsuarioId(-1);
+            }
+
+        }
+
+        System.out.println("Modificar la fecha");
+        System.out.println("1. Si");
+        System.out.println("2. No");
+
+        opcion2 = ComprobacionOpcion.leerOpcion(1, 2);
+
+        switch (opcion2) {
+
+            case 1 -> {
+                System.out.print("Fecha venta (yyyy-MM-dd), vacío para hoy: ");
+
+                LocalDate fecha = null;
+
+                while (true) {
+                    String input = scanner.nextLine();
+
+                    if (input.isBlank()) {
+                        fecha = LocalDate.now();
+                        break;
+                    }
+
+                    try {
+                        fecha = LocalDate.parse(input, formatter);
+                        break;
+                    } catch (DateTimeParseException e) {
+                        System.out.print("Formato incorrecto. Introduce yyyy-MM-dd: ");
+                    }
+                }
+
+                venta.setFecha(fecha);
+            }case 2 ->{
+                venta.setFecha(null);
+            }
+
+        }
+
+        System.out.println("Modificar estado");
+        System.out.println("1. Si");
+        System.out.println("2. No");
+
+        opcion2 = ComprobacionOpcion.leerOpcion(1, 2);
+
+        switch (opcion2) {
+
+            case 1 ->{
+                venta.setEstado(seleccionarEstadoVenta());
+            }case 2 ->{
+                venta.setEstado(null);
+            }
+
+        }
+
+        System.out.println("Modificar el total");
+        System.out.println("1. Si");
+        System.out.println("2. No");
+
+        opcion2 = ComprobacionOpcion.leerOpcion(1, 2);
+
+        switch (opcion2) {
+
+            case 1 ->{
+                System.out.println("Introduce el total: ");
+                venta.setTotal(Integer.parseInt(scanner.nextLine()));
+            }case 2 ->{
+                venta.setTotal(-1);
+            }
+
+        }
+
+        ventaController.modificarVenta(opcion, venta);
+
+    }
+
 }

@@ -5,11 +5,7 @@ import com.concesionario.proyectoTercerTrimestre.entities.Venta;
 import com.concesionario.proyectoTercerTrimestre.repositories.VentaRepository;
 import com.concesionario.proyectoTercerTrimestre.entities.EstadoVenta;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -93,4 +89,90 @@ public class VentaRepositoryImpl implements VentaRepository {
 
         return ventas;
     }
+
+    @Override
+    public void modificarVenta(int id, Venta venta){
+
+        String sql = "UPDATE ventas SET cliente_id = ? WHERE id = ?";
+        ResultSet resultSet = null;
+
+        try (Connection connection = DataBaseConnection.getConnection()) {
+
+            if (venta.getClienteId() != -1) {
+
+                PreparedStatement preparedStatementComprobacion = connection.prepareStatement("SELECT * FROM clientes WHERE id = ?");
+                preparedStatementComprobacion.setInt(1, venta.getClienteId());
+                resultSet = preparedStatementComprobacion.executeQuery();
+
+                if(!resultSet.next()) {
+                    System.out.println("El id del cliente no es valida");
+                    return;
+                }else {
+                    PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                    preparedStatement.setInt(1, venta.getClienteId());
+                    preparedStatement.setInt(2, id);
+                    preparedStatement.executeUpdate();
+                }
+
+
+            }
+
+            sql = "UPDATE ventas SET usuario_id = ? WHERE id = ?";
+
+            if (venta.getUsuarioId() != -1) {
+
+                PreparedStatement preparedStatementComprobacion = connection.prepareStatement("SELECT * FROM usuarios WHERE id = ?");
+                preparedStatementComprobacion.setInt(1, venta.getUsuarioId());
+                resultSet = preparedStatementComprobacion.executeQuery();
+
+                if (!resultSet.next()) {
+                    System.out.println("El id del usuario no es valido");
+                    return;
+                }else{
+                    PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                    preparedStatement.setInt(1, venta.getUsuarioId());
+                    preparedStatement.setInt(2, id);
+                    preparedStatement.executeUpdate();
+                }
+
+            }
+
+            sql = "UPDATE ventas SET fecha = ? WHERE id = ?";
+
+            if (venta.getFecha() != null){
+
+                PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setDate(1, Date.valueOf(venta.getFecha()));
+                preparedStatement.setInt(2, id);
+
+            }
+
+            sql = "UPDATE ventas SET estado = ? WHERE id = ?";
+
+            if (venta.getEstado() != null){
+
+                PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setString(1, venta.getEstado().getValorDb());
+                preparedStatement.setInt(2, id);
+                preparedStatement.executeUpdate();
+
+            }
+
+            sql = "UPDATE ventas SET total = ? WHERE id = ?";
+
+            if (venta.getTotal() != -1){
+
+                PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setDouble(1, venta.getTotal());
+                preparedStatement.setInt(2, id);
+                preparedStatement.executeUpdate();
+
+            }
+
+        }catch (SQLException e){
+            System.out.println("Error al modificar la venta.");
+            e.printStackTrace();
+        }
+    }
+
 }

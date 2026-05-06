@@ -11,4 +11,7 @@ public interface DetalleVentaRepository {
     void eliminarDetalleVenta(int id);
 
     List<DetalleVenta> listarDetallesVenta();
+
+    void modificarDetalleVenta(int id, DetalleVenta detalleVenta);
+
 }

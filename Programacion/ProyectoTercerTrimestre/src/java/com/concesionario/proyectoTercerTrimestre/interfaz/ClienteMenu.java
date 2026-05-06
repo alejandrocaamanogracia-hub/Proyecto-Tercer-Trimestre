@@ -2,6 +2,7 @@ package com.concesionario.proyectoTercerTrimestre.interfaz;
 
 import com.concesionario.proyectoTercerTrimestre.controller.ClienteController;
 import com.concesionario.proyectoTercerTrimestre.entities.Cliente;
+import com.concesionario.proyectoTercerTrimestre.utils.ComprobacionOpcion;
 
 import java.util.List;
 import java.util.Scanner;
@@ -25,6 +26,7 @@ public class ClienteMenu {
             System.out.println("2. Eliminar cliente");
             System.out.println("3. Listar clientes");
             System.out.println("4. Exportar clientes a TXT");
+            System.out.println("5. Modificar un cliente");
             System.out.println("0. Volver");
             System.out.print("Elige una opcion: ");
 
@@ -42,6 +44,9 @@ public class ClienteMenu {
                     break;
                 case 4:
                     exportarClientesTxt();
+                    break;
+                case 5:
+                    modificarCliente();
                     break;
                 case 0:
                     System.out.println("Volviendo al menu principal...");
@@ -99,4 +104,94 @@ public class ClienteMenu {
     private void exportarClientesTxt() {
         clienteController.exportarClientesTxt();
     }
+
+    private void modificarCliente(){
+
+        Cliente cliente = new Cliente();
+
+        System.out.println("Que cliente quieres modificar: ");
+        List<Cliente> clientes = clienteController.listarClientes();
+        int iterador = 1;
+        for (Cliente cliente2 : clientes){
+            System.out.println(iterador + ". " + cliente2.getNombre());
+            iterador++;
+        }
+
+        int opcion;
+        int opcion2;
+
+        opcion = ComprobacionOpcion.leerOpcion(1, clientes.size());
+
+        System.out.println("Modificar nombre");
+        System.out.println("1. Si");
+        System.out.println("2. No");
+
+        opcion2 = ComprobacionOpcion.leerOpcion(1, 2);
+
+        switch (opcion2) {
+
+            case 1 -> {
+                System.out.println("Introduce el nombre: ");
+                cliente.setNombre(scanner.nextLine());
+            }case 2  -> {
+                cliente.setNombre(null);
+            }
+
+        }
+
+        System.out.println("Modificar email");
+        System.out.println("1. Si");
+        System.out.println("2. No");
+
+        opcion2 = ComprobacionOpcion.leerOpcion(1, 2);
+
+        switch (opcion2) {
+
+            case 1 -> {
+                System.out.println("Introduce el email: ");
+                cliente.setEmail(scanner.nextLine());
+            }case 2  -> {
+                cliente.setEmail(null);
+            }
+
+        }
+
+        System.out.println("Modificar telefono");
+        System.out.println("1. Si");
+        System.out.println("2. No");
+
+        opcion2 = ComprobacionOpcion.leerOpcion(1, 2);
+
+        switch (opcion2) {
+
+            case 1 -> {
+                System.out.println("Introduce el telefono: ");
+                cliente.setTelefono(scanner.nextLine());
+            }case 2  -> {
+                cliente.setTelefono(null);
+            }
+
+        }
+
+        System.out.println("Modificar direccion");
+        System.out.println("1. Si");
+        System.out.println("2. No");
+
+        opcion2 = ComprobacionOpcion.leerOpcion(1, 2);
+
+        switch (opcion2) {
+
+            case 1 -> {
+                System.out.println("Introduce la direccion: ");
+                cliente.setDireccion(scanner.nextLine());
+            }case 2  -> {
+                cliente.setDireccion(null);
+            }
+
+        }
+
+        clienteController.modificarCliente(opcion, cliente);
+
+    }
+
 }

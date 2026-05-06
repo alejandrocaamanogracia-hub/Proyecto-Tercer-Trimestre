@@ -50,4 +50,10 @@ public class CocheController {
     public void exportarCochesTxt() {
         cocheService.exportarCochesTxt();
     }
+
+    public void modificarCoche(int id, Coche coche){
+
+        cocheService.modificarCoche(id, coche);
+
+    }
 }

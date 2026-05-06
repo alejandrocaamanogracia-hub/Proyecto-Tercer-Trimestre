@@ -30,4 +30,7 @@ public class UsuarioController {
     public void exportarUsuariosTxt() {
         usuarioService.exportarUsuariosTxt();
     }
+
+    public void modificarUsuario(int id, Usuario usuario) {usuarioService.modificarUsuario(id, usuario);}
+
 }

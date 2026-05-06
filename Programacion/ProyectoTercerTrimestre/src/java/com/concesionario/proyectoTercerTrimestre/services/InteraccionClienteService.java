@@ -112,4 +112,31 @@ public class InteraccionClienteService {
             e.printStackTrace();
         }
     }
+
+    public void modificarInteraccionCliente(int id, InteraccionCliente interaccionCliente) {
+
+        if (id <= 0 || id > interaccionClienteRepository.listarInteraccionesCliente().size()) {
+            System.out.println("El ID del cliente no es valido.");
+            return;
+        }
+
+        if (interaccionCliente.getAsunto() != null && interaccionCliente.getAsunto().isBlank()) {
+            System.out.println("El asunto de la interaccion no es valido.");
+            return;
+        }
+
+        if (interaccionCliente.getProximaAccion() != null && interaccionCliente.getProximaAccion().isBlank()) {
+            System.out.println("La proxima accion no es valida.");
+            return;
+        }
+
+        if (interaccionCliente.getDescripcion() != null && interaccionCliente.getDescripcion().isBlank()) {
+            System.out.println("La descripcion de la interaccion no es valida.");
+            return;
+        }
+
+        interaccionClienteRepository.modificarInteraccionCliente(id, interaccionCliente);
+
+    }
+
 }

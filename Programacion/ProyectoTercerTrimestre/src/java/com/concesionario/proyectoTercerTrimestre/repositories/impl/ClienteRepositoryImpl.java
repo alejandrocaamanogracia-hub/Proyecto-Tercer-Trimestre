@@ -83,4 +83,61 @@ public class ClienteRepositoryImpl implements ClienteRepository {
 
         return clientes;
     }
+
+    @Override
+    public void modificarCliente(int id,  Cliente cliente) {
+
+        String sql = "UPDATE clientes SET nombre = ? WHERE id = ?";
+
+        try (Connection connection = DataBaseConnection.getConnection()){
+
+            if (cliente.getNombre() != null) {
+
+                PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setString(1, cliente.getNombre());
+                preparedStatement.setInt(2, id);
+                preparedStatement.executeUpdate();
+
+            }
+
+            sql = "UPDATE clientes SET email = ? WHERE id = ?";
+
+            if (cliente.getEmail() != null) {
+
+                PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setString(1, cliente.getEmail());
+                preparedStatement.setInt(2, id);
+                preparedStatement.executeUpdate();
+
+            }
+
+            sql = "UPDATE clientes SET telefono = ? WHERE id = ?";
+
+            if (cliente.getTelefono() != null) {
+
+                PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setString(1, cliente.getTelefono());
+                preparedStatement.setInt(2, id);
+                preparedStatement.executeUpdate();
+
+            }
+
+            sql = "UPDATE clientes SET direccion = ? WHERE id = ?";
+
+            if (cliente.getDireccion() != null) {
+
+                PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setString(1, cliente.getDireccion());
+                preparedStatement.setInt(2, id);
+                preparedStatement.executeUpdate();
+
+            }
+
+        }catch (SQLException e){
+            System.out.println("Error al modificar el cliente.");
+            e.printStackTrace();
+        }
+
+    }
+
 }

@@ -109,4 +109,149 @@ public class CocheRepositoryImpl implements CocheRepository {
 
         return coches;
     }
+
+    @Override
+    public void modificarCoche(int id, Coche coche) {
+
+        String sql = "UPDATE coches SET marca = ? WHERE id = ?";
+
+        try (Connection connection = DataBaseConnection.getConnection()){
+
+            if (coche.getMarca() != null) {
+
+                PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setString(1, coche.getMarca());
+                preparedStatement.setInt(2, id);
+                preparedStatement.executeUpdate();
+
+            }
+
+            sql = "UPDATE coches SET modelo = ? WHERE id = ?";
+
+            if (coche.getModelo() != null) {
+
+                PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setString(1, coche.getModelo());
+                preparedStatement.setInt(2, id);
+                preparedStatement.executeUpdate();
+
+            }
+
+            sql = "UPDATE coches SET version = ? WHERE id = ?";
+
+            if (coche.getVersion() != null) {
+
+                PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setString(1, coche.getVersion());
+                preparedStatement.setInt(2, id);
+                preparedStatement.executeUpdate();
+
+            }
+
+            sql = "UPDATE coches SET matricula = ? WHERE id = ?";
+
+            if (coche.getMatricula() != null) {
+
+                PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setString(1, coche.getMatricula());
+                preparedStatement.setInt(2, id);
+                preparedStatement.executeUpdate();
+
+            }
+
+            sql = "UPDATE coches SET bastidor = ? WHERE id = ?";
+
+            if (coche.getBastidor() != null) {
+
+                PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setString(1, coche.getBastidor());
+                preparedStatement.setInt(2, id);
+                preparedStatement.executeUpdate();
+
+            }
+
+            sql = "UPDATE coches SET anio = ? WHERE id = ?";
+
+            if (coche.getAnio() != -1) {
+
+                PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setInt(1, coche.getAnio());
+                preparedStatement.setInt(2, id);
+                preparedStatement.executeUpdate();
+
+            }
+
+            sql = "UPDATE coches SET kilometros = ? WHERE id = ?";
+
+            if (coche.getKilometros() != -1) {
+
+                PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setInt(1, coche.getKilometros());
+                preparedStatement.setInt(2, id);
+                preparedStatement.executeUpdate();
+
+            }
+
+            sql = "UPDATE coches SET combustible = ? WHERE id = ?";
+
+            if (coche.getCombustible() != null) {
+
+                PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setString(1, coche.getCombustible().getValorDb());
+                preparedStatement.setInt(2, id);
+                preparedStatement.executeUpdate();
+
+            }
+
+            sql = "UPDATE coches SET cambio = ? WHERE id = ?";
+
+            if (coche.getCambio() != null) {
+
+                PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setString(1, coche.getCambio().getValorDb());
+                preparedStatement.setInt(2, id);
+                preparedStatement.executeUpdate();
+
+            }
+
+            sql = "UPDATE coches SET color = ? WHERE id = ?";
+
+            if (coche.getColor() != null) {
+
+                PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setString(1, coche.getColor());
+                preparedStatement.setInt(2, id);
+                preparedStatement.executeUpdate();
+
+            }
+
+            sql = "UPDATE coches SET precio = ? WHERE id = ?";
+
+            if (coche.getPrecio() != -1) {
+
+                PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setDouble(1, coche.getPrecio());
+                preparedStatement.setInt(2, id);
+                preparedStatement.executeUpdate();
+
+            }
+
+            sql = "UPDATE coches SET estado = ? WHERE id = ?";
+
+            if (coche.getEstado() != null) {
+
+                PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setString(1, coche.getEstado().getValorDb());
+                preparedStatement.setInt(2, id);
+                preparedStatement.executeUpdate();
+
+            }
+
+        }catch (SQLException e){
+            System.out.println("Error al modificar el coche.");
+            e.printStackTrace();
+        }
+
+    }
+
 }

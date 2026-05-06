@@ -88,4 +88,36 @@ public class ClienteService {
             e.printStackTrace();
         }
     }
+
+    public void modificarCliente(int id, Cliente cliente) {
+
+        if (id <= 0 || id > clienteRepository.listarClientes().size()) {
+            System.out.println("El id no es valido");
+            return;
+        }
+
+        if (cliente.getDireccion() != null && cliente.getDireccion().isBlank()) {
+            System.out.println("La direccion no puede estar en blanco");
+            return;
+        }
+
+        if (cliente.getTelefono() != null && cliente.getTelefono().isBlank()) {
+            System.out.println("El telefono no puede estar en blanco");
+            return;
+        }
+
+        if (cliente.getNombre() != null && cliente.getNombre().isBlank()) {
+            System.out.println("El nombre no puede estar en blanco");
+            return;
+        }
+
+        if (cliente.getEmail() != null && cliente.getEmail().isBlank()) {
+            System.out.println("El email no puede estar en blanco");
+            return;
+        }
+
+        clienteRepository.modificarCliente(id, cliente);
+
+    }
+
 }

@@ -1,7 +1,11 @@
 package com.concesionario.proyectoTercerTrimestre.services;
 
 import com.concesionario.proyectoTercerTrimestre.entities.Venta;
+import com.concesionario.proyectoTercerTrimestre.repositories.ClienteRepository;
+import com.concesionario.proyectoTercerTrimestre.repositories.UsuarioRepository;
 import com.concesionario.proyectoTercerTrimestre.repositories.VentaRepository;
+import com.concesionario.proyectoTercerTrimestre.repositories.impl.ClienteRepositoryImpl;
+import com.concesionario.proyectoTercerTrimestre.repositories.impl.UsuarioRepositoryImpl;
 import com.concesionario.proyectoTercerTrimestre.repositories.impl.VentaRepositoryImpl;
 
 import java.io.BufferedWriter;
@@ -104,4 +108,26 @@ public class VentaService {
             e.printStackTrace();
         }
     }
+
+    public void modificarVenta(int id, Venta venta){
+
+        if (id <= 0 || id > ventaRepository.listarVentas().size()) {
+            System.out.println("El ID de la venta no es valido.");
+            return;
+        }
+
+        if (id < -1) {
+            System.out.println("El ID del cliente no es valido.");
+            return;
+        }
+
+        if (venta.getUsuarioId() < -1) {
+            System.out.println("El ID del usuario no es valido.");
+            return;
+        }
+
+        ventaRepository.modificarVenta(id, venta);
+
+    }
+
 }

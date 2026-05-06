@@ -46,4 +46,7 @@ public class InteraccionClienteController {
     public void exportarInteraccionesClienteTxt() {
         interaccionClienteService.exportarInteraccionesClienteTxt();
     }
+
+    public void modificarInteraccionCliente(int id, InteraccionCliente interaccionCliente) {interaccionClienteService.modificarInteraccionCliente(id, interaccionCliente);}
+
 }

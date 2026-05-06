@@ -84,4 +84,80 @@ public class DetalleVentaRepositoryImpl implements DetalleVentaRepository {
 
         return detallesVenta;
     }
+
+    @Override
+    public void modificarDetalleVenta(int id, DetalleVenta detalleVenta){
+
+        String sql = "UPDATE detalle_venta SET venta_id = ? WHERE id = ?";
+        ResultSet resultSet = null;
+
+        try (Connection connection = DataBaseConnection.getConnection()){
+
+            if  (detalleVenta.getVentaId() != -1){
+
+                PreparedStatement preparedStatementComprobacion = connection.prepareStatement("SELECT * FROM ventas WHERE id = ?");
+                preparedStatementComprobacion.setInt(1, detalleVenta.getVentaId());
+                resultSet = preparedStatementComprobacion.executeQuery();
+
+                if (!resultSet.next()) {
+                    System.out.println("El id de la venta no es valido");
+                    return;
+                }else{
+                    PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                    preparedStatement.setInt(1, detalleVenta.getVentaId());
+                    preparedStatement.setInt(2, id);
+                    preparedStatement.executeUpdate();
+                }
+
+            }
+
+            sql = "UPDATE detalle_venta SET coche_id = ? WHERE id = ?";
+
+            if (detalleVenta.getCocheId() != -1){
+
+                PreparedStatement preparedStatementComprobacion = connection.prepareStatement("SELECT * FROM coches WHERE id = ?");
+                preparedStatementComprobacion.setInt(1, detalleVenta.getCocheId());
+                resultSet = preparedStatementComprobacion.executeQuery();
+
+                if (!resultSet.next()) {
+                    System.out.println("El id del coche no es valido");
+                    return;
+                }else{
+                    PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                    preparedStatement.setInt(1, detalleVenta.getCocheId());
+                    preparedStatement.setInt(2, id);
+                    preparedStatement.executeUpdate();
+                }
+
+            }
+
+            sql = "UPDATE detalle_venta SET cantidad = ? WHERE id = ?";
+
+            if (detalleVenta.getCantidad() != -1){
+
+                PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setInt(1, detalleVenta.getCantidad());
+                preparedStatement.setInt(2, id);
+                preparedStatement.executeUpdate();
+
+            }
+
+            sql = "UPDATE detalle_venta SET precio_unitario = ? WHERE id = ?";
+
+            if (detalleVenta.getPrecioUnitario() != -1){
+
+                PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setDouble(1, detalleVenta.getPrecioUnitario());
+                preparedStatement.setInt(2, id);
+                preparedStatement.executeUpdate();
+
+            }
+
+        }catch (SQLException e){
+            System.out.println("Error al modificar el detalle de venta.");
+            e.printStackTrace();
+        }
+
+    }
+
 }
