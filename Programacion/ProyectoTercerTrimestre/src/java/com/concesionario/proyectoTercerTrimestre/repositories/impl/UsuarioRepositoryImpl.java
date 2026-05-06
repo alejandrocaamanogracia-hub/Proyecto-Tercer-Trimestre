@@ -3,6 +3,7 @@ package com.concesionario.proyectoTercerTrimestre.repositories.impl;
 import com.concesionario.proyectoTercerTrimestre.database.DataBaseConnection;
 import com.concesionario.proyectoTercerTrimestre.entities.Usuario;
 import com.concesionario.proyectoTercerTrimestre.repositories.UsuarioRepository;
+import com.concesionario.proyectoTercerTrimestre.entities.RolUsuario;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -24,7 +25,7 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
 
             preparedStatement.setString(1, usuario.getNombre());
             preparedStatement.setString(2, usuario.getEmail());
-            preparedStatement.setString(3, usuario.getRol());
+            preparedStatement.setString(3, usuario.getRol().getValorDb());
             preparedStatement.setString(4, usuario.getPasswordHash());
 
             preparedStatement.executeUpdate();
@@ -71,7 +72,7 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
                 usuario.setId(resultSet.getInt("id"));
                 usuario.setNombre(resultSet.getString("nombre"));
                 usuario.setEmail(resultSet.getString("email"));
-                usuario.setRol(resultSet.getString("rol"));
+                usuario.setRol(RolUsuario.fromDb(resultSet.getString("rol")));
                 usuario.setPasswordHash(resultSet.getString("password_hash"));
 
                 usuarios.add(usuario);

@@ -58,6 +58,21 @@ public class CocheService {
             return;
         }
 
+        if (coche.getCombustible() == null) {
+            System.out.println("El combustible del coche es obligatorio.");
+            return;
+        }
+
+        if (coche.getCambio() == null) {
+            System.out.println("El cambio del coche es obligatorio.");
+            return;
+        }
+
+        if (coche.getEstado() == null) {
+            System.out.println("El estado del coche es obligatorio.");
+            return;
+        }
+
         cocheRepository.crearCoche(coche);
         System.out.println("Coche creado correctamente.");
     }
@@ -107,15 +122,15 @@ public class CocheService {
                 writer.newLine();
                 writer.write("Kilometros: " + coche.getKilometros());
                 writer.newLine();
-                writer.write("Combustible: " + coche.getCombustible());
+                writer.write("Combustible: " + coche.getCombustible().getValorDb());
                 writer.newLine();
-                writer.write("Cambio: " + coche.getCambio());
+                writer.write("Cambio: " + coche.getCambio().getValorDb());
                 writer.newLine();
                 writer.write("Color: " + coche.getColor());
                 writer.newLine();
                 writer.write("Precio: " + coche.getPrecio());
                 writer.newLine();
-                writer.write("Estado: " + coche.getEstado());
+                writer.write("Estado: " + coche.getEstado().getValorDb());
                 writer.newLine();
                 writer.write("----------------------------------");
                 writer.newLine();

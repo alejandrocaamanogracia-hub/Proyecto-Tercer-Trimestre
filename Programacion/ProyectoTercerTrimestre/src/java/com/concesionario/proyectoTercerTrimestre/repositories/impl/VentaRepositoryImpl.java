@@ -3,6 +3,7 @@ package com.concesionario.proyectoTercerTrimestre.repositories.impl;
 import com.concesionario.proyectoTercerTrimestre.database.DataBaseConnection;
 import com.concesionario.proyectoTercerTrimestre.entities.Venta;
 import com.concesionario.proyectoTercerTrimestre.repositories.VentaRepository;
+import com.concesionario.proyectoTercerTrimestre.entities.EstadoVenta;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -26,7 +27,7 @@ public class VentaRepositoryImpl implements VentaRepository {
             preparedStatement.setInt(1, venta.getClienteId());
             preparedStatement.setInt(2, venta.getUsuarioId());
             preparedStatement.setDate(3, Date.valueOf(venta.getFecha()));
-            preparedStatement.setString(4, venta.getEstado());
+            preparedStatement.setString(4, venta.getEstado().getValorDb());
             preparedStatement.setDouble(5, venta.getTotal());
 
             preparedStatement.executeUpdate();
@@ -79,7 +80,7 @@ public class VentaRepositoryImpl implements VentaRepository {
                     venta.setFecha(fecha.toLocalDate());
                 }
 
-                venta.setEstado(resultSet.getString("estado"));
+                venta.setEstado(EstadoVenta.fromDb(resultSet.getString("estado")));
                 venta.setTotal(resultSet.getDouble("total"));
 
                 ventas.add(venta);

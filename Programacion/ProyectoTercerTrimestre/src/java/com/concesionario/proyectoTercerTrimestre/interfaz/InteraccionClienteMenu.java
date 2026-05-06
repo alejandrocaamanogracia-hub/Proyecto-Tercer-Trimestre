@@ -2,6 +2,7 @@ package com.concesionario.proyectoTercerTrimestre.interfaz;
 
 import com.concesionario.proyectoTercerTrimestre.controller.InteraccionClienteController;
 import com.concesionario.proyectoTercerTrimestre.entities.InteraccionCliente;
+import com.concesionario.proyectoTercerTrimestre.entities.TipoInteraccion;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -67,8 +68,7 @@ public class InteraccionClienteMenu {
         System.out.print("ID Usuario: ");
         int usuarioId = Integer.parseInt(scanner.nextLine());
 
-        System.out.print("Tipo (Llamada, Email, WhatsApp, Reunion, Visita, Otro): ");
-        String tipo = scanner.nextLine();
+        TipoInteraccion tipo = seleccionarTipoInteraccion();
 
         LocalDateTime fecha = LocalDateTime.now();
 
@@ -104,6 +104,37 @@ public class InteraccionClienteMenu {
                 proximaAccion,
                 fechaProxima
         );
+    }
+
+    private TipoInteraccion seleccionarTipoInteraccion() {
+        System.out.println("Tipo de interaccion:");
+        System.out.println("1. Llamada");
+        System.out.println("2. Email");
+        System.out.println("3. WhatsApp");
+        System.out.println("4. Reunion");
+        System.out.println("5. Visita");
+        System.out.println("6. Otro");
+        System.out.print("Elige una opcion: ");
+
+        int opcion = Integer.parseInt(scanner.nextLine());
+
+        switch (opcion) {
+            case 1:
+                return TipoInteraccion.LLAMADA;
+            case 2:
+                return TipoInteraccion.EMAIL;
+            case 3:
+                return TipoInteraccion.WHATSAPP;
+            case 4:
+                return TipoInteraccion.REUNION;
+            case 5:
+                return TipoInteraccion.VISITA;
+            case 6:
+                return TipoInteraccion.OTRO;
+            default:
+                System.out.println("Opcion no valida. Se asigna Llamada por defecto.");
+                return TipoInteraccion.LLAMADA;
+        }
     }
 
     private void eliminarInteraccionCliente() {

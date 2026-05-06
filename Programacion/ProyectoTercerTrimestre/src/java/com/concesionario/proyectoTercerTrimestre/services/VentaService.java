@@ -38,7 +38,7 @@ public class VentaService {
             return;
         }
 
-        if (venta.getEstado() == null || venta.getEstado().isBlank()) {
+        if (venta.getEstado() == null) {
             System.out.println("El estado de la venta es obligatorio.");
             return;
         }
@@ -89,7 +89,7 @@ public class VentaService {
                 writer.newLine();
                 writer.write("Fecha: " + venta.getFecha());
                 writer.newLine();
-                writer.write("Estado: " + venta.getEstado());
+                writer.write("Estado: " + venta.getEstado().getValorDb());
                 writer.newLine();
                 writer.write("Total: " + venta.getTotal());
                 writer.newLine();

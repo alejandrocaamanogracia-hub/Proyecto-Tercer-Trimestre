@@ -1,6 +1,7 @@
 package com.concesionario.proyectoTercerTrimestre.controller;
 
 import com.concesionario.proyectoTercerTrimestre.entities.InteraccionCliente;
+import com.concesionario.proyectoTercerTrimestre.entities.TipoInteraccion;
 import com.concesionario.proyectoTercerTrimestre.services.InteraccionClienteService;
 
 import java.time.LocalDateTime;
@@ -14,7 +15,7 @@ public class InteraccionClienteController {
         this.interaccionClienteService = new InteraccionClienteService();
     }
 
-    public void crearInteraccionCliente(int clienteId, int usuarioId, String tipo,
+    public void crearInteraccionCliente(int clienteId, int usuarioId, TipoInteraccion tipo,
                                         LocalDateTime fecha, String asunto,
                                         String descripcion, String resultado,
                                         String proximaAccion, LocalDateTime fechaProxima) {

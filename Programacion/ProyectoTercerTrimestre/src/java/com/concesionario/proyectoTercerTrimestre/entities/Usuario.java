@@ -5,20 +5,21 @@ public class Usuario {
     private int id;
     private String nombre;
     private String email;
-    private String rol;
+    private RolUsuario rol;
     private String passwordHash;
 
     public Usuario() {
     }
 
-    public Usuario(String nombre, String email, String rol, String passwordHash) {
+
+    public Usuario(String nombre, String email, RolUsuario rol, String passwordHash) {
         this.nombre = nombre;
         this.email = email;
         this.rol = rol;
         this.passwordHash = passwordHash;
     }
 
-    public Usuario(int id, String nombre, String email, String rol, String passwordHash) {
+    public Usuario(int id, String nombre, String email, RolUsuario rol, String passwordHash) {
         this.id = id;
         this.nombre = nombre;
         this.email = email;
@@ -53,11 +54,11 @@ public class Usuario {
     }
 
 
-    public String getRol() {
+    public RolUsuario getRol() {
         return rol;
     }
 
-    public void setRol(String rol) {
+    public void setRol(RolUsuario rol) {
         this.rol = rol;
     }
 
@@ -77,7 +78,7 @@ public class Usuario {
                 "id=" + id +
                 ", nombre='" + nombre + '\'' +
                 ", email='" + email + '\'' +
-                ", rol='" + rol + '\'' +
+                ", rol=" + rol +
                 ", passwordHash='" + passwordHash + '\'' +
                 '}';
     }
