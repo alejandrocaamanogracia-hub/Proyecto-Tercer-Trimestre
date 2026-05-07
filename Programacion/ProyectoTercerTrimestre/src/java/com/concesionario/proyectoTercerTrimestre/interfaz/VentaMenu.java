@@ -40,7 +40,7 @@ public class VentaMenu {
             System.out.println("0. Volver");
             System.out.print("Elige una opcion: ");
 
-            opcion = Integer.parseInt(scanner.nextLine());
+            opcion = ComprobacionOpcion.leerInt();
 
             switch (opcion) {
                 case 1:
@@ -73,10 +73,10 @@ public class VentaMenu {
         System.out.println("\n--- Crear venta ---");
 
         System.out.print("ID Cliente: ");
-        int clienteId = Integer.parseInt(scanner.nextLine());
+        int clienteId = ComprobacionOpcion.leerInt();
 
         System.out.print("ID Usuario: ");
-        int usuarioId = Integer.parseInt(scanner.nextLine());
+        int usuarioId = ComprobacionOpcion.leerInt();
 
         System.out.print("Fecha venta (yyyy-MM-dd), vacio para hoy: ");
         String fechaTexto = scanner.nextLine();
@@ -92,7 +92,7 @@ public class VentaMenu {
         EstadoVenta estado = seleccionarEstadoVenta();
 
         System.out.print("Total: ");
-        double total = Double.parseDouble(scanner.nextLine());
+        double total = ComprobacionOpcion.leerDouble();
 
         ventaController.crearVenta(clienteId, usuarioId, fecha, estado, total);
     }
@@ -105,7 +105,7 @@ public class VentaMenu {
         System.out.println("4. Cancelada");
         System.out.print("Elige una opcion: ");
 
-        int opcion = Integer.parseInt(scanner.nextLine());
+        int opcion = ComprobacionOpcion.leerOpcion(1, 4);
 
         switch (opcion) {
             case 1:
@@ -126,7 +126,7 @@ public class VentaMenu {
         System.out.println("\n--- Eliminar venta ---");
 
         System.out.print("Introduce el ID de la venta: ");
-        int id = Integer.parseInt(scanner.nextLine());
+        int id = ComprobacionOpcion.leerInt();
 
         ventaController.eliminarVenta(id);
     }

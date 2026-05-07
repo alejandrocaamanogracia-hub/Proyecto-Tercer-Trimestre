@@ -33,7 +33,7 @@ public class CocheMenu {
             System.out.println("0. Volver");
             System.out.print("Elige una opcion: ");
 
-            opcion = Integer.parseInt(scanner.nextLine());
+            opcion = ComprobacionOpcion.leerInt();
 
             switch (opcion) {
                 case 1:
@@ -80,10 +80,10 @@ public class CocheMenu {
         String bastidor = scanner.nextLine();
 
         System.out.print("Anio: ");
-        int anio = Integer.parseInt(scanner.nextLine());
+        int anio = ComprobacionOpcion.leerInt();
 
         System.out.print("Kilometros: ");
-        int kilometros = Integer.parseInt(scanner.nextLine());
+        int kilometros = ComprobacionOpcion.leerInt();
 
         Combustible combustible = seleccionarCombustible();
 
@@ -93,7 +93,7 @@ public class CocheMenu {
         String color = scanner.nextLine();
 
         System.out.print("Precio: ");
-        double precio = Double.parseDouble(scanner.nextLine());
+        double precio = ComprobacionOpcion.leerDouble();
 
         EstadoCoche estado = seleccionarEstadoCoche();
 
@@ -122,7 +122,7 @@ public class CocheMenu {
         System.out.println("5. GLP");
         System.out.print("Elige una opcion: ");
 
-        int opcion = Integer.parseInt(scanner.nextLine());
+        int opcion = ComprobacionOpcion.leerOpcion(1, 5);
 
         switch (opcion) {
             case 1:
@@ -147,7 +147,7 @@ public class CocheMenu {
         System.out.println("2. Automatico");
         System.out.print("Elige una opcion: ");
 
-        int opcion = Integer.parseInt(scanner.nextLine());
+        int opcion = ComprobacionOpcion.leerOpcion(1, 2);
 
         switch (opcion) {
             case 1:
@@ -167,7 +167,7 @@ public class CocheMenu {
         System.out.println("3. Vendido");
         System.out.print("Elige una opcion: ");
 
-        int opcion = Integer.parseInt(scanner.nextLine());
+        int opcion = ComprobacionOpcion.leerOpcion(1, 3);
 
         switch (opcion) {
             case 1:
@@ -186,7 +186,7 @@ public class CocheMenu {
         System.out.println("\n--- Eliminar coche ---");
 
         System.out.print("Introduce el ID del coche: ");
-        int id = Integer.parseInt(scanner.nextLine());
+        int id = ComprobacionOpcion.leerInt();
 
         cocheController.eliminarCoche(id);
     }

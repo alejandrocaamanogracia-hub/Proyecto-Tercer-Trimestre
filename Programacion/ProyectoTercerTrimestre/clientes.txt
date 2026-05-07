@@ -1,10 +1,10 @@
 ===== LISTADO DE CLIENTES =====
 
 ID: 1
-Nombre: Carlos Martínez
-Email: carlos.martinez@email.com
-Telefono: 600111222
-Direccion: Calle Mayor 12, Madrid
+Nombre: Sergio Rodriguez
+Email: sergio.rodriguez@email.com
+Telefono: 6000225414
+Direccion: Versalles
 ------------------------------
 ID: 2
 Nombre: Laura Sánchez

@@ -39,7 +39,7 @@ public class InteraccionClienteMenu {
             System.out.println("0. Volver");
             System.out.print("Elige una opcion: ");
 
-            opcion = Integer.parseInt(scanner.nextLine());
+            opcion = ComprobacionOpcion.leerInt();
 
             switch (opcion) {
                 case 1:
@@ -72,10 +72,10 @@ public class InteraccionClienteMenu {
         System.out.println("\n--- Crear interaccion con cliente ---");
 
         System.out.print("ID Cliente: ");
-        int clienteId = Integer.parseInt(scanner.nextLine());
+        int clienteId = ComprobacionOpcion.leerInt();
 
         System.out.print("ID Usuario: ");
-        int usuarioId = Integer.parseInt(scanner.nextLine());
+        int usuarioId = ComprobacionOpcion.leerInt();
 
         TipoInteraccion tipo = seleccionarTipoInteraccion();
 
@@ -125,7 +125,7 @@ public class InteraccionClienteMenu {
         System.out.println("6. Otro");
         System.out.print("Elige una opcion: ");
 
-        int opcion = Integer.parseInt(scanner.nextLine());
+        int opcion = ComprobacionOpcion.leerOpcion(1, 6);
 
         switch (opcion) {
             case 1:
@@ -150,7 +150,7 @@ public class InteraccionClienteMenu {
         System.out.println("\n--- Eliminar interaccion ---");
 
         System.out.print("Introduce el ID de la interaccion: ");
-        int id = Integer.parseInt(scanner.nextLine());
+        int id = ComprobacionOpcion.leerInt();
 
         interaccionClienteController.eliminarInteraccionCliente(id);
     }

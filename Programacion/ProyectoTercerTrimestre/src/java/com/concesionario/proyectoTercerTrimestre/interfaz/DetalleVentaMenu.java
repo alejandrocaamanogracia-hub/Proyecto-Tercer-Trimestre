@@ -35,7 +35,7 @@ public class DetalleVentaMenu {
             System.out.println("0. Volver");
             System.out.print("Elige una opcion: ");
 
-            opcion = Integer.parseInt(scanner.nextLine());
+            opcion = ComprobacionOpcion.leerInt();
 
             switch (opcion) {
                 case 1:
@@ -68,16 +68,16 @@ public class DetalleVentaMenu {
         System.out.println("\n--- Crear detalle de venta ---");
 
         System.out.print("ID Venta: ");
-        int ventaId = Integer.parseInt(scanner.nextLine());
+        int ventaId = ComprobacionOpcion.leerInt();
 
         System.out.print("ID Coche: ");
-        int cocheId = Integer.parseInt(scanner.nextLine());
+        int cocheId = ComprobacionOpcion.leerInt();
 
         System.out.print("Cantidad: ");
-        int cantidad = Integer.parseInt(scanner.nextLine());
+        int cantidad = ComprobacionOpcion.leerInt();
 
         System.out.print("Precio unitario: ");
-        double precioUnitario = Double.parseDouble(scanner.nextLine());
+        double precioUnitario = ComprobacionOpcion.leerDouble();
 
         detalleVentaController.crearDetalleVenta(ventaId, cocheId, cantidad, precioUnitario);
     }

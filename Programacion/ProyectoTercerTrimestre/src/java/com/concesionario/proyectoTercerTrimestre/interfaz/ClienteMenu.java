@@ -30,7 +30,7 @@ public class ClienteMenu {
             System.out.println("0. Volver");
             System.out.print("Elige una opcion: ");
 
-            opcion = Integer.parseInt(scanner.nextLine());
+            opcion = ComprobacionOpcion.leerInt();;
 
             switch (opcion) {
                 case 1:
@@ -81,7 +81,7 @@ public class ClienteMenu {
         System.out.println("\n--- Eliminar cliente ---");
 
         System.out.print("Introduce el ID del cliente: ");
-        int id = Integer.parseInt(scanner.nextLine());
+        int id = ComprobacionOpcion.leerInt();
 
         clienteController.eliminarCliente(id);
     }
