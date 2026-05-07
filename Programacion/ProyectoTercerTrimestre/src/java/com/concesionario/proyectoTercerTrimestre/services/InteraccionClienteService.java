@@ -139,4 +139,22 @@ public class InteraccionClienteService {
 
     }
 
+    public InteraccionCliente buscarInteraccionCliente(int id) {
+
+        if (id <= 0) {
+            System.out.println("El ID de la interaccion no es valido.");
+            return null;
+        }
+
+        InteraccionCliente interaccionCliente = interaccionClienteRepository.bucarInteraccionCliente(id);
+
+        if (interaccionCliente == null) {
+            System.out.println("No existe el interaccion cliente con el id " + id);
+            return null;
+        }
+
+        return interaccionCliente;
+
+    }
+
 }

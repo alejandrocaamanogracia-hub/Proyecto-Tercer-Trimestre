@@ -34,4 +34,8 @@ public class DetalleVentaController {
         detalleVentaService.modificarDetalleVenta(id, detalleVenta);
     }
 
+    public DetalleVenta buscarDetalleVenta(int id) {
+        return detalleVentaService.buscarDetalleVenta(id);
+    }
+
 }

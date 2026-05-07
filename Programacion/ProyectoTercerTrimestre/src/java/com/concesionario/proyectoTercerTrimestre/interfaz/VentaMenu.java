@@ -3,10 +3,7 @@ package com.concesionario.proyectoTercerTrimestre.interfaz;
 import com.concesionario.proyectoTercerTrimestre.controller.ClienteController;
 import com.concesionario.proyectoTercerTrimestre.controller.UsuarioController;
 import com.concesionario.proyectoTercerTrimestre.controller.VentaController;
-import com.concesionario.proyectoTercerTrimestre.entities.Cliente;
-import com.concesionario.proyectoTercerTrimestre.entities.Usuario;
-import com.concesionario.proyectoTercerTrimestre.entities.Venta;
-import com.concesionario.proyectoTercerTrimestre.entities.EstadoVenta;
+import com.concesionario.proyectoTercerTrimestre.entities.*;
 import com.concesionario.proyectoTercerTrimestre.utils.ComprobacionOpcion;
 
 import java.time.LocalDate;
@@ -37,6 +34,7 @@ public class VentaMenu {
             System.out.println("3. Listar ventas");
             System.out.println("4. Exportar ventas a TXT");
             System.out.println("5. Modificar venta");
+            System.out.println("6. Buscar venta");
             System.out.println("0. Volver");
             System.out.print("Elige una opcion: ");
 
@@ -57,6 +55,9 @@ public class VentaMenu {
                     break;
                 case 5:
                     modificarVenta();
+                    break;
+                case 6:
+                    buscarVentas();
                     break;
                 case 0:
                     System.out.println("Volviendo al menu principal...");
@@ -280,6 +281,31 @@ public class VentaMenu {
         }
 
         ventaController.modificarVenta(opcion, venta);
+
+    }
+
+    public void buscarVentas() {
+
+        List<Venta> ventas = ventaController.listarVentas();
+
+        if (ventas.isEmpty()) {
+            System.out.println("No hay ventas registradas.");
+            return;
+        }
+
+        System.out.println("Que venta quieres ver: ");
+
+        for (Venta venta : ventas) {
+            System.out.println(venta.getId());
+        }
+
+        Venta venta = ventaController.buscarVenta(ComprobacionOpcion.leerInt());
+
+        if (venta != null) {
+            System.out.println(venta.toString());
+        }else {
+            System.out.println("No existe un venta con ese id");
+        }
 
     }
 

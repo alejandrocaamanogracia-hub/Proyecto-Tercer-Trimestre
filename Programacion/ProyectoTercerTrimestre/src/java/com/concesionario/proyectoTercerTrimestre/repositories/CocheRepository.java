@@ -14,4 +14,6 @@ public interface CocheRepository {
 
     void modificarCoche(int id, Coche coche);
 
+    Coche buscarCoche(int id);
+
 }

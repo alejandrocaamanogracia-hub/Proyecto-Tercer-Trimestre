@@ -160,4 +160,33 @@ public class DetalleVentaRepositoryImpl implements DetalleVentaRepository {
 
     }
 
+    @Override
+    public DetalleVenta buscarDetalleVenta(int id){
+
+        DetalleVenta detalleVenta = new DetalleVenta();
+        String sql = "SELECT * FROM detalle_venta WHERE id = ?";
+
+        try (Connection connection = DataBaseConnection.getConnection()){
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                DetalleVenta detalleVenta1 = new DetalleVenta();
+                detalleVenta1.setId(resultSet.getInt("id"));
+                detalleVenta1.setVentaId(resultSet.getInt("venta_id"));
+                detalleVenta1.setCocheId(resultSet.getInt("coche_id"));
+                detalleVenta1.setCantidad(resultSet.getInt("cantidad"));
+                detalleVenta1.setPrecioUnitario(resultSet.getDouble("precio_unitario"));
+            }
+
+        }catch (SQLException e){
+            System.out.println("Error al verificar el detalle de venta.");
+            e.printStackTrace();
+        }
+
+        return detalleVenta;
+
+    }
+
 }

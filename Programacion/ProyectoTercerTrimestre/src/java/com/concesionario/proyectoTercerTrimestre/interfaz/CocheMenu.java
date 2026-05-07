@@ -1,10 +1,7 @@
 package com.concesionario.proyectoTercerTrimestre.interfaz;
 
 import com.concesionario.proyectoTercerTrimestre.controller.CocheController;
-import com.concesionario.proyectoTercerTrimestre.entities.Coche;
-import com.concesionario.proyectoTercerTrimestre.entities.Combustible;
-import com.concesionario.proyectoTercerTrimestre.entities.EstadoCoche;
-import com.concesionario.proyectoTercerTrimestre.entities.TipoCambio;
+import com.concesionario.proyectoTercerTrimestre.entities.*;
 import com.concesionario.proyectoTercerTrimestre.utils.ComprobacionOpcion;
 
 import java.util.List;
@@ -30,6 +27,7 @@ public class CocheMenu {
             System.out.println("3. Listar coches");
             System.out.println("4. Exportar coches a TXT");
             System.out.println("5. Modificar un coche");
+            System.out.println("6. Buscar un coche");
             System.out.println("0. Volver");
             System.out.print("Elige una opcion: ");
 
@@ -50,6 +48,8 @@ public class CocheMenu {
                     break;
                 case 5:
                     modificarCoches();
+                case 6:
+                    buscarCoche();
                 case 0:
                     System.out.println("Volviendo al menu principal...");
                     break;
@@ -462,6 +462,31 @@ public class CocheMenu {
         }
 
         cocheController.modificarCoche(opcion, coche);
+
+    }
+
+    public void buscarCoche() {
+
+        List<Coche> coches = cocheController.listarCoches();
+
+        if (coches.isEmpty()) {
+            System.out.println("No hay coches registrados.");
+            return;
+        }
+
+        System.out.println("Que coche quieres ver: ");
+
+        for (Coche coche : coches) {
+            System.out.println(coche.getId() +  ". " + coche.getMatricula());
+        }
+
+        Coche coche = cocheController.buscarCoche(ComprobacionOpcion.leerInt());
+
+        if (coche != null) {
+            System.out.println(coche.toString());
+        }else  {
+            System.out.println("No existe el coche con ese id");
+        }
 
     }
 

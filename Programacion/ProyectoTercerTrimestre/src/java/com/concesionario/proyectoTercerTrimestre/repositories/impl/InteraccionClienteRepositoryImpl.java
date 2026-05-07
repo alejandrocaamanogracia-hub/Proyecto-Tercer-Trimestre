@@ -245,4 +245,47 @@ public class InteraccionClienteRepositoryImpl implements InteraccionClienteRepos
 
     }
 
+    @Override
+    public InteraccionCliente bucarInteraccionCliente(int id){
+
+        InteraccionCliente interaccionCliente = new InteraccionCliente();
+
+        String sql = "SELECT * FROM interacciones_cliente WHERE id = ?";
+
+        try (Connection connection = DataBaseConnection.getConnection()){
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                interaccionCliente.setId(resultSet.getInt("id"));
+                interaccionCliente.setClienteId(resultSet.getInt("cliente_id"));
+                interaccionCliente.setUsuarioId(resultSet.getInt("usuario_id"));
+                interaccionCliente.setTipo(TipoInteraccion.fromDb(resultSet.getString("tipo")));
+
+                Timestamp fecha = resultSet.getTimestamp("fecha");
+                if (fecha != null) {
+                    interaccionCliente.setFecha(fecha.toLocalDateTime());
+                }
+
+                interaccionCliente.setAsunto(resultSet.getString("asunto"));
+                interaccionCliente.setDescripcion(resultSet.getString("descripcion"));
+                interaccionCliente.setResultado(resultSet.getString("resultado"));
+                interaccionCliente.setProximaAccion(resultSet.getString("proxima_accion"));
+
+                Timestamp fechaProxima = resultSet.getTimestamp("fecha_proxima");
+                if (fechaProxima != null) {
+                    interaccionCliente.setFechaProxima(fechaProxima.toLocalDateTime());
+                }
+            }
+
+        }catch (SQLException e){
+            System.out.println("Error al buscar la interaccion con cliente.");
+            e.printStackTrace();
+        }
+
+        return  interaccionCliente;
+
+    }
+
 }

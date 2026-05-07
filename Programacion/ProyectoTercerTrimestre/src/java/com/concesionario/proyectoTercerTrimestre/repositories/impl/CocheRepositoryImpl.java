@@ -254,4 +254,41 @@ public class CocheRepositoryImpl implements CocheRepository {
 
     }
 
+    @Override
+    public Coche buscarCoche(int id){
+
+        Coche coche = new Coche();
+
+        String sql =  "SELECT * FROM coches WHERE id = ?";
+
+        try (Connection connection = DataBaseConnection.getConnection()){
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                coche.setId(resultSet.getInt("id"));
+                coche.setMarca(resultSet.getString("marca"));
+                coche.setModelo(resultSet.getString("modelo"));
+                coche.setVersion(resultSet.getString("version"));
+                coche.setMatricula(resultSet.getString("matricula"));
+                coche.setBastidor(resultSet.getString("bastidor"));
+                coche.setAnio(resultSet.getInt("anio"));
+                coche.setKilometros(resultSet.getInt("kilometros"));
+                coche.setCombustible(Combustible.fromDb(resultSet.getString("combustible")));
+                coche.setCambio(TipoCambio.fromDb(resultSet.getString("cambio")));
+                coche.setColor(resultSet.getString("color"));
+                coche.setPrecio(resultSet.getDouble("precio"));
+                coche.setEstado(EstadoCoche.fromDb(resultSet.getString("estado")));
+            }
+
+        }catch (SQLException e){
+            System.out.println("Error al verificar el coche.");
+            e.printStackTrace();
+        }
+
+        return coche;
+
+    }
+
 }

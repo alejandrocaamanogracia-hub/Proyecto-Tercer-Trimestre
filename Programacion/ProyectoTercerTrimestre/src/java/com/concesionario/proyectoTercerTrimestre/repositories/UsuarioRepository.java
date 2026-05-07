@@ -14,4 +14,6 @@ public interface UsuarioRepository {
 
     void modificarUsuario(int id, Usuario usuario);
 
+    Usuario buscarUsuario(int id);
+
 }

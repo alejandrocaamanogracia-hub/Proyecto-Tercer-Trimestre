@@ -3,10 +3,7 @@ package com.concesionario.proyectoTercerTrimestre.interfaz;
 import com.concesionario.proyectoTercerTrimestre.controller.CocheController;
 import com.concesionario.proyectoTercerTrimestre.controller.DetalleVentaController;
 import com.concesionario.proyectoTercerTrimestre.controller.VentaController;
-import com.concesionario.proyectoTercerTrimestre.entities.Coche;
-import com.concesionario.proyectoTercerTrimestre.entities.DetalleVenta;
-import com.concesionario.proyectoTercerTrimestre.entities.Usuario;
-import com.concesionario.proyectoTercerTrimestre.entities.Venta;
+import com.concesionario.proyectoTercerTrimestre.entities.*;
 import com.concesionario.proyectoTercerTrimestre.utils.ComprobacionOpcion;
 
 import java.util.List;
@@ -32,6 +29,7 @@ public class DetalleVentaMenu {
             System.out.println("3. Listar detalles de venta");
             System.out.println("4. Exportar detalles de venta a TXT");
             System.out.println("5. Modificar detalle de venta");
+            System.out.println("6. Buscar detalle de venta");
             System.out.println("0. Volver");
             System.out.print("Elige una opcion: ");
 
@@ -52,6 +50,9 @@ public class DetalleVentaMenu {
                     break;
                 case 5:
                     modificarDetalleVenta();
+                    break;
+                case 6:
+                    buscarDetalleVenta();
                     break;
                 case 0:
                     System.out.println("Volviendo al menu principal...");
@@ -209,6 +210,31 @@ public class DetalleVentaMenu {
         }
 
         detalleVentaController.modificarDetalleVenta(opcion, detalleVenta);
+
+    }
+
+    public void buscarDetalleVenta() {
+
+        List<DetalleVenta> detalleVentas = detalleVentaController.listarDetallesVenta();
+
+        if (detalleVentas.isEmpty()) {
+            System.out.println("No hay detalles venta registrados.");
+            return;
+        }
+
+        System.out.println("Que detalles venta quieres ver: ");
+
+        for (DetalleVenta detalleVenta : detalleVentas) {
+            System.out.println(detalleVenta.getId());
+        }
+
+        DetalleVenta detalleVenta1 = detalleVentaController.buscarDetalleVenta(ComprobacionOpcion.leerInt());
+
+        if (detalleVenta1 == null) {
+            System.out.println("No existe el coche con ese id");
+        }else {
+            System.out.println(detalleVenta1.toString());
+        }
 
     }
 

@@ -169,4 +169,22 @@ public class CocheService {
 
     }
 
+    public Coche buscarCoche(int id){
+
+        if (id <= 0) {
+            System.out.println("El ID del coche no es valido.");
+            return null;
+        }
+
+        Coche coche = cocheRepository.buscarCoche(id);
+
+        if (coche == null){
+            System.out.println("Coche no encontrado.");
+            return null;
+        }
+
+        return coche;
+
+    }
+
 }

@@ -37,4 +37,8 @@ public class VentaController {
         ventaService.modificarVenta(id, venta);
     }
 
+    public Venta buscarVenta(int id) {
+        return ventaService.buscarVenta(id);
+    }
+
 }

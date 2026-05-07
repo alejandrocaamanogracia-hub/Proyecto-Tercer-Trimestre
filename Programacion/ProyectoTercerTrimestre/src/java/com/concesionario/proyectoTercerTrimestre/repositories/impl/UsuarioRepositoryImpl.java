@@ -142,4 +142,32 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
 
     }
 
+    @Override
+    public Usuario buscarUsuario(int id) {
+
+        Usuario usuario = new Usuario();
+        String sql = "SELECT * FROM usuarios WHERE id = ?";
+
+        try (Connection connection = DataBaseConnection.getConnection()){
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                usuario.setId(resultSet.getInt("id"));
+                usuario.setNombre(resultSet.getString("nombre"));
+                usuario.setEmail(resultSet.getString("email"));
+                usuario.setRol(RolUsuario.fromDb(resultSet.getString("rol")));
+                usuario.setPasswordHash(resultSet.getString("password_hash"));
+            }
+
+        }catch (SQLException e){
+            System.out.println("Error al buscar el usuario.");
+            e.printStackTrace();
+        }
+
+        return usuario;
+
+    }
+
 }

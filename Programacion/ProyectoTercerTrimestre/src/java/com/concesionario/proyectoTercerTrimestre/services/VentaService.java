@@ -130,4 +130,22 @@ public class VentaService {
 
     }
 
+    public Venta buscarVenta(int id){
+
+        if (id <= 0) {
+            System.out.println("El ID del cliente no es valido.");
+            return null;
+        }
+
+        Venta venta = ventaRepository.buscarVenta(id);
+
+        if (venta == null) {
+            System.out.println("No existe el venta con el ID del cliente.");
+            return null;
+        }
+
+        return venta;
+
+    }
+
 }

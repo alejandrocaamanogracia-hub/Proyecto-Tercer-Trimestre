@@ -36,4 +36,8 @@ public class ClienteController {
 
     }
 
+    public Cliente buscarCliente(int id) {
+        return clienteService.buscarCliente(id);
+    }
+
 }

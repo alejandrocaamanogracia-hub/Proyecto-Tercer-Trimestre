@@ -56,4 +56,8 @@ public class CocheController {
         cocheService.modificarCoche(id, coche);
 
     }
+
+    public Coche buscarCoche(int id){
+        return cocheService.buscarCoche(id);
+    }
 }

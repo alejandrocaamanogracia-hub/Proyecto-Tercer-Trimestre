@@ -118,4 +118,21 @@ public class DetalleVentaService {
         detalleVentaRepository.modificarDetalleVenta(id, detalleVenta);
     }
 
+    public DetalleVenta buscarDetalleVenta(int id) {
+
+        if (id <= 0) {
+            System.out.println("El ID del detalle de venta no es valido.");
+        }
+
+        DetalleVenta detalleVenta = detalleVentaRepository.buscarDetalleVenta(id);
+
+        if (detalleVenta == null){
+            System.out.println("Detalle de venta no encontrado.");
+            return null;
+        }
+
+        return detalleVenta;
+
+    }
+
 }

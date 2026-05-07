@@ -13,4 +13,6 @@ public interface ClienteRepository {
     List<Cliente> listarClientes();
 
     void modificarCliente(int id, Cliente cliente);
+
+    Cliente buscarCliente(int id);
 }

@@ -1,6 +1,7 @@
 package com.concesionario.proyectoTercerTrimestre.interfaz;
 
 import com.concesionario.proyectoTercerTrimestre.controller.UsuarioController;
+import com.concesionario.proyectoTercerTrimestre.entities.DetalleVenta;
 import com.concesionario.proyectoTercerTrimestre.entities.EstadoCoche;
 import com.concesionario.proyectoTercerTrimestre.entities.Usuario;
 import com.concesionario.proyectoTercerTrimestre.entities.RolUsuario;
@@ -29,6 +30,7 @@ public class UsuarioMenu {
             System.out.println("3. Listar usuarios");
             System.out.println("4. Exportar usuarios a TXT");
             System.out.println("5. Modificar usuario");
+            System.out.println("6. Buscar usuario");
             System.out.println("0. Volver");
             System.out.print("Elige una opcion: ");
 
@@ -49,6 +51,9 @@ public class UsuarioMenu {
                     break;
                 case 5:
                     modificarUsuario();
+                    break;
+                case 6:
+                    buscarUsuario();
                     break;
                 case 0:
                     System.out.println("Volviendo al menu principal...");
@@ -241,6 +246,31 @@ public class UsuarioMenu {
         }
 
         usuarioController.modificarUsuario(opcion, usuario);
+
+    }
+
+    public void buscarUsuario() {
+
+        List<Usuario> usuarios = usuarioController.listarUsuarios();
+
+        if (usuarios.isEmpty()) {
+            System.out.println("No hay usuarios registrados.");
+            return;
+        }
+
+        System.out.println("Que usuario venta quieres ver: ");
+
+        for (Usuario usuario : usuarios) {
+            System.out.println(usuario.getId());
+        }
+
+        Usuario usuario = usuarioController.buscarUsuario(ComprobacionOpcion.leerInt());
+
+        if (usuario != null) {
+            System.out.println(usuario.toString());
+        }else {
+            System.out.println("No existe un usuario con ese id");
+        }
 
     }
 

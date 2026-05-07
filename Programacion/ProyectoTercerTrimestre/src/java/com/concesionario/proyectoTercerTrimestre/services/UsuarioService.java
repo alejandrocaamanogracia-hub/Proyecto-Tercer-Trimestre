@@ -124,4 +124,22 @@ public class UsuarioService {
 
     }
 
+    public Usuario buscarUsuario(int id){
+
+        if (id <= 0) {
+            System.out.println("El ID del usuario no es valido.");
+            return null;
+        }
+
+        Usuario usuario = usuarioRepository.buscarUsuario(id);
+
+        if (usuario == null){
+            System.out.println("Usuario no encontrado");
+            return null;
+        }
+
+        return usuario;
+
+    }
+
 }

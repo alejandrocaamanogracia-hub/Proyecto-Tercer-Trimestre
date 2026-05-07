@@ -14,4 +14,6 @@ public interface VentaRepository {
 
     void modificarVenta(int id, Venta venta);
 
+    Venta buscarVenta(int id);
+
 }

@@ -27,6 +27,7 @@ public class ClienteMenu {
             System.out.println("3. Listar clientes");
             System.out.println("4. Exportar clientes a TXT");
             System.out.println("5. Modificar un cliente");
+            System.out.println("6. Buscar un cliente");
             System.out.println("0. Volver");
             System.out.print("Elige una opcion: ");
 
@@ -47,6 +48,9 @@ public class ClienteMenu {
                     break;
                 case 5:
                     modificarCliente();
+                    break;
+                case 6:
+                    buscarCliente();
                     break;
                 case 0:
                     System.out.println("Volviendo al menu principal...");
@@ -191,6 +195,31 @@ public class ClienteMenu {
         }
 
         clienteController.modificarCliente(opcion, cliente);
+
+    }
+
+    public void buscarCliente() {
+
+        List<Cliente> clientes = clienteController.listarClientes();
+
+        if (clientes.isEmpty()) {
+            System.out.println("No hay clientes registrados.");
+            return;
+        }
+
+        System.out.println("Que cliente quieres ver: ");
+
+        for (Cliente cliente : clientes) {
+            System.out.println(cliente.getId() +  ". " + cliente.getNombre());
+        }
+
+        Cliente cliente = clienteController.buscarCliente(ComprobacionOpcion.leerInt());
+
+        if (cliente != null) {
+            System.out.println(cliente.toString());
+        }else  {
+            System.out.println("No existe el cliente con ese nombre.");
+        }
 
     }
 

@@ -14,4 +14,6 @@ public interface InteraccionClienteRepository {
 
     void modificarInteraccionCliente(int id, InteraccionCliente interaccionCliente);
 
+    InteraccionCliente bucarInteraccionCliente(int id);
+
 }

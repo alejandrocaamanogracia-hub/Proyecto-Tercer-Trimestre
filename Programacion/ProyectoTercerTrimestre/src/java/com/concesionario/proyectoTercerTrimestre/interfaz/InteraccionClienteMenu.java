@@ -36,6 +36,7 @@ public class InteraccionClienteMenu {
             System.out.println("3. Listar interacciones");
             System.out.println("4. Exportar interacciones a TXT");
             System.out.println("5. Modificar interaccion");
+            System.out.println("6. Buscar interaccion");
             System.out.println("0. Volver");
             System.out.print("Elige una opcion: ");
 
@@ -56,6 +57,9 @@ public class InteraccionClienteMenu {
                     break;
                 case 5:
                     modificarInteraccion();
+                    break;
+                case 6:
+                    buscarInteraccionCliente();
                     break;
                 case 0:
                     System.out.println("Volviendo al menu principal...");
@@ -339,6 +343,31 @@ public class InteraccionClienteMenu {
         }
 
         interaccionClienteController.modificarInteraccionCliente(opcion,  interaccionCliente);
+
+    }
+
+    public void buscarInteraccionCliente() {
+
+        List<InteraccionCliente> interaccionClientes = interaccionClienteController.listarInteraccionesCliente();
+
+        if (interaccionClientes.isEmpty()) {
+            System.out.println("No hay interacciones registradas.");
+            return;
+        }
+
+        System.out.println("Que interaccion quieres ver: ");
+
+        for (InteraccionCliente interaccionCliente : interaccionClientes) {
+            System.out.println(interaccionCliente.getId());
+        }
+
+        InteraccionCliente interaccionCliente = interaccionClienteController.buscarInteraccionCliente(ComprobacionOpcion.leerInt());
+
+        if (interaccionCliente == null){
+            System.out.println("No existe el interaccion con ese id");
+        }else{
+            System.out.println(interaccionCliente.toString());
+        }
 
     }
 

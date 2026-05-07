@@ -14,4 +14,6 @@ public interface DetalleVentaRepository {
 
     void modificarDetalleVenta(int id, DetalleVenta detalleVenta);
 
+    DetalleVenta buscarDetalleVenta(int id);
+
 }

@@ -175,4 +175,37 @@ public class VentaRepositoryImpl implements VentaRepository {
         }
     }
 
+    public Venta buscarVenta(int id){
+
+        Venta venta = new Venta();
+        String sql = "SELECT * FROM ventas WHERE id = ?";
+
+        try (Connection connection = DataBaseConnection.getConnection()){
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                venta.setId(resultSet.getInt("id"));
+                venta.setClienteId(resultSet.getInt("cliente_id"));
+                venta.setUsuarioId(resultSet.getInt("usuario_id"));
+
+                Date fecha = resultSet.getDate("fecha");
+                if (fecha != null) {
+                    venta.setFecha(fecha.toLocalDate());
+                }
+
+                venta.setEstado(EstadoVenta.fromDb(resultSet.getString("estado")));
+                venta.setTotal(resultSet.getDouble("total"));
+            }
+
+        }catch (SQLException e){
+            System.out.println("Error al buscar la venta.");
+            e.printStackTrace();
+        }
+
+        return venta;
+
+    }
+
 }

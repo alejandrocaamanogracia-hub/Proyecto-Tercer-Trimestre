@@ -120,4 +120,21 @@ public class ClienteService {
 
     }
 
+    public Cliente buscarCliente(int id) {
+
+        if (id <= 0) {
+            System.out.println("El ID del cliente no es válido.");
+            return null;
+        }
+
+        Cliente cliente = clienteRepository.buscarCliente(id);
+
+        if (cliente == null) {
+            System.out.println("No existe un cliente con ese ID.");
+        }
+
+        return cliente;
+
+    }
+
 }
