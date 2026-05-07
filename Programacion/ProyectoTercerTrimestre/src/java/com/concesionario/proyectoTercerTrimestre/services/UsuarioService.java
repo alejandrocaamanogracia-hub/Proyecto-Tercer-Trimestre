@@ -97,4 +97,49 @@ public class UsuarioService {
             e.printStackTrace();
         }
     }
+
+    public void modificarUsuario(int id, Usuario usuario){
+
+        if (id <= 0 || id > usuarioRepository.listarUsuarios().size()) {
+            System.out.println("El ID del usuario no es valido.");
+            return;
+        }
+
+        if (usuario.getNombre() != null && usuario.getNombre().isBlank()) {
+            System.out.println("El nombre no puede estar en blanco");
+            return;
+        }
+
+        if (usuario.getEmail() != null && usuario.getEmail().isBlank()) {
+            System.out.println("El email no puede estar en blanco");
+            return;
+        }
+
+        if (usuario.getPasswordHash() != null && usuario.getPasswordHash().isBlank()) {
+            System.out.println("La contraseña no puede estar en blanco");
+            return;
+        }
+
+        usuarioRepository.modificarUsuario(id, usuario);
+
+    }
+
+    public Usuario buscarUsuario(int id){
+
+        if (id <= 0) {
+            System.out.println("El ID del usuario no es valido.");
+            return null;
+        }
+
+        Usuario usuario = usuarioRepository.buscarUsuario(id);
+
+        if (usuario == null){
+            System.out.println("Usuario no encontrado");
+            return null;
+        }
+
+        return usuario;
+
+    }
+
 }

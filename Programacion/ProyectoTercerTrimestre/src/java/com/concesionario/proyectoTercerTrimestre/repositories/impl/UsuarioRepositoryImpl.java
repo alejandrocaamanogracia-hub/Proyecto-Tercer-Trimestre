@@ -85,4 +85,92 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
 
         return usuarios;
     }
+<<<<<<< HEAD
+
+    @Override
+    public void modificarUsuario(int id, Usuario usuario){
+
+        String sql = "UPDATE usuarios SET nombre = ? WHERE id = ?";
+
+        try (Connection connection = DataBaseConnection.getConnection()){
+
+            if (usuario.getNombre() != null){
+
+                PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setString(1, usuario.getNombre());
+                preparedStatement.setInt(2, id);
+                preparedStatement.executeUpdate();
+
+            }
+
+            sql = "UPDATE usuarios SET email = ? WHERE id = ?";
+
+            if (usuario.getEmail() != null){
+
+                PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setString(1, usuario.getEmail());
+                preparedStatement.setInt(2, id);
+                preparedStatement.executeUpdate();
+
+            }
+
+            sql = "UPDATE usuarios SET password_hash = ? WHERE id = ?";
+
+            if (usuario.getPasswordHash() != null){
+
+                PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setString(1, usuario.getPasswordHash());
+                preparedStatement.setInt(2, id);
+                preparedStatement.executeUpdate();
+
+            }
+
+            sql = "UPDATE usuarios SET rol = ? WHERE id = ?";
+
+            if (usuario.getRol() != null){
+
+                PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setString(1, usuario.getRol().getValorDb());
+                preparedStatement.setInt(2, id);
+                preparedStatement.executeUpdate();
+
+            }
+
+        }catch (SQLException e){
+            System.out.println("Error al modificar el usuario.");
+            e.printStackTrace();
+        }
+
+    }
+
+    @Override
+    public Usuario buscarUsuario(int id) {
+
+        Usuario usuario = new Usuario();
+        String sql = "SELECT * FROM usuarios WHERE id = ?";
+
+        try (Connection connection = DataBaseConnection.getConnection()){
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                usuario.setId(resultSet.getInt("id"));
+                usuario.setNombre(resultSet.getString("nombre"));
+                usuario.setEmail(resultSet.getString("email"));
+                usuario.setRol(RolUsuario.fromDb(resultSet.getString("rol")));
+                usuario.setPasswordHash(resultSet.getString("password_hash"));
+            }
+
+        }catch (SQLException e){
+            System.out.println("Error al buscar el usuario.");
+            e.printStackTrace();
+        }
+
+        return usuario;
+
+    }
+
+=======
+>>>>>>> b40c4a9e5a9be5217f0a95a74284f60254651042
 }

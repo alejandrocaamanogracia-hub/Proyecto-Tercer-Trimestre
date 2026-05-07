@@ -4,7 +4,7 @@ public enum TipoInteraccion {
     LLAMADA("Llamada"),
     EMAIL("Email"),
     WHATSAPP("WhatsApp"),
-    REUNION("Reunion"),
+    REUNION("Reunión"),
     VISITA("Visita"),
     OTRO("Otro");
 

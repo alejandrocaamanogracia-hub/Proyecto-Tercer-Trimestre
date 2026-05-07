@@ -1,5 +1,7 @@
 package com.concesionario.proyectoTercerTrimestre.interfaz;
 
+import com.concesionario.proyectoTercerTrimestre.utils.ComprobacionOpcion;
+
 import java.util.Scanner;
 
 public class Menu {
@@ -36,7 +38,7 @@ public class Menu {
             System.out.println("0. Salir");
             System.out.print("Elige una opcion: ");
 
-            opcion = Integer.parseInt(scanner.nextLine());
+            opcion = ComprobacionOpcion.leerInt();
 
             switch (opcion) {
                 case 1:

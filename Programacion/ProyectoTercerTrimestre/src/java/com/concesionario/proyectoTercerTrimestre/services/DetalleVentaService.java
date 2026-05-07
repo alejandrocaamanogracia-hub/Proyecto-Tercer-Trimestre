@@ -97,4 +97,42 @@ public class DetalleVentaService {
             e.printStackTrace();
         }
     }
+
+    public void modificarDetalleVenta(int id, DetalleVenta detalleVenta) {
+
+        if (id <= 0 || id > detalleVentaRepository.listarDetallesVenta().size()) {
+            System.out.println("El ID del detalle de venta no es valido.");
+            return;
+        }
+
+        if (detalleVenta.getCantidad() < 0) {
+            System.out.println("La cantidad debe ser mayor que 0.");
+            return;
+        }
+
+        if (detalleVenta.getPrecioUnitario() < 0) {
+            System.out.println("El precio unitario no puede ser negativo.");
+            return;
+        }
+
+        detalleVentaRepository.modificarDetalleVenta(id, detalleVenta);
+    }
+
+    public DetalleVenta buscarDetalleVenta(int id) {
+
+        if (id <= 0) {
+            System.out.println("El ID del detalle de venta no es valido.");
+        }
+
+        DetalleVenta detalleVenta = detalleVentaRepository.buscarDetalleVenta(id);
+
+        if (detalleVenta == null){
+            System.out.println("Detalle de venta no encontrado.");
+            return null;
+        }
+
+        return detalleVenta;
+
+    }
+
 }

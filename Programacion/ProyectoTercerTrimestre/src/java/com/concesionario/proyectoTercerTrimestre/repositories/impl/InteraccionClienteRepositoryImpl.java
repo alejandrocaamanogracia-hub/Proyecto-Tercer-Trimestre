@@ -111,4 +111,184 @@ public class InteraccionClienteRepositoryImpl implements InteraccionClienteRepos
 
         return interacciones;
     }
+<<<<<<< HEAD
+
+    @Override
+    public void modificarInteraccionCliente(int id, InteraccionCliente interaccionCliente){
+
+        String sql = "UPDATE interacciones_cliente SET cliente_id = ? WHERE id = ?";
+        ResultSet resultSet = null;
+
+        try (Connection connection = DataBaseConnection.getConnection()){
+
+            if (interaccionCliente.getClienteId() != -1){
+
+                PreparedStatement preparedStatementComprobacion = connection.prepareStatement("SELECT * FROM usuarios WHERE id = ?");
+                preparedStatementComprobacion.setInt(1, interaccionCliente.getUsuarioId());
+                resultSet = preparedStatementComprobacion.executeQuery();
+
+                if (!resultSet.next()) {
+                    System.out.println("El id del usuario no es valido");
+                    return;
+                }else{
+                    PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                    preparedStatement.setInt(1, interaccionCliente.getClienteId());
+                    preparedStatement.setInt(2, id);
+                    preparedStatement.executeUpdate();
+                }
+
+            }
+
+            sql = "UPDATE interacciones_cliente SET usuario_id = ? WHERE id = ?";
+
+            if (interaccionCliente.getUsuarioId() != -1){
+
+                PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setInt(1, interaccionCliente.getUsuarioId());
+                preparedStatement.setInt(2, id);
+                preparedStatement.executeUpdate();
+
+            }
+
+            sql = "UPDATE interacciones_cliente SET tipo = ? WHERE id = ?";
+
+            if (interaccionCliente.getTipo() != null){
+
+                PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setString(1, interaccionCliente.getTipo().getValorDb());
+                preparedStatement.setInt(2, id);
+                preparedStatement.executeUpdate();
+
+            }
+
+            sql = "UPDATE interacciones_cliente SET fecha = ? WHERE id = ?";
+
+            if (interaccionCliente.getFecha() != null){
+
+                PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setTimestamp(1, Timestamp.valueOf(interaccionCliente.getFecha()));
+                preparedStatement.setInt(2, id);
+
+            }
+
+            sql = "UPDATE interacciones_cliente SET fecha_proxima = ? WHERE id = ?";
+
+            if (interaccionCliente.getFecha() != null){
+
+                PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setTimestamp(1, Timestamp.valueOf(interaccionCliente.getFechaProxima()));
+                preparedStatement.setInt(2, id);
+                preparedStatement.executeUpdate();
+
+            }
+
+            sql = "UPDATE interacciones_cliente SET asunto = ? WHERE id = ?";
+
+            if (interaccionCliente.getAsunto() != null){
+
+                PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setString(1, interaccionCliente.getAsunto());
+                preparedStatement.setInt(2, id);
+                preparedStatement.executeUpdate();
+
+            }
+
+            sql = "UPDATE interacciones_cliente SET descripcion = ? WHERE id = ?";
+
+            if (interaccionCliente.getDescripcion() != null){
+
+                PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setString(1, interaccionCliente.getDescripcion());
+                preparedStatement.setInt(2, id);
+                preparedStatement.executeUpdate();
+
+            }
+
+            sql = "UPDATE interacciones_cliente SET resultado = ? WHERE id = ?";
+
+            if (interaccionCliente.getResultado() != null){
+
+                PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setString(1, interaccionCliente.getResultado());
+                preparedStatement.setInt(2, id);
+                preparedStatement.executeUpdate();
+
+            }
+
+            sql = "UPDATE interacciones_cliente SET proxima_accion = ? WHERE id = ?";
+
+            if (interaccionCliente.getProximaAccion() != null){
+
+                PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setString(1, interaccionCliente.getProximaAccion());
+                preparedStatement.setInt(2, id);
+                preparedStatement.executeUpdate();
+
+            }
+
+            sql = "UPDATE interacciones_cliente SET fecha_proxima = ? WHERE id = ?";
+
+            if (interaccionCliente.getFechaProxima() != null) {
+
+                PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+                preparedStatement.setTimestamp(1, Timestamp.valueOf(interaccionCliente.getFechaProxima()));
+
+                preparedStatement.setInt(2, id);
+
+                preparedStatement.executeUpdate();
+            }
+
+        }catch (SQLException e){
+            System.out.println("Error al modificar la interaccion con cliente.");
+            e.printStackTrace();
+        }
+
+    }
+
+    @Override
+    public InteraccionCliente bucarInteraccionCliente(int id){
+
+        InteraccionCliente interaccionCliente = new InteraccionCliente();
+
+        String sql = "SELECT * FROM interacciones_cliente WHERE id = ?";
+
+        try (Connection connection = DataBaseConnection.getConnection()){
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                interaccionCliente.setId(resultSet.getInt("id"));
+                interaccionCliente.setClienteId(resultSet.getInt("cliente_id"));
+                interaccionCliente.setUsuarioId(resultSet.getInt("usuario_id"));
+                interaccionCliente.setTipo(TipoInteraccion.fromDb(resultSet.getString("tipo")));
+
+                Timestamp fecha = resultSet.getTimestamp("fecha");
+                if (fecha != null) {
+                    interaccionCliente.setFecha(fecha.toLocalDateTime());
+                }
+
+                interaccionCliente.setAsunto(resultSet.getString("asunto"));
+                interaccionCliente.setDescripcion(resultSet.getString("descripcion"));
+                interaccionCliente.setResultado(resultSet.getString("resultado"));
+                interaccionCliente.setProximaAccion(resultSet.getString("proxima_accion"));
+
+                Timestamp fechaProxima = resultSet.getTimestamp("fecha_proxima");
+                if (fechaProxima != null) {
+                    interaccionCliente.setFechaProxima(fechaProxima.toLocalDateTime());
+                }
+            }
+
+        }catch (SQLException e){
+            System.out.println("Error al buscar la interaccion con cliente.");
+            e.printStackTrace();
+        }
+
+        return  interaccionCliente;
+
+    }
+
+=======
+>>>>>>> b40c4a9e5a9be5217f0a95a74284f60254651042
 }

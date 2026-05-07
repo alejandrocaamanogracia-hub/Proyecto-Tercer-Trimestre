@@ -2,9 +2,9 @@ package com.concesionario.proyectoTercerTrimestre.entities;
 
 public enum Combustible {
     GASOLINA("Gasolina"),
-    DIESEL("Diesel"),
-    HIBRIDO("Hibrido"),
-    ELECTRICO("Electrico"),
+    DIESEL("Diésel"),
+    HIBRIDO("Híbrido"),
+    ELECTRICO("Eléctrico"),
     GLP("GLP");
 
     private final String valorDb;

@@ -2,7 +2,7 @@ package com.concesionario.proyectoTercerTrimestre.entities;
 
 public enum TipoCambio {
     MANUAL("Manual"),
-    AUTOMATICO("Automatico");
+    AUTOMATICO("Automático");
 
     private final String valorDb;
 

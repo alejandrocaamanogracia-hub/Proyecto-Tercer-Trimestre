@@ -29,4 +29,13 @@ public class DetalleVentaController {
     public void exportarDetallesVentaTxt() {
         detalleVentaService.exportarDetallesVentaTxt();
     }
+
+    public void modificarDetalleVenta(int id, DetalleVenta detalleVenta) {
+        detalleVentaService.modificarDetalleVenta(id, detalleVenta);
+    }
+
+    public DetalleVenta buscarDetalleVenta(int id) {
+        return detalleVentaService.buscarDetalleVenta(id);
+    }
+
 }

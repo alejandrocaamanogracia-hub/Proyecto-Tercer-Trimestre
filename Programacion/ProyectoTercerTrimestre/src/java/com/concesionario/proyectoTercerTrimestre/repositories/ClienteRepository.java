@@ -11,4 +11,8 @@ public interface ClienteRepository {
     void eliminarCliente(int id);
 
     List<Cliente> listarClientes();
+
+    void modificarCliente(int id, Cliente cliente);
+
+    Cliente buscarCliente(int id);
 }

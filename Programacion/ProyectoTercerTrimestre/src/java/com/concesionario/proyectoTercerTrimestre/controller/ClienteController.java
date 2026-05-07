@@ -29,4 +29,15 @@ public class ClienteController {
     public void exportarClientesTxt() {
         clienteService.exportarClientesTxt();
     }
+
+    public void modificarCliente(int id, Cliente cliente) {
+
+        clienteService.modificarCliente(id, cliente);
+
+    }
+
+    public Cliente buscarCliente(int id) {
+        return clienteService.buscarCliente(id);
+    }
+
 }

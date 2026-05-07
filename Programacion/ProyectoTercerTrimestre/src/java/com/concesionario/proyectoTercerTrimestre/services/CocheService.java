@@ -143,4 +143,48 @@ public class CocheService {
             e.printStackTrace();
         }
     }
+
+    public void modificarCoche(int id, Coche coche){
+
+        if (id <= 0 || id > cocheRepository.listarCoches().size()) {
+            System.out.println("El ID del coche no es valido.");
+            return;
+        }
+
+        if (coche.getAnio() < -1){
+            System.out.println("El anio del coche no puede ser negativo.");
+            return;
+        }
+
+        if (coche.getPrecio() < -1) {
+            System.out.println("El precio no puede ser negativo");
+            return;
+        }
+
+        if (coche.getKilometros() < -1){
+            System.out.println("Los kilometros no pueden ser negativos");
+        }
+
+        cocheRepository.modificarCoche(id, coche);
+
+    }
+
+    public Coche buscarCoche(int id){
+
+        if (id <= 0) {
+            System.out.println("El ID del coche no es valido.");
+            return null;
+        }
+
+        Coche coche = cocheRepository.buscarCoche(id);
+
+        if (coche == null){
+            System.out.println("Coche no encontrado.");
+            return null;
+        }
+
+        return coche;
+
+    }
+
 }

@@ -11,4 +11,9 @@ public interface UsuarioRepository {
     void eliminarUsuario(int id);
 
     List<Usuario> listarUsuarios();
+
+    void modificarUsuario(int id, Usuario usuario);
+
+    Usuario buscarUsuario(int id);
+
 }

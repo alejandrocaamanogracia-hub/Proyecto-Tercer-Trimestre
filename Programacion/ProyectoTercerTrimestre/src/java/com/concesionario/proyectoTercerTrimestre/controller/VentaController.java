@@ -1,5 +1,6 @@
 package com.concesionario.proyectoTercerTrimestre.controller;
 
+import com.concesionario.proyectoTercerTrimestre.entities.DetalleVenta;
 import com.concesionario.proyectoTercerTrimestre.entities.EstadoVenta;
 import com.concesionario.proyectoTercerTrimestre.entities.Venta;
 import com.concesionario.proyectoTercerTrimestre.services.VentaService;
@@ -31,4 +32,13 @@ public class VentaController {
     public void exportarVentasTxt() {
         ventaService.exportarVentasTxt();
     }
+
+    public void modificarVenta(int id, Venta venta) {
+        ventaService.modificarVenta(id, venta);
+    }
+
+    public Venta buscarVenta(int id) {
+        return ventaService.buscarVenta(id);
+    }
+
 }

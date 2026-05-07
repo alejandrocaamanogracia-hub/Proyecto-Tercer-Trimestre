@@ -1,8 +1,11 @@
 package com.concesionario.proyectoTercerTrimestre.interfaz;
 
 import com.concesionario.proyectoTercerTrimestre.controller.UsuarioController;
+import com.concesionario.proyectoTercerTrimestre.entities.DetalleVenta;
+import com.concesionario.proyectoTercerTrimestre.entities.EstadoCoche;
 import com.concesionario.proyectoTercerTrimestre.entities.Usuario;
 import com.concesionario.proyectoTercerTrimestre.entities.RolUsuario;
+import com.concesionario.proyectoTercerTrimestre.utils.ComprobacionOpcion;
 
 import java.util.List;
 import java.util.Scanner;
@@ -26,10 +29,12 @@ public class UsuarioMenu {
             System.out.println("2. Eliminar usuario");
             System.out.println("3. Listar usuarios");
             System.out.println("4. Exportar usuarios a TXT");
+            System.out.println("5. Modificar usuario");
+            System.out.println("6. Buscar usuario");
             System.out.println("0. Volver");
             System.out.print("Elige una opcion: ");
 
-            opcion = Integer.parseInt(scanner.nextLine());
+            opcion = ComprobacionOpcion.leerInt();
 
             switch (opcion) {
                 case 1:
@@ -43,6 +48,12 @@ public class UsuarioMenu {
                     break;
                 case 4:
                     exportarUsuariosTxt();
+                    break;
+                case 5:
+                    modificarUsuario();
+                    break;
+                case 6:
+                    buscarUsuario();
                     break;
                 case 0:
                     System.out.println("Volviendo al menu principal...");
@@ -70,7 +81,7 @@ public class UsuarioMenu {
         System.out.println("3. Gestor");
         System.out.print("Elige una opcion: ");
 
-        int opcionRol = Integer.parseInt(scanner.nextLine());
+        int opcionRol = ComprobacionOpcion.leerOpcion(1, 3);
 
         RolUsuario rol;
 
@@ -100,7 +111,7 @@ public class UsuarioMenu {
         System.out.println("\n--- Eliminar usuario ---");
 
         System.out.print("Introduce el ID del usuario: ");
-        int id = Integer.parseInt(scanner.nextLine());
+        int id = ComprobacionOpcion.leerInt();
 
         usuarioController.eliminarUsuario(id);
     }
@@ -123,4 +134,144 @@ public class UsuarioMenu {
     private void exportarUsuariosTxt() {
         usuarioController.exportarUsuariosTxt();
     }
+
+    private void modificarUsuario() {
+
+        Usuario usuario = new Usuario();
+
+        System.out.println("Que usuario quieres modificar: ");
+        List<Usuario> usuarios =  usuarioController.listarUsuarios();
+        int iterador = 1;
+        for (Usuario usuario1 : usuarios) {
+            System.out.println(iterador++ + " - " + usuario1);
+        }
+
+        int opcion;
+        int opcion2;
+
+        opcion = ComprobacionOpcion.leerOpcion(1, usuarios.size());
+
+        System.out.println("Modificar nombre del usuario");
+        System.out.println("1. Si");
+        System.out.println("2. No");
+
+        opcion2 = ComprobacionOpcion.leerOpcion(1, 2);
+
+        switch (opcion2) {
+
+            case 1 -> {
+                System.out.println("Introduce el nombre: ");
+                usuario.setNombre(scanner.nextLine());
+            }case  2 -> {
+                usuario.setNombre(null);
+            }
+
+        }
+
+        System.out.println("Modificar email del usuario");
+        System.out.println("1. Si");
+        System.out.println("2. No");
+
+        opcion2 = ComprobacionOpcion.leerOpcion(1, 2);
+
+        switch (opcion2) {
+
+            case 1 -> {
+                System.out.println("Introduce el email: ");
+                usuario.setEmail(scanner.nextLine());
+            }case  2 -> {
+                usuario.setEmail(null);
+            }
+
+        }
+
+        System.out.println("Modificar password del usuario");
+        System.out.println("1. Si");
+        System.out.println("2. No");
+
+        opcion2 = ComprobacionOpcion.leerOpcion(1, 2);
+
+        switch (opcion2) {
+
+            case 1 -> {
+                System.out.println("Introduce el password: ");
+                usuario.setPasswordHash(scanner.nextLine());
+            }case  2 -> {
+                usuario.setPasswordHash(null);
+            }
+
+        }
+
+        System.out.println("Modificar rol del usuario: ");
+        System.out.println("1. Si");
+        System.out.println("2. No");
+
+        opcion2 = ComprobacionOpcion.leerOpcion(1, 2);
+
+        switch (opcion2) {
+
+            case 1 -> {
+                System.out.println("Rol:");
+                System.out.println("1. Administrador");
+                System.out.println("2. Comercial");
+                System.out.println("3. Gestor");
+                System.out.print("Elige una opcion: ");
+
+                int opcionRol = Integer.parseInt(scanner.nextLine());
+
+                RolUsuario rol;
+
+                switch (opcionRol) {
+                    case 1:
+                        rol = RolUsuario.ADMINISTRADOR;
+                        break;
+                    case 2:
+                        rol = RolUsuario.COMERCIAL;
+                        break;
+                    case 3:
+                        rol = RolUsuario.GESTOR;
+                        break;
+                    default:
+                        System.out.println("Rol no valido. Se asigna Comercial por defecto.");
+                        rol = RolUsuario.COMERCIAL;
+                        break;
+                }
+
+                usuario.setRol(rol);
+
+            }case 2 -> {
+                usuario.setRol(null);
+            }
+
+        }
+
+        usuarioController.modificarUsuario(opcion, usuario);
+
+    }
+
+    public void buscarUsuario() {
+
+        List<Usuario> usuarios = usuarioController.listarUsuarios();
+
+        if (usuarios.isEmpty()) {
+            System.out.println("No hay usuarios registrados.");
+            return;
+        }
+
+        System.out.println("Que usuario venta quieres ver: ");
+
+        for (Usuario usuario : usuarios) {
+            System.out.println(usuario.getId());
+        }
+
+        Usuario usuario = usuarioController.buscarUsuario(ComprobacionOpcion.leerInt());
+
+        if (usuario != null) {
+            System.out.println(usuario.toString());
+        }else {
+            System.out.println("No existe un usuario con ese id");
+        }
+
+    }
+
 }
