@@ -84,6 +84,7 @@ public class DetalleVentaRepositoryImpl implements DetalleVentaRepository {
 
         return detallesVenta;
     }
+<<<<<<< HEAD
 
     @Override
     public void modificarDetalleVenta(int id, DetalleVenta detalleVenta){
@@ -189,4 +190,6 @@ public class DetalleVentaRepositoryImpl implements DetalleVentaRepository {
 
     }
 
+=======
+>>>>>>> b40c4a9e5a9be5217f0a95a74284f60254651042
 }

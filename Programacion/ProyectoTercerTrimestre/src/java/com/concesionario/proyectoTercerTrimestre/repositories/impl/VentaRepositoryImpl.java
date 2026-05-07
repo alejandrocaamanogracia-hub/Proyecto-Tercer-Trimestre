@@ -5,7 +5,15 @@ import com.concesionario.proyectoTercerTrimestre.entities.Venta;
 import com.concesionario.proyectoTercerTrimestre.repositories.VentaRepository;
 import com.concesionario.proyectoTercerTrimestre.entities.EstadoVenta;
 
+<<<<<<< HEAD
 import java.sql.*;
+=======
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+>>>>>>> b40c4a9e5a9be5217f0a95a74284f60254651042
 import java.util.ArrayList;
 import java.util.List;
 
@@ -89,6 +97,7 @@ public class VentaRepositoryImpl implements VentaRepository {
 
         return ventas;
     }
+<<<<<<< HEAD
 
     @Override
     public void modificarVenta(int id, Venta venta){
@@ -208,4 +217,6 @@ public class VentaRepositoryImpl implements VentaRepository {
 
     }
 
+=======
+>>>>>>> b40c4a9e5a9be5217f0a95a74284f60254651042
 }
