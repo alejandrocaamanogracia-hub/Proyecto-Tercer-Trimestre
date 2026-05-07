@@ -136,19 +136,11 @@ public class DetalleVentaMenu {
 
             case 1 -> {
 
-                System.out.println("Cual de las ventas desea seleccionar: ");
-                VentaController ventaController = new VentaController();
-                List <Venta> ventas = ventaController.listarVentas();
-                iterador = 1;
-                for (Venta venta : ventas) {
-                    System.out.println(iterador++ + ". " + venta.getId());
+                System.out.println("Introduce el id de la venta: ");
+                while (scanner.hasNextInt()) {
+                    opcion2 = scanner.nextInt();
                 }
-                opcion2 = 0;
-                while (opcion2 <= 0 || opcion2 > ventas.size()) {
-                    opcion2 = Integer.parseInt(scanner.next());
-                    scanner.nextLine();
-                }
-                detalleVenta.setVentaId(opcion2);
+                detalleVenta.setCantidad(opcion2);
 
             }case 2 -> {
                 detalleVenta.setVentaId(-1);
@@ -166,17 +158,9 @@ public class DetalleVentaMenu {
 
             case 1 -> {
 
-                System.out.println("Cual de los coches desea seleccionar: ");
-                CocheController cocheController = new CocheController();
-                List <Coche> coches = cocheController.listarCoches();
-                iterador = 1;
-                for (Coche coche: coches) {
-                    System.out.println(iterador++ + ". " + coche.getMatricula());
-                }
-                opcion2 = 0;
-                while (opcion2 <= 0 || opcion2 > coches.size()) {
-                    opcion2 = Integer.parseInt(scanner.next());
-                    scanner.nextLine();
+                System.out.println("Introduce el id del coche: ");
+                while (scanner.hasNextInt()) {
+                    opcion2 = scanner.nextInt();
                 }
                 detalleVenta.setCocheId(opcion2);
 

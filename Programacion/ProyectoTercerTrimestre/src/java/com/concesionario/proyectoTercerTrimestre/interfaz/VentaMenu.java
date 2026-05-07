@@ -175,18 +175,10 @@ public class VentaMenu {
         switch (opcion2) {
 
             case 1 ->{
-                System.out.println("Cual de los cliente desea seleccionar");
-                ClienteController clienteController = new ClienteController();
-                List <Cliente> clientes = clienteController.listarClientes();
-                iterador = 1;
-                for (Cliente cliente : clientes) {
-                    System.out.println( iterador++ + ". " + cliente.getNombre());
+                System.out.println("Introduce el id del cliente: ");
+                while (scanner.hasNextInt()) {
+                    opcion2 = scanner.nextInt();
                 }
-                opcion2 = 0;
-                while (opcion2 < 1 || opcion2 > clientes.size()) {
-                    opcion2 = Integer.parseInt(scanner.nextLine());
-                }
-
                 venta.setClienteId(opcion2);
 
             }case 2 ->{
@@ -204,16 +196,10 @@ public class VentaMenu {
         switch (opcion2) {
 
             case 1 ->{
-                System.out.println("Cual de los usuarios desea seleccionar");
-                UsuarioController usuarioController = new UsuarioController();
-                List <Usuario> usuarios = usuarioController.listarUsuarios();
-                iterador = 1;
-                for (Usuario usuario : usuarios) {
-                    System.out.println( iterador++ + ". " + usuario.getNombre());
-                }
-                opcion2 = 0;
-                while (opcion2 < 1 || opcion2 > usuarios.size()) {
-                    opcion2 = Integer.parseInt(scanner.nextLine());
+
+                System.out.println("Introduce el id del usuario: ");
+                while (scanner.hasNextInt()) {
+                    opcion2 = scanner.nextInt();
                 }
 
                 venta.setUsuarioId(opcion2);

@@ -227,13 +227,15 @@ public class InteraccionClienteRepositoryImpl implements InteraccionClienteRepos
 
             sql = "UPDATE interacciones_cliente SET fecha_proxima = ? WHERE id = ?";
 
-            if (interaccionCliente.getProximaAccion() != null){
+            if (interaccionCliente.getFechaProxima() != null) {
 
                 PreparedStatement preparedStatement = connection.prepareStatement(sql);
-                preparedStatement.setTimestamp(4, Timestamp.valueOf(interaccionCliente.getFecha()));
-                preparedStatement.setInt(2, id);
-                preparedStatement.executeUpdate();
 
+                preparedStatement.setTimestamp(1, Timestamp.valueOf(interaccionCliente.getFechaProxima()));
+
+                preparedStatement.setInt(2, id);
+
+                preparedStatement.executeUpdate();
             }
 
         }catch (SQLException e){

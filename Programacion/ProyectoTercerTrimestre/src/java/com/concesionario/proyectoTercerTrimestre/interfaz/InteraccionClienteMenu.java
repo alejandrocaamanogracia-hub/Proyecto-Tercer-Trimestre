@@ -199,19 +199,11 @@ public class InteraccionClienteMenu {
         switch (opcion2) {
 
             case 1 ->{
-                System.out.println("Cual de los cliente desea seleccionar: ");
-                ClienteController clienteController = new ClienteController();
-                List <Cliente> clientes = clienteController.listarClientes();
-                iterador = 1;
-                for (Cliente cliente : clientes) {
-                    System.out.println( iterador++ + ". " + cliente.getNombre());
+                System.out.println("Introduce el id del cliente: ");
+                while (scanner.hasNextInt()) {
+                    opcion2 = scanner.nextInt();
                 }
-                int opc = 0;
-                while (opc < 1 || opc > clientes.size()) {
-                    opc = Integer.parseInt(scanner.nextLine());
-                }
-
-                interaccionCliente.setClienteId(opc);
+                interaccionCliente.setClienteId(opcion2);
 
             }case 2 ->{
                 interaccionCliente.setClienteId(-1);
@@ -228,20 +220,11 @@ public class InteraccionClienteMenu {
         switch (opcion2) {
 
             case 1 ->{
-                System.out.println("Cual de los usuarios desea seleccionar");
-                UsuarioController usuarioController = new UsuarioController();
-                List <Usuario> usuarios = usuarioController.listarUsuarios();
-                iterador = 1;
-                for (Usuario usuario : usuarios) {
-                    System.out.println( iterador++ + ". " + usuario.getNombre());
+                System.out.println("Introduce el id del usuario: ");
+                while (scanner.hasNextInt()) {
+                    opcion2 = scanner.nextInt();
                 }
-                int opc = 0;
-                while (opc < 1 || opc > usuarios.size()) {
-                    opc = Integer.parseInt(scanner.next());
-                    scanner.nextLine();
-                }
-
-                interaccionCliente.setUsuarioId(opc);
+                interaccionCliente.setUsuarioId(opcion2);
 
             }case 2 ->{
                 interaccionCliente.setUsuarioId(-1);
@@ -339,28 +322,15 @@ public class InteraccionClienteMenu {
         switch (opcion2) {
 
             case 1 -> {
-                System.out.print("Fecha próxima (yyyy-MM-dd HH:mm), vacío para null: ");
 
-                LocalDateTime fecha = null;
+                System.out.print("Fecha proxima (yyyy-MM-dd HH:mm) o vacio si no hay: ");
+                String fechaProximaTexto = scanner.nextLine();
 
-                while (true) {
-                    String input = scanner.nextLine();
+                LocalDateTime fechaProxima = null;
 
-                    if (input.isBlank()) {
-                        fecha = null;
-                        break;
-                    }
+                fechaProxima = LocalDateTime.parse(fechaProximaTexto, formatter);
 
-                    try {
-                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-                        fecha = LocalDateTime.parse(input, formatter);
-                        break;
-                    } catch (DateTimeParseException e) {
-                        System.out.print("Formato incorrecto. Usa yyyy-MM-dd HH:mm: ");
-                    }
-                }
-
-                interaccionCliente.setFechaProxima(fecha);
+                interaccionCliente.setFechaProxima(fechaProxima);
 
             }case 2 ->{
                 interaccionCliente.setFechaProxima(null);
