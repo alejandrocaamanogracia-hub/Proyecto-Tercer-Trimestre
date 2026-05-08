@@ -111,7 +111,6 @@ public class InteraccionClienteRepositoryImpl implements InteraccionClienteRepos
 
         return interacciones;
     }
-<<<<<<< HEAD
 
     @Override
     public void modificarInteraccionCliente(int id, InteraccionCliente interaccionCliente){
@@ -289,6 +288,4 @@ public class InteraccionClienteRepositoryImpl implements InteraccionClienteRepos
 
     }
 
-=======
->>>>>>> b40c4a9e5a9be5217f0a95a74284f60254651042
 }
