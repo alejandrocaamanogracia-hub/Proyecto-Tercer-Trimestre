@@ -2,8 +2,8 @@ package com.concesionario.proyectoTercerTrimestre.repositories.impl;
 
 import com.concesionario.proyectoTercerTrimestre.database.DataBaseConnection;
 import com.concesionario.proyectoTercerTrimestre.entities.InteraccionCliente;
-import com.concesionario.proyectoTercerTrimestre.repositories.InteraccionClienteRepository;
 import com.concesionario.proyectoTercerTrimestre.entities.TipoInteraccion;
+import com.concesionario.proyectoTercerTrimestre.repositories.InteraccionClienteRepository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -21,9 +21,8 @@ public class InteraccionClienteRepositoryImpl implements InteraccionClienteRepos
                 "(cliente_id, usuario_id, tipo, fecha, asunto, descripcion, resultado, proxima_accion, fecha_proxima) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        try {
-            Connection connection = DataBaseConnection.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        try (Connection connection = DataBaseConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setInt(1, interaccionCliente.getClienteId());
             preparedStatement.setInt(2, interaccionCliente.getUsuarioId());
@@ -52,9 +51,8 @@ public class InteraccionClienteRepositoryImpl implements InteraccionClienteRepos
     public void eliminarInteraccionCliente(int id) {
         String sql = "DELETE FROM interacciones_cliente WHERE id = ?";
 
-        try {
-            Connection connection = DataBaseConnection.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        try (Connection connection = DataBaseConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
@@ -73,10 +71,9 @@ public class InteraccionClienteRepositoryImpl implements InteraccionClienteRepos
                 "FROM interacciones_cliente " +
                 "ORDER BY id";
 
-        try {
-            Connection connection = DataBaseConnection.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            ResultSet resultSet = preparedStatement.executeQuery();
+        try (Connection connection = DataBaseConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
 
             while (resultSet.next()) {
                 InteraccionCliente interaccionCliente = new InteraccionCliente();
@@ -111,184 +108,175 @@ public class InteraccionClienteRepositoryImpl implements InteraccionClienteRepos
 
         return interacciones;
     }
-<<<<<<< HEAD
 
     @Override
-    public void modificarInteraccionCliente(int id, InteraccionCliente interaccionCliente){
+    public void modificarInteraccionCliente(int id, InteraccionCliente interaccionCliente) {
 
-        String sql = "UPDATE interacciones_cliente SET cliente_id = ? WHERE id = ?";
-        ResultSet resultSet = null;
+        try (Connection connection = DataBaseConnection.getConnection()) {
 
-        try (Connection connection = DataBaseConnection.getConnection()){
+            if (interaccionCliente.getClienteId() != -1) {
+                String sqlComprobacion = "SELECT * FROM clientes WHERE id = ?";
 
-            if (interaccionCliente.getClienteId() != -1){
+                try (PreparedStatement preparedStatementComprobacion = connection.prepareStatement(sqlComprobacion)) {
+                    preparedStatementComprobacion.setInt(1, interaccionCliente.getClienteId());
 
-                PreparedStatement preparedStatementComprobacion = connection.prepareStatement("SELECT * FROM usuarios WHERE id = ?");
-                preparedStatementComprobacion.setInt(1, interaccionCliente.getUsuarioId());
-                resultSet = preparedStatementComprobacion.executeQuery();
+                    try (ResultSet resultSet = preparedStatementComprobacion.executeQuery()) {
+                        if (!resultSet.next()) {
+                            System.out.println("El id del cliente no es valido");
+                            return;
+                        }
+                    }
+                }
 
-                if (!resultSet.next()) {
-                    System.out.println("El id del usuario no es valido");
-                    return;
-                }else{
-                    PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                String sql = "UPDATE interacciones_cliente SET cliente_id = ? WHERE id = ?";
+
+                try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
                     preparedStatement.setInt(1, interaccionCliente.getClienteId());
                     preparedStatement.setInt(2, id);
                     preparedStatement.executeUpdate();
                 }
-
             }
 
-            sql = "UPDATE interacciones_cliente SET usuario_id = ? WHERE id = ?";
+            if (interaccionCliente.getUsuarioId() != -1) {
+                String sqlComprobacion = "SELECT * FROM usuarios WHERE id = ?";
 
-            if (interaccionCliente.getUsuarioId() != -1){
+                try (PreparedStatement preparedStatementComprobacion = connection.prepareStatement(sqlComprobacion)) {
+                    preparedStatementComprobacion.setInt(1, interaccionCliente.getUsuarioId());
 
-                PreparedStatement preparedStatement = connection.prepareStatement(sql);
-                preparedStatement.setInt(1, interaccionCliente.getUsuarioId());
-                preparedStatement.setInt(2, id);
-                preparedStatement.executeUpdate();
+                    try (ResultSet resultSet = preparedStatementComprobacion.executeQuery()) {
+                        if (!resultSet.next()) {
+                            System.out.println("El id del usuario no es valido");
+                            return;
+                        }
+                    }
+                }
 
+                String sql = "UPDATE interacciones_cliente SET usuario_id = ? WHERE id = ?";
+
+                try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                    preparedStatement.setInt(1, interaccionCliente.getUsuarioId());
+                    preparedStatement.setInt(2, id);
+                    preparedStatement.executeUpdate();
+                }
             }
 
-            sql = "UPDATE interacciones_cliente SET tipo = ? WHERE id = ?";
+            if (interaccionCliente.getTipo() != null) {
+                String sql = "UPDATE interacciones_cliente SET tipo = ? WHERE id = ?";
 
-            if (interaccionCliente.getTipo() != null){
-
-                PreparedStatement preparedStatement = connection.prepareStatement(sql);
-                preparedStatement.setString(1, interaccionCliente.getTipo().getValorDb());
-                preparedStatement.setInt(2, id);
-                preparedStatement.executeUpdate();
-
+                try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                    preparedStatement.setString(1, interaccionCliente.getTipo().getValorDb());
+                    preparedStatement.setInt(2, id);
+                    preparedStatement.executeUpdate();
+                }
             }
 
-            sql = "UPDATE interacciones_cliente SET fecha = ? WHERE id = ?";
+            if (interaccionCliente.getFecha() != null) {
+                String sql = "UPDATE interacciones_cliente SET fecha = ? WHERE id = ?";
 
-            if (interaccionCliente.getFecha() != null){
-
-                PreparedStatement preparedStatement = connection.prepareStatement(sql);
-                preparedStatement.setTimestamp(1, Timestamp.valueOf(interaccionCliente.getFecha()));
-                preparedStatement.setInt(2, id);
-
+                try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                    preparedStatement.setTimestamp(1, Timestamp.valueOf(interaccionCliente.getFecha()));
+                    preparedStatement.setInt(2, id);
+                    preparedStatement.executeUpdate();
+                }
             }
 
-            sql = "UPDATE interacciones_cliente SET fecha_proxima = ? WHERE id = ?";
+            if (interaccionCliente.getAsunto() != null) {
+                String sql = "UPDATE interacciones_cliente SET asunto = ? WHERE id = ?";
 
-            if (interaccionCliente.getFecha() != null){
-
-                PreparedStatement preparedStatement = connection.prepareStatement(sql);
-                preparedStatement.setTimestamp(1, Timestamp.valueOf(interaccionCliente.getFechaProxima()));
-                preparedStatement.setInt(2, id);
-                preparedStatement.executeUpdate();
-
+                try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                    preparedStatement.setString(1, interaccionCliente.getAsunto());
+                    preparedStatement.setInt(2, id);
+                    preparedStatement.executeUpdate();
+                }
             }
 
-            sql = "UPDATE interacciones_cliente SET asunto = ? WHERE id = ?";
+            if (interaccionCliente.getDescripcion() != null) {
+                String sql = "UPDATE interacciones_cliente SET descripcion = ? WHERE id = ?";
 
-            if (interaccionCliente.getAsunto() != null){
-
-                PreparedStatement preparedStatement = connection.prepareStatement(sql);
-                preparedStatement.setString(1, interaccionCliente.getAsunto());
-                preparedStatement.setInt(2, id);
-                preparedStatement.executeUpdate();
-
+                try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                    preparedStatement.setString(1, interaccionCliente.getDescripcion());
+                    preparedStatement.setInt(2, id);
+                    preparedStatement.executeUpdate();
+                }
             }
 
-            sql = "UPDATE interacciones_cliente SET descripcion = ? WHERE id = ?";
+            if (interaccionCliente.getResultado() != null) {
+                String sql = "UPDATE interacciones_cliente SET resultado = ? WHERE id = ?";
 
-            if (interaccionCliente.getDescripcion() != null){
-
-                PreparedStatement preparedStatement = connection.prepareStatement(sql);
-                preparedStatement.setString(1, interaccionCliente.getDescripcion());
-                preparedStatement.setInt(2, id);
-                preparedStatement.executeUpdate();
-
+                try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                    preparedStatement.setString(1, interaccionCliente.getResultado());
+                    preparedStatement.setInt(2, id);
+                    preparedStatement.executeUpdate();
+                }
             }
 
-            sql = "UPDATE interacciones_cliente SET resultado = ? WHERE id = ?";
+            if (interaccionCliente.getProximaAccion() != null) {
+                String sql = "UPDATE interacciones_cliente SET proxima_accion = ? WHERE id = ?";
 
-            if (interaccionCliente.getResultado() != null){
-
-                PreparedStatement preparedStatement = connection.prepareStatement(sql);
-                preparedStatement.setString(1, interaccionCliente.getResultado());
-                preparedStatement.setInt(2, id);
-                preparedStatement.executeUpdate();
-
+                try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                    preparedStatement.setString(1, interaccionCliente.getProximaAccion());
+                    preparedStatement.setInt(2, id);
+                    preparedStatement.executeUpdate();
+                }
             }
-
-            sql = "UPDATE interacciones_cliente SET proxima_accion = ? WHERE id = ?";
-
-            if (interaccionCliente.getProximaAccion() != null){
-
-                PreparedStatement preparedStatement = connection.prepareStatement(sql);
-                preparedStatement.setString(1, interaccionCliente.getProximaAccion());
-                preparedStatement.setInt(2, id);
-                preparedStatement.executeUpdate();
-
-            }
-
-            sql = "UPDATE interacciones_cliente SET fecha_proxima = ? WHERE id = ?";
 
             if (interaccionCliente.getFechaProxima() != null) {
+                String sql = "UPDATE interacciones_cliente SET fecha_proxima = ? WHERE id = ?";
 
-                PreparedStatement preparedStatement = connection.prepareStatement(sql);
-
-                preparedStatement.setTimestamp(1, Timestamp.valueOf(interaccionCliente.getFechaProxima()));
-
-                preparedStatement.setInt(2, id);
-
-                preparedStatement.executeUpdate();
+                try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                    preparedStatement.setTimestamp(1, Timestamp.valueOf(interaccionCliente.getFechaProxima()));
+                    preparedStatement.setInt(2, id);
+                    preparedStatement.executeUpdate();
+                }
             }
 
-        }catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println("Error al modificar la interaccion con cliente.");
             e.printStackTrace();
         }
-
     }
 
     @Override
-    public InteraccionCliente bucarInteraccionCliente(int id){
+    public InteraccionCliente bucarInteraccionCliente(int id) {
 
         InteraccionCliente interaccionCliente = new InteraccionCliente();
 
         String sql = "SELECT * FROM interacciones_cliente WHERE id = ?";
 
-        try (Connection connection = DataBaseConnection.getConnection()){
+        try (Connection connection = DataBaseConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, id);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()){
-                interaccionCliente.setId(resultSet.getInt("id"));
-                interaccionCliente.setClienteId(resultSet.getInt("cliente_id"));
-                interaccionCliente.setUsuarioId(resultSet.getInt("usuario_id"));
-                interaccionCliente.setTipo(TipoInteraccion.fromDb(resultSet.getString("tipo")));
 
-                Timestamp fecha = resultSet.getTimestamp("fecha");
-                if (fecha != null) {
-                    interaccionCliente.setFecha(fecha.toLocalDateTime());
-                }
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    interaccionCliente.setId(resultSet.getInt("id"));
+                    interaccionCliente.setClienteId(resultSet.getInt("cliente_id"));
+                    interaccionCliente.setUsuarioId(resultSet.getInt("usuario_id"));
+                    interaccionCliente.setTipo(TipoInteraccion.fromDb(resultSet.getString("tipo")));
 
-                interaccionCliente.setAsunto(resultSet.getString("asunto"));
-                interaccionCliente.setDescripcion(resultSet.getString("descripcion"));
-                interaccionCliente.setResultado(resultSet.getString("resultado"));
-                interaccionCliente.setProximaAccion(resultSet.getString("proxima_accion"));
+                    Timestamp fecha = resultSet.getTimestamp("fecha");
+                    if (fecha != null) {
+                        interaccionCliente.setFecha(fecha.toLocalDateTime());
+                    }
 
-                Timestamp fechaProxima = resultSet.getTimestamp("fecha_proxima");
-                if (fechaProxima != null) {
-                    interaccionCliente.setFechaProxima(fechaProxima.toLocalDateTime());
+                    interaccionCliente.setAsunto(resultSet.getString("asunto"));
+                    interaccionCliente.setDescripcion(resultSet.getString("descripcion"));
+                    interaccionCliente.setResultado(resultSet.getString("resultado"));
+                    interaccionCliente.setProximaAccion(resultSet.getString("proxima_accion"));
+
+                    Timestamp fechaProxima = resultSet.getTimestamp("fecha_proxima");
+                    if (fechaProxima != null) {
+                        interaccionCliente.setFechaProxima(fechaProxima.toLocalDateTime());
+                    }
                 }
             }
 
-        }catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println("Error al buscar la interaccion con cliente.");
             e.printStackTrace();
         }
 
-        return  interaccionCliente;
-
+        return interaccionCliente;
     }
-
-=======
->>>>>>> b40c4a9e5a9be5217f0a95a74284f60254651042
 }

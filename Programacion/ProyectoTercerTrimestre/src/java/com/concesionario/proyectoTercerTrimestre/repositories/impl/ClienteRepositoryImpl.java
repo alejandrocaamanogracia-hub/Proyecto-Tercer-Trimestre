@@ -83,7 +83,7 @@ public class ClienteRepositoryImpl implements ClienteRepository {
 
         return clientes;
     }
-<<<<<<< HEAD
+
 
     @Override
     public void modificarCliente(int id,  Cliente cliente) {
@@ -170,6 +170,4 @@ public class ClienteRepositoryImpl implements ClienteRepository {
 
     }
 
-=======
->>>>>>> b40c4a9e5a9be5217f0a95a74284f60254651042
 }

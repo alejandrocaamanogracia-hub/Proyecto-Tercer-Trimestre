@@ -77,10 +77,7 @@ public class DetalleVentaMenu {
         System.out.print("Cantidad: ");
         int cantidad = ComprobacionOpcion.leerInt();
 
-        System.out.print("Precio unitario: ");
-        double precioUnitario = ComprobacionOpcion.leerDouble();
-
-        detalleVentaController.crearDetalleVenta(ventaId, cocheId, cantidad, precioUnitario);
+        detalleVentaController.crearDetalleVenta(ventaId, cocheId, cantidad);
     }
 
     private void eliminarDetalleVenta() {
@@ -116,37 +113,37 @@ public class DetalleVentaMenu {
         DetalleVenta detalleVenta = new DetalleVenta();
 
         System.out.println("Que detalle venta quieres modificar: ");
-        List<DetalleVenta> detalleVentas =  detalleVentaController.listarDetallesVenta();
+        List<DetalleVenta> detalleVentas = detalleVentaController.listarDetallesVenta();
+
+        if (detalleVentas.isEmpty()) {
+            System.out.println("No hay detalles de venta registrados.");
+            return;
+        }
+
         int iterador = 1;
         for (DetalleVenta detalleVenta1 : detalleVentas) {
             System.out.println(iterador++ + " - " + detalleVenta1.getId());
         }
 
-        int opcion;
-        int opcion2;
+        int opcion = ComprobacionOpcion.leerOpcion(1, detalleVentas.size());
 
-        opcion = ComprobacionOpcion.leerOpcion(1, detalleVentas.size());
+        int idDetalleVenta = detalleVentas.get(opcion - 1).getId();
 
         System.out.println("Modificar id de la venta");
         System.out.println("1. Si");
         System.out.println("2. No");
 
-        opcion2 = ComprobacionOpcion.leerOpcion(1, 2);
+        int opcion2 = ComprobacionOpcion.leerOpcion(1, 2);
 
         switch (opcion2) {
-
             case 1 -> {
-
                 System.out.println("Introduce el id de la venta: ");
-                while (scanner.hasNextInt()) {
-                    opcion2 = scanner.nextInt();
-                }
-                detalleVenta.setCantidad(opcion2);
-
-            }case 2 -> {
+                int ventaId = ComprobacionOpcion.leerInt();
+                detalleVenta.setVentaId(ventaId);
+            }
+            case 2 -> {
                 detalleVenta.setVentaId(-1);
             }
-
         }
 
         System.out.println("Modificar id del coche");
@@ -156,19 +153,14 @@ public class DetalleVentaMenu {
         opcion2 = ComprobacionOpcion.leerOpcion(1, 2);
 
         switch (opcion2) {
-
             case 1 -> {
-
                 System.out.println("Introduce el id del coche: ");
-                while (scanner.hasNextInt()) {
-                    opcion2 = scanner.nextInt();
-                }
-                detalleVenta.setCocheId(opcion2);
-
-            }case 2 -> {
+                int cocheId = ComprobacionOpcion.leerInt();
+                detalleVenta.setCocheId(cocheId);
+            }
+            case 2 -> {
                 detalleVenta.setCocheId(-1);
             }
-
         }
 
         System.out.println("Modificar la cantidad");
@@ -180,37 +172,15 @@ public class DetalleVentaMenu {
         switch (opcion2) {
             case 1 -> {
                 System.out.println("Introduce la cantidad: ");
-                int cantidad = 0;
-                while (scanner.hasNextInt()) {
-                    cantidad = scanner.nextInt();
-                }
+                int cantidad = ComprobacionOpcion.leerInt();
                 detalleVenta.setCantidad(cantidad);
-            }case 2 -> {
+            }
+            case 2 -> {
                 detalleVenta.setCantidad(-1);
             }
         }
 
-        System.out.println("Modificar precio_unitario");
-        System.out.println("1. Si");
-        System.out.println("2. No");
-
-        opcion2 = ComprobacionOpcion.leerOpcion(1, 2);
-
-        switch (opcion2) {
-            case 1 -> {
-                System.out.println("Introduce el precio unitario: ");
-                int precio = 0;
-                while (scanner.hasNextInt()) {
-                    precio = scanner.nextInt();
-                }
-                detalleVenta.setPrecioUnitario(precio);
-            }case 2 -> {
-                detalleVenta.setPrecioUnitario(-1);
-            }
-        }
-
-        detalleVentaController.modificarDetalleVenta(opcion, detalleVenta);
-
+        detalleVentaController.modificarDetalleVenta(idDetalleVenta, detalleVenta);
     }
 
     public void buscarDetalleVenta() {

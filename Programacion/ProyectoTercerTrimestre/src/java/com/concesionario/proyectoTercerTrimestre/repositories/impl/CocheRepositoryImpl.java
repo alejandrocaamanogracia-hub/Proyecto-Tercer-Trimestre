@@ -109,7 +109,7 @@ public class CocheRepositoryImpl implements CocheRepository {
 
         return coches;
     }
-<<<<<<< HEAD
+
 
     @Override
     public void modificarCoche(int id, Coche coche) {
@@ -292,6 +292,4 @@ public class CocheRepositoryImpl implements CocheRepository {
 
     }
 
-=======
->>>>>>> b40c4a9e5a9be5217f0a95a74284f60254651042
 }

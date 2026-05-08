@@ -4,35 +4,34 @@ ID: 1
 ID Venta: 1
 ID Coche: 4
 Cantidad: 1
-Precio unitario: 28900.0
 ----------------------------------
 ID: 2
 ID Venta: 2
 ID Coche: 5
 Cantidad: 1
-Precio unitario: 35900.0
 ----------------------------------
 ID: 3
 ID Venta: 3
 ID Coche: 2
 Cantidad: 1
-Precio unitario: 24500.0
 ----------------------------------
 ID: 4
 ID Venta: 4
 ID Coche: 1
 Cantidad: 1
-Precio unitario: 18900.0
 ----------------------------------
 ID: 5
 ID Venta: 5
 ID Coche: 3
 Cantidad: 1
-Precio unitario: 19900.0
 ----------------------------------
-ID: 6
+ID: 7
+ID Venta: 1
+ID Coche: 1
+Cantidad: 2
+----------------------------------
+ID: 8
 ID Venta: 1
 ID Coche: 1
 Cantidad: 1
-Precio unitario: 10000.0
 ----------------------------------

@@ -85,7 +85,7 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
 
         return usuarios;
     }
-<<<<<<< HEAD
+
 
     @Override
     public void modificarUsuario(int id, Usuario usuario){
@@ -171,6 +171,5 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
 
     }
 
-=======
->>>>>>> b40c4a9e5a9be5217f0a95a74284f60254651042
+
 }
