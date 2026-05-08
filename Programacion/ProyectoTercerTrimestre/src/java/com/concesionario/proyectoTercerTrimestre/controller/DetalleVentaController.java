@@ -13,8 +13,8 @@ public class DetalleVentaController {
         this.detalleVentaService = new DetalleVentaService();
     }
 
-    public void crearDetalleVenta(int ventaId, int cocheId, int cantidad, double precioUnitario) {
-        DetalleVenta detalleVenta = new DetalleVenta(ventaId, cocheId, cantidad, precioUnitario);
+    public void crearDetalleVenta(int ventaId, int cocheId, int cantidad) {
+        DetalleVenta detalleVenta = new DetalleVenta(ventaId, cocheId, cantidad);
         detalleVentaService.crearDetalleVenta(detalleVenta);
     }
 

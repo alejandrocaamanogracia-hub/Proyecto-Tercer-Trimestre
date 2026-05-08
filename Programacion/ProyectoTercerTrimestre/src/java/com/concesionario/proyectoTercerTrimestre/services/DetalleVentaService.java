@@ -38,11 +38,6 @@ public class DetalleVentaService {
             return;
         }
 
-        if (detalleVenta.getPrecioUnitario() < 0) {
-            System.out.println("El precio unitario no puede ser negativo.");
-            return;
-        }
-
         detalleVentaRepository.crearDetalleVenta(detalleVenta);
         System.out.println("Detalle de venta creado correctamente.");
     }
@@ -84,8 +79,6 @@ public class DetalleVentaService {
                 writer.newLine();
                 writer.write("Cantidad: " + detalleVenta.getCantidad());
                 writer.newLine();
-                writer.write("Precio unitario: " + detalleVenta.getPrecioUnitario());
-                writer.newLine();
                 writer.write("----------------------------------");
                 writer.newLine();
             }
@@ -100,22 +93,33 @@ public class DetalleVentaService {
 
     public void modificarDetalleVenta(int id, DetalleVenta detalleVenta) {
 
-        if (id <= 0 || id > detalleVentaRepository.listarDetallesVenta().size()) {
+        if (id <= 0) {
             System.out.println("El ID del detalle de venta no es valido.");
             return;
         }
 
-        if (detalleVenta.getCantidad() < 0) {
+        if (detalleVenta == null) {
+            System.out.println("El detalle de venta no puede ser nulo.");
+            return;
+        }
+
+        if (detalleVenta.getVentaId() != -1 && detalleVenta.getVentaId() <= 0) {
+            System.out.println("El ID de la venta no es valido.");
+            return;
+        }
+
+        if (detalleVenta.getCocheId() != -1 && detalleVenta.getCocheId() <= 0) {
+            System.out.println("El ID del coche no es valido.");
+            return;
+        }
+
+        if (detalleVenta.getCantidad() != -1 && detalleVenta.getCantidad() <= 0) {
             System.out.println("La cantidad debe ser mayor que 0.");
             return;
         }
 
-        if (detalleVenta.getPrecioUnitario() < 0) {
-            System.out.println("El precio unitario no puede ser negativo.");
-            return;
-        }
-
         detalleVentaRepository.modificarDetalleVenta(id, detalleVenta);
+        System.out.println("Detalle de venta modificado correctamente.");
     }
 
     public DetalleVenta buscarDetalleVenta(int id) {

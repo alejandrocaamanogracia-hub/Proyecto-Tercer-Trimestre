@@ -6,24 +6,21 @@ public class DetalleVenta {
     private int ventaId;
     private int cocheId;
     private int cantidad;
-    private double precioUnitario;
 
     public DetalleVenta() {
     }
 
-    public DetalleVenta(int ventaId, int cocheId, int cantidad, double precioUnitario) {
+    public DetalleVenta(int ventaId, int cocheId, int cantidad) {
         this.ventaId = ventaId;
         this.cocheId = cocheId;
         this.cantidad = cantidad;
-        this.precioUnitario = precioUnitario;
     }
 
-    public DetalleVenta(int id, int ventaId, int cocheId, int cantidad, double precioUnitario) {
+    public DetalleVenta(int id, int ventaId, int cocheId, int cantidad) {
         this.id = id;
         this.ventaId = ventaId;
         this.cocheId = cocheId;
         this.cantidad = cantidad;
-        this.precioUnitario = precioUnitario;
     }
 
     public int getId() {
@@ -62,15 +59,6 @@ public class DetalleVenta {
     }
 
 
-    public double getPrecioUnitario() {
-        return precioUnitario;
-    }
-
-    public void setPrecioUnitario(double precioUnitario) {
-        this.precioUnitario = precioUnitario;
-    }
-
-
     @Override
     public String toString() {
         return "DetalleVenta{" +
@@ -78,7 +66,6 @@ public class DetalleVenta {
                 ", ventaId=" + ventaId +
                 ", cocheId=" + cocheId +
                 ", cantidad=" + cantidad +
-                ", precioUnitario=" + precioUnitario +
                 '}';
     }
 }
