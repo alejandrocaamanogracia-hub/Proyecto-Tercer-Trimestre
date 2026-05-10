@@ -159,3 +159,50 @@ END;
 /
 SELECT fn_total_gastado_cliente(1) AS total_gastado
 FROM dual;
+
+
+
+
+CREATE OR REPLACE FUNCTION total_usuario(v_id_usuario usuarios.id%type)
+return Number
+AS
+    v_suma_dinero NUMBER;
+    
+BEGIN
+
+    SELECT SUM(total) INTO v_suma_dinero
+    FROM ventas
+    WHERE usuario_id = v_id_usuario;
+    
+    RETURN v_suma_dinero;
+    
+END;
+/
+
+BEGIN
+    DBMS_OUTPUT.PUT_LINE(total_usuario(29));
+END;
+/
+
+CREATE OR REPLACE PROCEDURE coche_venta(v_id_venta ventas.id%type)
+
+AS
+    v_coche coches.modelo%type;
+    
+BEGIN
+
+    SELECT c.modelo INTO v_coche
+    FROM coches c
+    JOIN detalle_venta d ON d.coche_id = c.id
+    JOIN ventas v ON d.venta_id = v.id
+    WHERE v.id = v_id_venta;
+    
+    DBMS_OUTPUT.PUT_LINE('En la venta con el id ' || v_id_venta || ' se ha vendido el coche ' || v_coche);
+    
+END;
+/
+
+BEGIN
+    coche_venta(41);
+END;
+/

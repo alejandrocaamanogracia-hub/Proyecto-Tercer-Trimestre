@@ -1,3 +1,5 @@
+SET SERVEROUTPUT ON;
+
 // CLIENTES
 
 DECLARE
@@ -24,13 +26,13 @@ END;
 
 DECLARE 
 
-    CURSOR c_cliente IS
+    CURSOR c_cliente (v_ciudad clientes.direccion%type) IS
         
-        SELECT id, nombre FROM clientes WHERE direccion LIKE '%Madrid%';
+        SELECT id, nombre FROM clientes WHERE direccion LIKE ('%' || v_ciudad || '%' );
 
 BEGIN
 
-        FOR cliente IN c_cliente LOOP
+        FOR cliente IN c_cliente ('Madrid') LOOP
         
             DBMS_OUTPUT.PUT_LINE('El cliente ' || cliente.nombre || ' con id ' || cliente.id || ' vive en Madrid');
             
@@ -67,7 +69,8 @@ DECLARE
         
         SELECT id, nombre
         FROM clientes 
-        WHERE telefono IS NULL;
+        WHERE telefono IS NULL
+        FOR UPDATE;
 
 BEGIN
 
@@ -77,6 +80,12 @@ BEGIN
         
             DBMS_OUTPUT.PUT_LINE('id: ' || cliente.id || ' nombre: ' || cliente.nombre);
             
+            DBMS_OUTPUT.PUT_LINE('Se le asignará el número por defecto 0');
+            
+            UPDATE clientes 
+            SET telefono = 0
+            WHERE CURRENT OF c_cliente;
+            
         END LOOP;
 
 
@@ -85,18 +94,18 @@ END;
 
 DECLARE 
 
-    CURSOR c_cliente IS
+    CURSOR c_cliente (v_compra ventas.total%type) IS
         
         SELECT c.id, c.nombre, v.total
         FROM clientes c
         JOIN ventas v ON v.cliente_id = c.id
-        WHERE v.total > 20000;
+        WHERE v.total > v_compra;
 
 BEGIN
 
-        DBMS_OUTPUT.PUT_LINE('Los clientes que han hecho una compra de más de 20000€ son: ');
+        DBMS_OUTPUT.PUT_LINE('Clientes que han hecho una compra de más de 20000€' );
 
-        FOR cliente IN c_cliente LOOP
+        FOR cliente IN c_cliente (20000) LOOP
         
             DBMS_OUTPUT.PUT_LINE('id: ' || cliente.id || ' nombre: ' || cliente.nombre || ' total: ' || cliente.total);
             
@@ -109,15 +118,15 @@ END;
 // COCHES
 
 DECLARE
-    CURSOR c_coches IS
+    CURSOR c_coches (v_anio coches.anio%type) IS
         SELECT id, marca, modelo, version, anio FROM coches
-        WHERE anio > 2021;
+        WHERE anio > v_anio;
 
 BEGIN
 
     DBMS_OUTPUT.PUT_LINE('Coches del 2022 a la actualidad: ');
 
-    FOR coche IN c_coches LOOP
+    FOR coche IN c_coches (2022) LOOP
     
         DBMS_OUTPUT.PUT_LINE(coche.id || ' ' || coche.marca || ' ' || coche.modelo || ' ' || coche.anio);
     
@@ -147,15 +156,20 @@ END;
 DECLARE
     CURSOR c_coches IS
         SELECT id, marca, modelo, version, anio FROM coches
-        WHERE estado LIKE '%Disponible%' AND color LIKE '%Azul%';
+        WHERE estado LIKE '%Disponible%' AND color LIKE '%Azul%'
+        FOR UPDATE;
 
 BEGIN
 
-    DBMS_OUTPUT.PUT_LINE('Coches disponibles: ');
+    DBMS_OUTPUT.PUT_LINE('Los coches disponibles en color azul son: ');
 
     FOR coche IN c_coches LOOP
     
         DBMS_OUTPUT.PUT_LINE(coche.id || ' ' || coche.marca || ' ' || coche.modelo || ' ' || coche.anio);
+        DBMS_OUTPUT.PUT_LINE('Se han vendido todos los vehiculos azules que estaban disponibles');
+        UPDATE coches
+        SET estado = 'Vendido'
+        WHERE CURRENT OF c_coches;
     
     END LOOP;
 
@@ -223,7 +237,8 @@ END;
 DECLARE
     CURSOR c_usuarios IS
         SELECT id, nombre, rol FROM usuarios
-        WHERE rol LIKE '%Gestor%';
+        WHERE rol LIKE '%Gestor%'
+        FOR UPDATE;
 
 BEGIN
 
@@ -232,6 +247,11 @@ BEGIN
     FOR usuario IN c_usuarios LOOP
     
         DBMS_OUTPUT.PUT_LINE(usuario.id || ' ' || usuario.nombre || ' ' || usuario.rol);
+        DBMS_OUTPUT.PUT_LINE('Se les cambiará la contraseña añadiendo su rol');
+        UPDATE usuarios
+        SET password_hash = (password_hash || '.gestor')
+        WHERE CURRENT OF c_usuarios;
+        
     
     END LOOP;
 
@@ -250,6 +270,7 @@ BEGIN
     FOR usuario IN c_usuarios LOOP
     
         DBMS_OUTPUT.PUT_LINE(usuario.id || ' ' || usuario.nombre || ' ' || usuario.rol);
+    
     
     END LOOP;
 
@@ -410,9 +431,7 @@ END;
 
 DECLARE
 
-    v_min_presupuesto NUMBER := 20000;
-
-    CURSOR c_ventas IS
+    CURSOR c_ventas (v_min_presupuesto NUMBER) IS
         SELECT v.id, v.fecha, v.estado, v.total, c.nombre AS cliente
         FROM ventas v
         JOIN clientes c ON c.id = v.cliente_id
@@ -421,9 +440,9 @@ DECLARE
 
 BEGIN
 
-    DBMS_OUTPUT.PUT_LINE('Ventas con presupuesto mayor a ' || v_min_presupuesto || ':');
+    DBMS_OUTPUT.PUT_LINE('Ventas con presupuesto mayor a ' || 20000 || ':');
 
-    FOR venta IN c_ventas LOOP
+    FOR venta IN c_ventas (20000) LOOP
     
         DBMS_OUTPUT.PUT_LINE(
             'ID: ' || venta.id ||
