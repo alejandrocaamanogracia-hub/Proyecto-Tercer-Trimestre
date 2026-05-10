@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DriveFlow CRM | Login</title>
+
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/medias.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,300..800&display=swap"
+        rel="stylesheet">
+</head>
+
+<body class="log-body">
+
+    <main class="log-login">
+
+        <section class="log-login__hero">
+            <div class="log-login__hero-content">
+                <p class="log-login__subtitle">DriveFlow CRM</p>
+
+                <h1 class="log-login__title">
+                    Gestiona clientes, ventas e interacciones desde un solo lugar
+                </h1>
+
+                <p class="log-login__description">
+                    Plataforma interna para concesionarios. Accede al sistema para gestionar la información comercial
+                    del CRM.
+                </p>
+
+                <div class="log-login__viewport-box">
+                    <span class="log-login__viewport-label">Viewport actual:</span>
+                    <span id="viewportInfo" class="log-login__viewport-value">Calculando...</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="log-login__access">
+            <form class="log-login__form" id="loginForm">
+
+                <div class="log-login__brand">
+                    <div class="log-login__logo">DF</div>
+
+                    <div>
+                        <h2 class="log-login__form-title">Iniciar sesión</h2>
+                        <p class="log-login__form-subtitle">Accede con tu usuario corporativo</p>
+                    </div>
+                </div>
+
+                <div class="log-login__group">
+                    <label class="log-login__label" for="email">Email</label>
+                    <input class="log-login__input" type="email" id="email" name="email"
+                        placeholder="admin@driveflow.com" autocomplete="email">
+                </div>
+
+                <div class="log-login__group">
+                    <label class="log-login__label" for="password">Contraseña</label>
+                    <input class="log-login__input" type="password" id="password" name="password"
+                        placeholder="Introduce tu contraseña" autocomplete="current-password">
+                </div>
+
+                <p class="log-login__error" id="loginError"></p>
+
+                <button class="log-login__button" type="submit">
+                    Entrar al CRM
+                </button>
+
+                <div class="log-login__demo">
+                    <p class="log-login__demo-title">Usuario de prueba</p>
+                    <p class="log-login__demo-text">Email: admin@driveflow.com</p>
+                    <p class="log-login__demo-text">Contraseña: admin123</p>
+                </div>
+
+            </form>
+        </section>
+
+    </main>
+
+    <script src="js/auth.js"></script>
+    <script src="js/login.js"></script>
+</body>
+
+</html>

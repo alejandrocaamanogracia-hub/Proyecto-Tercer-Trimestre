@@ -1,0 +1,65 @@
+/* #region LOGIN */
+
+@media (max-width: 900px) {
+    .log-body {
+        height: auto;
+        min-height: 100vh;
+        overflow: auto;
+    }
+
+    .log-login {
+        min-height: 100vh;
+        height: auto;
+        grid-template-columns: 1fr;
+    }
+
+    .log-login__hero {
+        min-height: 38vh;
+        padding: 32px 24px;
+    }
+
+    .log-login__access {
+        padding: 20px;
+    }
+
+    .log-login__form {
+        padding: 26px;
+    }
+}
+
+@media (max-width: 520px) {
+    .log-login__hero {
+        min-height: auto;
+        padding: 32px 18px;
+    }
+
+    .log-login__title {
+        margin-bottom: 18px;
+    }
+
+    .log-login__description {
+        margin-bottom: 24px;
+        font-size: 0.98rem;
+    }
+
+    .log-login__viewport-box {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .log-login__access {
+        padding: 18px;
+    }
+
+    .log-login__form {
+        padding: 22px;
+        border-radius: 22px;
+    }
+
+    .log-login__brand {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}
+
+/* #endregion */
