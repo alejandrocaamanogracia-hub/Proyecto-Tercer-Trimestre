@@ -1,3 +1,6 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght,XOPQ,XTRA,YOPQ,YTDE,YTFI,YTLC,YTUC@8..144,100..1000,96,468,79,-203,738,514,712&display=swap');
+
 /* #region GLOBAL VARIABLES */
 
 :root {
@@ -25,17 +28,120 @@
 
 /* #endregion */
 
-
 /* #region RESET */
 
 * {
     box-sizing: border-box;
+}
+
+body{
+    font-family: var(--font-main);
+    color: var(--color-white);
+    height: 100vh;
     margin: 0;
     padding: 0;
 }
 
 /* #endregion */
 
+/* #region ELEMENTOS COMUNES */
+
+.logo {
+    width: 54px;
+    height: 54px;
+    display: grid;
+    place-items: center;
+    border-radius: 18px;
+    background: linear-gradient(135deg, var(--color-accent), var(--color-danger));
+    color: var(--color-primary);
+    font-weight: 800;
+    font-size: 1.1rem;
+}
+
+.title{
+    margin-bottom: 24px;
+    font-size: 5.8rem;
+    line-height: 0.95;
+    letter-spacing: -0.06em;
+    font-weight: 800;
+}
+
+.text{
+    max-width: 560px;
+    color: var(--color-muted);
+    font-size: 1.08rem;
+    line-height: 1.7;
+    margin: 0;
+}
+
+.subtitle{
+    margin: 0;
+    color: var(--color-white);
+    font-size: 1.75rem;
+    font-weight: 800;
+}
+
+.button{
+    width: 100%;
+    padding: 15px 18px;
+    border: none;
+    border-radius: var(--radius-md);
+    background: linear-gradient(135deg, var(--color-accent), var(--color-danger));
+    color: var(--color-primary);
+    font-family: var(--font-main);
+    font-size: 1rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: transform var(--transition-base), box-shadow var(--transition-base), background var(--transition-base);
+}
+
+/* #region  HEADER */
+
+.header{
+    position: sticky;
+    top: 0;
+    left: 0;
+    padding: 24px ;
+    background-color: color-mix(var(--color-primary), transparent 50%);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header__brand{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.header__nav {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+}
+
+.header__link {
+    padding: 12px 14px;
+    border-radius: 12px;
+    color: var(--color-muted);
+    font-weight: 700;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    text-decoration: none;
+    font-weight: 800;
+}
+
+.header__link:hover,
+.header__link--active {
+    border: none;
+    border-radius: var(--radius-md);
+    background: linear-gradient(135deg, var(--color-accent), var(--color-danger));
+    color: var(--color-primary);
+}
+
+
+/* #endregion */
+
+/* #endregion */
 
 /* #region LOGIN */
 
@@ -107,22 +213,6 @@
     text-transform: uppercase;
 }
 
-.log-login__title {
-    margin-bottom: 24px;
-    font-size: clamp(2.4rem, 6vw, 5.8rem);
-    line-height: 0.95;
-    letter-spacing: -0.06em;
-    font-weight: 800;
-}
-
-.log-login__description {
-    max-width: 560px;
-    margin-bottom: 32px;
-    color: var(--color-muted);
-    font-size: 1.08rem;
-    line-height: 1.7;
-}
-
 .log-login__viewport-box {
     display: inline-flex;
     gap: 10px;
@@ -167,25 +257,6 @@
     gap: 16px;
     align-items: center;
     margin-bottom: 28px;
-}
-
-.log-login__logo {
-    width: 54px;
-    height: 54px;
-    display: grid;
-    place-items: center;
-    border-radius: 18px;
-    background: linear-gradient(135deg, var(--color-accent), var(--color-danger));
-    color: var(--color-primary);
-    font-weight: 800;
-    font-size: 1.1rem;
-}
-
-.log-login__form-title {
-    margin-bottom: 4px;
-    color: var(--color-white);
-    font-size: 1.75rem;
-    font-weight: 800;
 }
 
 .log-login__form-subtitle {
@@ -236,20 +307,6 @@
     font-weight: 650;
 }
 
-.log-login__button {
-    width: 100%;
-    padding: 15px 18px;
-    border: none;
-    border-radius: var(--radius-md);
-    background: linear-gradient(135deg, var(--color-accent), var(--color-danger));
-    color: var(--color-primary);
-    font-family: var(--font-main);
-    font-size: 1rem;
-    font-weight: 800;
-    cursor: pointer;
-    transition: transform var(--transition-base), box-shadow var(--transition-base), background var(--transition-base);
-}
-
 .log-login__button:hover {
     transform: translateY(-2px);
     box-shadow: inset 0 0 0 2px rgba(254, 231, 181, 0.35);
@@ -280,5 +337,16 @@
     font-size: 0.92rem;
     line-height: 1.6;
 }
+
+/* #endregion */
+
+/* #region  dashboard */
+
+.dashboard{
+    background: radial-gradient(circle at top left, rgba(254, 137, 50, 0.28), transparent 32%),
+linear-gradient(135deg, var(--color-primary), var(--color-secondary) 45%, var(--color-tertiary));
+    background-repeat: no-repeat;
+}
+
 
 /* #endregion */
