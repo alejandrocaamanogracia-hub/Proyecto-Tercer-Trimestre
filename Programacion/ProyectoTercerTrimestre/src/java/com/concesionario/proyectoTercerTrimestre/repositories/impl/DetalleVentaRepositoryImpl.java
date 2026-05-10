@@ -15,8 +15,8 @@ public class DetalleVentaRepositoryImpl implements DetalleVentaRepository {
 
     @Override
     public void crearDetalleVenta(DetalleVenta detalleVenta) {
-        String sql = "INSERT INTO detalle_venta (venta_id, coche_id, cantidad, precio_unitario) " +
-                "VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO detalle_venta (venta_id, coche_id, cantidad) " +
+                "VALUES (?, ?, ?)";
 
         try {
             Connection connection = DataBaseConnection.getConnection();
@@ -25,7 +25,6 @@ public class DetalleVentaRepositoryImpl implements DetalleVentaRepository {
             preparedStatement.setInt(1, detalleVenta.getVentaId());
             preparedStatement.setInt(2, detalleVenta.getCocheId());
             preparedStatement.setInt(3, detalleVenta.getCantidad());
-            preparedStatement.setDouble(4, detalleVenta.getPrecioUnitario());
 
             preparedStatement.executeUpdate();
 
@@ -72,7 +71,6 @@ public class DetalleVentaRepositoryImpl implements DetalleVentaRepository {
                 detalleVenta.setVentaId(resultSet.getInt("venta_id"));
                 detalleVenta.setCocheId(resultSet.getInt("coche_id"));
                 detalleVenta.setCantidad(resultSet.getInt("cantidad"));
-                detalleVenta.setPrecioUnitario(resultSet.getDouble("precio_unitario"));
 
                 detallesVenta.add(detalleVenta);
             }
@@ -142,17 +140,6 @@ public class DetalleVentaRepositoryImpl implements DetalleVentaRepository {
 
             }
 
-            sql = "UPDATE detalle_venta SET precio_unitario = ? WHERE id = ?";
-
-            if (detalleVenta.getPrecioUnitario() != -1){
-
-                PreparedStatement preparedStatement = connection.prepareStatement(sql);
-                preparedStatement.setDouble(1, detalleVenta.getPrecioUnitario());
-                preparedStatement.setInt(2, id);
-                preparedStatement.executeUpdate();
-
-            }
-
         }catch (SQLException e){
             System.out.println("Error al modificar el detalle de venta.");
             e.printStackTrace();
@@ -177,7 +164,6 @@ public class DetalleVentaRepositoryImpl implements DetalleVentaRepository {
                 detalleVenta1.setVentaId(resultSet.getInt("venta_id"));
                 detalleVenta1.setCocheId(resultSet.getInt("coche_id"));
                 detalleVenta1.setCantidad(resultSet.getInt("cantidad"));
-                detalleVenta1.setPrecioUnitario(resultSet.getDouble("precio_unitario"));
             }
 
         }catch (SQLException e){
