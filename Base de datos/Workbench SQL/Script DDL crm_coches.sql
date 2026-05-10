@@ -88,7 +88,13 @@ CREATE TABLE detalle_venta (
         FOREIGN KEY (coche_id)
         REFERENCES coches(id)
         ON DELETE RESTRICT
-        ON UPDATE CASCADE
+        ON UPDATE CASCADE,
+
+    CONSTRAINT uk_detalle_venta_venta_coche
+        UNIQUE (venta_id, coche_id),
+
+    CONSTRAINT uk_detalle_venta_coche
+        UNIQUE (coche_id)
 );
 
 -- =========================
