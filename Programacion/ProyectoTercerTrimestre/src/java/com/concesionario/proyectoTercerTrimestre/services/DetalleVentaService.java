@@ -38,6 +38,28 @@ public class DetalleVentaService {
             return;
         }
 
+        if (!detalleVentaRepository.existeVenta(detalleVenta.getVentaId())) {
+            System.out.println("No existe una venta con ese ID.");
+            return;
+        }
+
+        if (!detalleVentaRepository.existeCoche(detalleVenta.getCocheId())) {
+            System.out.println("No existe un coche con ese ID.");
+            return;
+        }
+
+        if (detalleVentaRepository.existeDetalleVentaConVentaYCoche(
+                detalleVenta.getVentaId(),
+                detalleVenta.getCocheId())) {
+            System.out.println("Ya existe un detalle de venta con esa venta y ese coche.");
+            return;
+        }
+
+        if (detalleVentaRepository.existeDetalleVentaConCoche(detalleVenta.getCocheId())) {
+            System.out.println("Ese coche ya esta asociado a una venta.");
+            return;
+        }
+
         detalleVentaRepository.crearDetalleVenta(detalleVenta);
         System.out.println("Detalle de venta creado correctamente.");
     }
@@ -138,5 +160,7 @@ public class DetalleVentaService {
         return detalleVenta;
 
     }
+
+
 
 }

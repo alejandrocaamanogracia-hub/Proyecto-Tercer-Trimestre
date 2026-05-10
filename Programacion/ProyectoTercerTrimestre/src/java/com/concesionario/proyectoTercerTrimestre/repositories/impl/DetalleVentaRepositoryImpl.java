@@ -177,4 +177,97 @@ public class DetalleVentaRepositoryImpl implements DetalleVentaRepository {
 
     }
 
+    @Override
+    public boolean existeVenta(int ventaId) {
+        String sql = "SELECT COUNT(*) FROM ventas WHERE id = ?";
+
+        try (Connection connection = DataBaseConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setInt(1, ventaId);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getInt(1) > 0;
+                }
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error al comprobar si existe la venta.");
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    @Override
+    public boolean existeCoche(int cocheId) {
+        String sql = "SELECT COUNT(*) FROM coches WHERE id = ?";
+
+        try (Connection connection = DataBaseConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setInt(1, cocheId);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getInt(1) > 0;
+                }
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error al comprobar si existe el coche.");
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    @Override
+    public boolean existeDetalleVentaConVentaYCoche(int ventaId, int cocheId) {
+        String sql = "SELECT COUNT(*) FROM detalle_venta WHERE venta_id = ? AND coche_id = ?";
+
+        try (Connection connection = DataBaseConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setInt(1, ventaId);
+            preparedStatement.setInt(2, cocheId);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getInt(1) > 0;
+                }
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error al comprobar si ya existe el detalle de venta.");
+            e.printStackTrace();
+        }
+
+        return true;
+    }
+
+    @Override
+    public boolean existeDetalleVentaConCoche(int cocheId) {
+        String sql = "SELECT COUNT(*) FROM detalle_venta WHERE coche_id = ?";
+
+        try (Connection connection = DataBaseConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setInt(1, cocheId);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getInt(1) > 0;
+                }
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error al comprobar si el coche ya esta en un detalle de venta.");
+            e.printStackTrace();
+        }
+
+        return true;
+    }
+
 }
