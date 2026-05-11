@@ -103,3 +103,30 @@
 }
 
 /* #endregion */
+
+/* #region GLOBAL FOOTER RESPONSIVE */
+
+@media (max-width: 900px) {
+    .app-footer {
+        padding: 22px;
+    }
+
+    .app-footer__content {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .app-footer__copy {
+        text-align: left;
+    }
+}
+
+@media (max-width: 520px) {
+    .app-footer__nav {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+}
+
+/* #endregion */
