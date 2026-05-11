@@ -17,21 +17,77 @@
 
 <body class="cli-body">
 
-    <header class="cli-header">
-        <div class="cli-header__brand">
-            <div class="cli-header__logo">DF</div>
-            <div>
-                <h1 class="cli-header__title">Gestión de clientes</h1>
-                <p class="cli-header__subtitle">Crear, consultar, modificar y eliminar clientes del CRM</p>
+    <aside class="sidebar" id="sidebar">
+
+        <div class="sidebar__brand">
+            <div class="logo">DF</div>
+            <div class="sidebar__brand-text">
+                <span class="sidebar__brand-name">DriveFlow</span>
+                <span class="sidebar__brand-sub">CRM</span>
             </div>
         </div>
 
-        <nav class="cli-header__nav">
-            <a class="cli-header__link" href="dashboard.html">Dashboard</a>
-            <a class="cli-header__link cli-header__link--active" href="clientes.html">Clientes</a>
-            <button class="cli-header__logout" id="logoutButton">Cerrar sesión</button>
+        <nav class="sidebar__nav">
+
+            <span class="sidebar__label">Principal</span>
+
+            <a class="sidebar__link" href="./dashboard.html" data-tooltip="Dashboard">
+                <span class="material-symbols-rounded sidebar__icon">dashboard</span>
+                <span class="sidebar__text">Dashboard</span>
+            </a>
+
+            <div class="sidebar__divider"></div>
+            <span class="sidebar__label">Gestión</span>
+
+            <a class="sidebar__link sidebar__link--active" href="./clientes.html" data-tooltip="Clientes">
+                <span class="material-symbols-rounded sidebar__icon">groups</span>
+                <span class="sidebar__text">Clientes</span>
+                <span class="sidebar__badge">25</span>
+            </a>
+
+            <a class="sidebar__link" href="./usuarios.html" data-tooltip="Usuarios">
+                <span class="material-symbols-rounded sidebar__icon">badge</span>
+                <span class="sidebar__text">Usuarios</span>
+                <span class="sidebar__badge">8</span>
+            </a>
+
+            <a class="sidebar__link" href="./coches.html" data-tooltip="Coches">
+                <span class="material-symbols-rounded sidebar__icon">directions_car</span>
+                <span class="sidebar__text">Coches</span>
+                <span class="sidebar__badge">56</span>
+            </a>
+
+            <div class="sidebar__divider"></div>
+            <span class="sidebar__label">Comercial</span>
+
+            <a class="sidebar__link" href="./ventas.html" data-tooltip="Ventas">
+                <span class="material-symbols-rounded sidebar__icon">payments</span>
+                <span class="sidebar__text">Ventas</span>
+            </a>
+
+            <a class="sidebar__link" href="./detalle-ventas.html" data-tooltip="Detalle ventas">
+                <span class="material-symbols-rounded sidebar__icon">receipt_long</span>
+                <span class="sidebar__text">Detalle ventas</span>
+            </a>
+
+            <a class="sidebar__link" href="./interacciones-cliente.html" data-tooltip="Interacciones">
+                <span class="material-symbols-rounded sidebar__icon">forum</span>
+                <span class="sidebar__text">Interacciones</span>
+            </a>
+
         </nav>
-    </header>
+
+        <div class="sidebar__footer">
+            <div class="sidebar__profile">
+                <div class="sidebar__avatar">AD</div>
+                <div class="sidebar__profile-info">
+                    <div class="sidebar__profile-name">Admin Principal</div>
+                    <div class="sidebar__profile-role">Administrador</div>
+                </div>
+            </div>
+        </div>
+
+    </aside>
 
     <main class="cli-clientes">
 
@@ -137,6 +193,7 @@
 
     <script src="/js/auth.js"></script>
     <script src="/js/clientes.js"></script>
+    <script src="/js/barra.js"></script>
 </body>
 
 </html>
