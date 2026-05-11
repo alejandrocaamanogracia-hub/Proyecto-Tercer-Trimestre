@@ -7,57 +7,84 @@
     <title>DriveFlow CRM | Dashboard</title>
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/medias.css">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+    
 </head>
 
 <body class="dashboard">
 
-    <header class="header">
+        <aside class="sidebar" id="sidebar">
 
-        <div class="header__brand">
-
+        <div class="sidebar__brand">
             <div class="logo">DF</div>
-
-            <div>
-
-                <h2 class="heading">DriveFlow</h2>
-
-                <p class="text">CRM</p>
-
+            <div class="sidebar__brand-text">
+                <span class="sidebar__brand-name">DriveFlow</span>
+                <span class="sidebar__brand-sub">CRM</span>
             </div>
-
         </div>
 
-        <nav class="header__nav">
-            <a class="header__link header__link--active" href="./index.html">
-                Dashboard
+        <nav class="sidebar__nav">
+
+            <span class="sidebar__label">Principal</span>
+
+            <a class="sidebar__link sidebar__link--active" href="./index.html" data-tooltip="Dashboard">
+                <span class="material-symbols-rounded sidebar__icon">dashboard</span>
+                <span class="sidebar__text">Dashboard</span>
             </a>
 
-            <a class="header__link sidebar__link" href="./clientes.html">
-                Clientes
+            <div class="sidebar__divider"></div>
+            <span class="sidebar__label">Gestión</span>
+
+            <a class="sidebar__link" href="./clientes.html" data-tooltip="Clientes">
+                <span class="material-symbols-rounded sidebar__icon">groups</span>
+                <span class="sidebar__text">Clientes</span>
+                <span class="sidebar__badge">25</span>
             </a>
 
-            <a class="header__link sidebar__link" href="./empleados.html">
-                Usuarios
+            <a class="sidebar__link" href="./empleados.html" data-tooltip="Usuarios">
+                <span class="material-symbols-rounded sidebar__icon">badge</span>
+                <span class="sidebar__text">Usuarios</span>
+                <span class="sidebar__badge">8</span>
             </a>
 
-            <a class="header__link sidebar__link" href="./coches.html">
-                Coches
+            <a class="sidebar__link" href="./coches.html" data-tooltip="Coches">
+                <span class="material-symbols-rounded sidebar__icon">directions_car</span>
+                <span class="sidebar__text">Coches</span>
+                <span class="sidebar__badge">56</span>
             </a>
 
-            <a class="header__link sidebar__link" href="./ventas.html">
-                Ventas
+            <div class="sidebar__divider"></div>
+            <span class="sidebar__label">Comercial</span>
+
+            <a class="sidebar__link" href="./ventas.html" data-tooltip="Ventas">
+                <span class="material-symbols-rounded sidebar__icon">payments</span>
+                <span class="sidebar__text">Ventas</span>
             </a>
 
-            <a class="header__link sidebar__link" href="./detalle-ventas.html">
-                Detalle ventas
+            <a class="sidebar__link" href="./detalle-ventas.html" data-tooltip="Detalle ventas">
+                <span class="material-symbols-rounded sidebar__icon">receipt_long</span>
+                <span class="sidebar__text">Detalle ventas</span>
             </a>
 
-            <a class="header__link sidebar__link" href="./interacciones.html">
-                Interacciones
+            <a class="sidebar__link" href="./interacciones.html" data-tooltip="Interacciones">
+                <span class="material-symbols-rounded sidebar__icon">forum</span>
+                <span class="sidebar__text">Interacciones</span>
             </a>
+
         </nav>
 
-    </header>
+        <div class="sidebar__footer">
+            <div class="sidebar__profile">
+                <div class="sidebar__avatar">JP</div>
+                <div class="sidebar__profile-info">
+                    <div class="sidebar__profile-name">Juan Pérez</div>
+                    <div class="sidebar__profile-role">Administrador</div>
+                </div>
+            </div>
+        </div>
+
+    </aside>
+
 
     <section class="dash-total">
 
@@ -119,6 +146,8 @@
         </aside>
 
     </section>
+
+    <script src="./js/barra.js"></script>
 
 </body>
 
