@@ -63,3 +63,43 @@
 }
 
 /* #endregion */
+
+/* #region CLIENTES RESPONSIVE */
+
+@media (max-width: 1100px) {
+    .cli-clientes {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 760px) {
+    .cli-header {
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 22px;
+    }
+
+    .cli-header__nav {
+        width: 100%;
+        flex-wrap: wrap;
+    }
+
+    .cli-clientes {
+        padding: 20px;
+    }
+
+    .cli-clientes__toolbar {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .cli-clientes__search-box {
+        width: 100%;
+    }
+
+    .cli-clientes__actions {
+        flex-direction: column;
+    }
+}
+
+/* #endregion */

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DriveFlow CRM | Clientes</title>
+
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/medias.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,300..800&display=swap"
+        rel="stylesheet">
+</head>
+
+<body class="cli-body">
+
+    <header class="cli-header">
+        <div class="cli-header__brand">
+            <div class="cli-header__logo">DF</div>
+            <div>
+                <h1 class="cli-header__title">Gestión de clientes</h1>
+                <p class="cli-header__subtitle">Crear, consultar, modificar y eliminar clientes del CRM</p>
+            </div>
+        </div>
+
+        <nav class="cli-header__nav">
+            <a class="cli-header__link" href="dashboard.html">Dashboard</a>
+            <a class="cli-header__link cli-header__link--active" href="clientes.html">Clientes</a>
+            <button class="cli-header__logout" id="logoutButton">Cerrar sesión</button>
+        </nav>
+    </header>
+
+    <main class="cli-clientes">
+
+        <section class="cli-clientes__panel">
+            <div class="cli-clientes__panel-header">
+                <h2 class="cli-clientes__panel-title">Formulario de cliente</h2>
+                <p class="cli-clientes__panel-text">Completa los datos para registrar o actualizar un cliente.</p>
+            </div>
+
+            <form class="cli-clientes__form" id="clienteForm">
+                <input type="hidden" id="clienteId">
+
+                <div class="cli-clientes__group">
+                    <label class="cli-clientes__label" for="nombre">Nombre</label>
+                    <input class="cli-clientes__input" type="text" id="nombre" placeholder="Nombre del cliente">
+                </div>
+
+                <div class="cli-clientes__group">
+                    <label class="cli-clientes__label" for="email">Email</label>
+                    <input class="cli-clientes__input" type="email" id="email" placeholder="cliente@email.com">
+                </div>
+
+                <div class="cli-clientes__group">
+                    <label class="cli-clientes__label" for="telefono">Teléfono</label>
+                    <input class="cli-clientes__input" type="text" id="telefono" placeholder="600111222">
+                </div>
+
+                <div class="cli-clientes__group">
+                    <label class="cli-clientes__label" for="direccion">Dirección</label>
+                    <input class="cli-clientes__input" type="text" id="direccion" placeholder="Calle, ciudad">
+                </div>
+
+                <p class="cli-clientes__message" id="clienteMensaje"></p>
+
+                <div class="cli-clientes__actions">
+                    <button class="cli-clientes__button cli-clientes__button--primary" type="submit" id="submitButton">
+                        Guardar cliente
+                    </button>
+
+                    <button class="cli-clientes__button cli-clientes__button--secondary" type="button"
+                        id="cancelButton">
+                        Limpiar
+                    </button>
+                </div>
+            </form>
+        </section>
+
+        <section class="cli-clientes__list-section">
+            <div class="cli-clientes__toolbar">
+                <div>
+                    <h2 class="cli-clientes__list-title">Listado de clientes</h2>
+                    <p class="cli-clientes__list-text">Datos guardados en SessionStorage durante la sesión.</p>
+                </div>
+
+                <div class="cli-clientes__search-box">
+                    <input class="cli-clientes__search" type="text" id="buscadorClientes"
+                        placeholder="Buscar cliente...">
+                </div>
+            </div>
+
+            <div class="cli-clientes__table-wrapper">
+                <table class="cli-clientes__table">
+                    <thead class="cli-clientes__thead">
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Email</th>
+                            <th>Teléfono</th>
+                            <th>Dirección</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+
+                    <tbody class="cli-clientes__tbody" id="clientesTableBody">
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="/js/auth.js"></script>
+    <script src="/js/clientes.js"></script>
+</body>
+
+</html>
