@@ -38,14 +38,14 @@ function guardarUsuarioActivo(usuario) {
 
 function cerrarSesion() {
     sessionStorage.removeItem("usuarioActivo");
-    window.location.href = "index.html";
+    window.location.href = "../index.html";
 }
 
 function protegerPagina() {
     const usuarioActivo = obtenerUsuarioActivo();
 
     if (!usuarioActivo) {
-        window.location.href = "index.html";
+        window.location.href = "../index.html";
     }
 }
 

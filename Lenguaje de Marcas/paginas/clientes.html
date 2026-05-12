@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DriveFlow CRM | Clientes</title>
+
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/medias.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,300..800&display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+        rel="stylesheet">
+</head>
+
+<body class="cli-body">
+
+    <div class="cli-layout">
+
+        <aside class="sidebar" id="sidebar">
+
+            <div class="sidebar__brand">
+                <div class="logo">DF</div>
+                <div class="sidebar__brand-text">
+                    <span class="sidebar__brand-name">DriveFlow</span>
+                    <span class="sidebar__brand-sub">CRM</span>
+                </div>
+            </div>
+
+            <nav class="sidebar__nav">
+
+                <span class="sidebar__label">Principal</span>
+
+                <a class="sidebar__link" href="dashboard.html" data-tooltip="Dashboard">
+                    <span class="material-symbols-rounded sidebar__icon">dashboard</span>
+                    <span class="sidebar__text">Dashboard</span>
+                </a>
+
+                <div class="sidebar__divider"></div>
+                <span class="sidebar__label">Gestión</span>
+
+                <a class="sidebar__link sidebar__link--active" href="clientes.html" data-tooltip="Clientes">
+                    <span class="material-symbols-rounded sidebar__icon">groups</span>
+                    <span class="sidebar__text">Clientes</span>
+                    <span class="sidebar__badge">25</span>
+                </a>
+
+                <a class="sidebar__link" href="usuarios.html" data-tooltip="Usuarios">
+                    <span class="material-symbols-rounded sidebar__icon">badge</span>
+                    <span class="sidebar__text">Usuarios</span>
+                    <span class="sidebar__badge">8</span>
+                </a>
+
+                <a class="sidebar__link" href="coches.html" data-tooltip="Coches">
+                    <span class="material-symbols-rounded sidebar__icon">directions_car</span>
+                    <span class="sidebar__text">Coches</span>
+                    <span class="sidebar__badge">56</span>
+                </a>
+
+                <div class="sidebar__divider"></div>
+                <span class="sidebar__label">Comercial</span>
+
+                <a class="sidebar__link" href="ventas.html" data-tooltip="Ventas">
+                    <span class="material-symbols-rounded sidebar__icon">payments</span>
+                    <span class="sidebar__text">Ventas</span>
+                </a>
+
+                <a class="sidebar__link" href="detalle-ventas.html" data-tooltip="Detalle ventas">
+                    <span class="material-symbols-rounded sidebar__icon">receipt_long</span>
+                    <span class="sidebar__text">Detalle ventas</span>
+                </a>
+
+                <a class="sidebar__link" href="interacciones-cliente.html" data-tooltip="Interacciones">
+                    <span class="material-symbols-rounded sidebar__icon">forum</span>
+                    <span class="sidebar__text">Interacciones</span>
+                </a>
+
+                <button class="sidebar__link" type="button" id="logoutButton" data-tooltip="Cerrar sesión">
+                    <span class="material-symbols-rounded sidebar__icon">logout</span>
+                    <span class="sidebar__text">Cerrar sesión</span>
+                </button>
+
+            </nav>
+
+            <div class="sidebar__footer">
+                <div class="sidebar__profile">
+                    <div class="sidebar__avatar">AD</div>
+                    <div class="sidebar__profile-info">
+                        <div class="sidebar__profile-name">Admin Principal</div>
+                        <div class="sidebar__profile-role">Administrador</div>
+                    </div>
+                </div>
+            </div>
+
+        </aside>
+
+        <div class="cli-page">
+
+            <main class="cli-clientes">
+
+                <section class="cli-clientes__list-section">
+                    <div class="cli-clientes__toolbar">
+                        <div>
+                            <h2 class="cli-clientes__list-title">Listado de clientes</h2>
+                            <p class="cli-clientes__list-text">Datos guardados en SessionStorage durante la sesión.</p>
+                        </div>
+
+                        <div class="cli-clientes__toolbar-actions">
+                            <div class="cli-clientes__search-box">
+                                <input class="cli-clientes__search" type="text" id="buscadorClientes"
+                                    placeholder="Buscar cliente...">
+                            </div>
+
+                            <button class="cli-clientes__button cli-clientes__button--primary" type="button"
+                                id="newClientButton">
+                                Nuevo cliente
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="cli-clientes__table-wrapper">
+                        <table class="cli-clientes__table">
+                            <thead class="cli-clientes__thead">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nombre</th>
+                                    <th>Email</th>
+                                    <th>Teléfono</th>
+                                    <th>Dirección</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+
+                            <tbody class="cli-clientes__tbody" id="clientesTableBody">
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <section class="cli-clientes__panel cli-clientes__panel--hidden" id="clienteFormPanel">
+                    <div class="cli-clientes__panel-header">
+                        <h2 class="cli-clientes__panel-title">Formulario de cliente</h2>
+                        <p class="cli-clientes__panel-text">Completa los datos para registrar o actualizar un cliente.
+                        </p>
+                    </div>
+
+                    <form class="cli-clientes__form" id="clienteForm">
+                        <input type="hidden" id="clienteId">
+
+                        <div class="cli-clientes__group">
+                            <label class="cli-clientes__label" for="nombre">Nombre</label>
+                            <input class="cli-clientes__input" type="text" id="nombre" placeholder="Nombre del cliente">
+                        </div>
+
+                        <div class="cli-clientes__group">
+                            <label class="cli-clientes__label" for="email">Email</label>
+                            <input class="cli-clientes__input" type="email" id="email" placeholder="cliente@email.com">
+                        </div>
+
+                        <div class="cli-clientes__group">
+                            <label class="cli-clientes__label" for="telefono">Teléfono</label>
+                            <input class="cli-clientes__input" type="text" id="telefono" placeholder="600111222">
+                        </div>
+
+                        <div class="cli-clientes__group">
+                            <label class="cli-clientes__label" for="direccion">Dirección</label>
+                            <input class="cli-clientes__input" type="text" id="direccion" placeholder="Calle, ciudad">
+                        </div>
+
+                        <p class="cli-clientes__message" id="clienteMensaje"></p>
+
+                        <div class="cli-clientes__actions">
+                            <button class="cli-clientes__button cli-clientes__button--primary" type="submit"
+                                id="submitButton">
+                                Guardar cliente
+                            </button>
+
+                            <button class="cli-clientes__button cli-clientes__button--secondary" type="button"
+                                id="cancelButton">
+                                Cancelar
+                            </button>
+                        </div>
+                    </form>
+                </section>
+
+            </main>
+
+        </div>
+
+    </div>
+
+    <footer class="app-footer">
+        <div class="app-footer__content">
+            <div class="app-footer__brand">
+                <div class="app-footer__logo">DF</div>
+                <div>
+                    <p class="app-footer__title">DriveFlow CRM</p>
+                    <p class="app-footer__text">Sistema de gestión para concesionarios</p>
+                </div>
+            </div>
+
+            <nav class="app-footer__nav">
+                <a class="app-footer__link" href="#">Política de privacidad</a>
+                <a class="app-footer__link" href="#">Aviso legal</a>
+                <a class="app-footer__link" href="#">Soporte</a>
+            </nav>
+
+            <p class="app-footer__copy">
+                © 2026 DriveFlow CRM · Proyecto académico
+            </p>
+        </div>
+    </footer>
+
+    <script src="/js/auth.js"></script>
+    <script src="/js/clientes.js"></script>
+    <script src="/js/barra.js"></script>
+</body>
+
+</html>
