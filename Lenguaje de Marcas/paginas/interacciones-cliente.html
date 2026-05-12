@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DriveFlow CRM | Interacciones</title>
+
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/medias.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,300..800&display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+        rel="stylesheet">
+</head>
+
+<body class="int-body">
+
+    <div class="int-layout">
+
+        <aside class="sidebar" id="sidebar">
+
+            <div class="sidebar__brand">
+                <div class="logo">DF</div>
+                <div class="sidebar__brand-text">
+                    <span class="sidebar__brand-name">DriveFlow</span>
+                    <span class="sidebar__brand-sub">CRM</span>
+                </div>
+            </div>
+
+            <nav class="sidebar__nav">
+
+                <span class="sidebar__label">Principal</span>
+
+                <a class="sidebar__link" href="dashboard.html" data-tooltip="Dashboard">
+                    <span class="material-symbols-rounded sidebar__icon">dashboard</span>
+                    <span class="sidebar__text">Dashboard</span>
+                </a>
+
+                <div class="sidebar__divider"></div>
+                <span class="sidebar__label">Gestión</span>
+
+                <a class="sidebar__link" href="clientes.html" data-tooltip="Clientes">
+                    <span class="material-symbols-rounded sidebar__icon">groups</span>
+                    <span class="sidebar__text">Clientes</span>
+                    <span class="sidebar__badge">25</span>
+                </a>
+
+                <a class="sidebar__link" href="usuarios.html" data-tooltip="Usuarios">
+                    <span class="material-symbols-rounded sidebar__icon">badge</span>
+                    <span class="sidebar__text">Usuarios</span>
+                    <span class="sidebar__badge">8</span>
+                </a>
+
+                <a class="sidebar__link" href="coches.html" data-tooltip="Coches">
+                    <span class="material-symbols-rounded sidebar__icon">directions_car</span>
+                    <span class="sidebar__text">Coches</span>
+                    <span class="sidebar__badge">56</span>
+                </a>
+
+                <div class="sidebar__divider"></div>
+                <span class="sidebar__label">Comercial</span>
+
+                <a class="sidebar__link" href="ventas.html" data-tooltip="Ventas">
+                    <span class="material-symbols-rounded sidebar__icon">payments</span>
+                    <span class="sidebar__text">Ventas</span>
+                </a>
+
+                <a class="sidebar__link" href="detalle-ventas.html" data-tooltip="Detalle ventas">
+                    <span class="material-symbols-rounded sidebar__icon">receipt_long</span>
+                    <span class="sidebar__text">Detalle ventas</span>
+                </a>
+
+                <a class="sidebar__link sidebar__link--active" href="interacciones-cliente.html"
+                    data-tooltip="Interacciones">
+                    <span class="material-symbols-rounded sidebar__icon">forum</span>
+                    <span class="sidebar__text">Interacciones</span>
+                </a>
+
+                <button class="sidebar__link" type="button" id="logoutButton" data-tooltip="Cerrar sesión">
+                    <span class="material-symbols-rounded sidebar__icon">logout</span>
+                    <span class="sidebar__text">Cerrar sesión</span>
+                </button>
+
+            </nav>
+
+            <div class="sidebar__footer">
+                <div class="sidebar__profile">
+                    <div class="sidebar__avatar">AD</div>
+                    <div class="sidebar__profile-info">
+                        <div class="sidebar__profile-name">Admin Principal</div>
+                        <div class="sidebar__profile-role">Administrador</div>
+                    </div>
+                </div>
+            </div>
+
+        </aside>
+
+        <div class="int-page">
+
+            <main class="int-interacciones">
+
+                <section class="int-interacciones__calendar-section">
+                    <div class="int-interacciones__calendar-header">
+                        <div>
+                            <h2 class="int-interacciones__title">Calendario de seguimientos</h2>
+                            <p class="int-interacciones__text">
+                                Visualiza las próximas acciones programadas con clientes.
+                            </p>
+                        </div>
+
+                        <div class="int-interacciones__calendar-actions">
+                            <button class="int-interacciones__small-button" type="button" id="prevMonthButton">
+                                Anterior
+                            </button>
+
+                            <h3 class="int-interacciones__month-title" id="calendarTitle"></h3>
+
+                            <button class="int-interacciones__small-button" type="button" id="nextMonthButton">
+                                Siguiente
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="int-interacciones__calendar-weekdays">
+                        <span>Lun</span>
+                        <span>Mar</span>
+                        <span>Mié</span>
+                        <span>Jue</span>
+                        <span>Vie</span>
+                        <span>Sáb</span>
+                        <span>Dom</span>
+                    </div>
+
+                    <div class="int-interacciones__calendar-grid" id="calendarGrid"></div>
+                </section>
+
+                <section class="int-interacciones__list-section">
+                    <div class="int-interacciones__toolbar">
+                        <div>
+                            <h2 class="int-interacciones__title">Listado de interacciones</h2>
+                            <p class="int-interacciones__text">
+                                Gestiona llamadas, emails, reuniones y seguimientos.
+                            </p>
+                        </div>
+
+                        <div class="int-interacciones__toolbar-actions">
+                            <div class="int-interacciones__search-box">
+                                <input class="int-interacciones__search" type="text" id="buscadorInteracciones"
+                                    placeholder="Buscar interacción...">
+                            </div>
+
+                            <button class="int-interacciones__button int-interacciones__button--primary" type="button"
+                                id="newInteractionButton">
+                                Nueva interacción
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="int-interacciones__table-wrapper">
+                        <table class="int-interacciones__table">
+                            <thead class="int-interacciones__thead">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Cliente</th>
+                                    <th>Usuario</th>
+                                    <th>Tipo</th>
+                                    <th>Fecha</th>
+                                    <th>Asunto</th>
+                                    <th>Próxima acción</th>
+                                    <th>Fecha próxima</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+
+                            <tbody class="int-interacciones__tbody" id="interaccionesTableBody">
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <section class="int-interacciones__panel int-interacciones__panel--hidden" id="interaccionFormPanel">
+                    <div class="int-interacciones__panel-header">
+                        <h2 class="int-interacciones__panel-title">Formulario de interacción</h2>
+                        <p class="int-interacciones__panel-text">
+                            Completa los datos para registrar o actualizar una interacción con cliente.
+                        </p>
+                    </div>
+
+                    <form class="int-interacciones__form" id="interaccionForm">
+                        <input type="hidden" id="interaccionId">
+
+                        <div class="int-interacciones__form-grid">
+                            <div class="int-interacciones__group">
+                                <label class="int-interacciones__label" for="clienteId">Cliente</label>
+                                <select class="int-interacciones__input" id="clienteId">
+                                    <option value="">Selecciona un cliente</option>
+                                </select>
+                            </div>
+
+                            <div class="int-interacciones__group">
+                                <label class="int-interacciones__label" for="usuarioId">Usuario</label>
+                                <select class="int-interacciones__input" id="usuarioId">
+                                    <option value="">Selecciona un usuario</option>
+                                </select>
+                            </div>
+
+                            <div class="int-interacciones__group">
+                                <label class="int-interacciones__label" for="tipoInteraccion">Tipo</label>
+                                <select class="int-interacciones__input" id="tipoInteraccion">
+                                    <option value="">Selecciona un tipo</option>
+                                    <option value="Llamada">Llamada</option>
+                                    <option value="Email">Email</option>
+                                    <option value="WhatsApp">WhatsApp</option>
+                                    <option value="Reunión">Reunión</option>
+                                </select>
+                            </div>
+
+                            <div class="int-interacciones__group">
+                                <label class="int-interacciones__label" for="fechaInteraccion">Fecha</label>
+                                <input class="int-interacciones__input" type="datetime-local" id="fechaInteraccion">
+                            </div>
+
+                            <div class="int-interacciones__group int-interacciones__group--full">
+                                <label class="int-interacciones__label" for="asuntoInteraccion">Asunto</label>
+                                <input class="int-interacciones__input" type="text" id="asuntoInteraccion"
+                                    placeholder="Asunto de la interacción">
+                            </div>
+
+                            <div class="int-interacciones__group int-interacciones__group--full">
+                                <label class="int-interacciones__label" for="descripcionInteraccion">Descripción</label>
+                                <textarea class="int-interacciones__input int-interacciones__textarea"
+                                    id="descripcionInteraccion" placeholder="Descripción de la interacción"></textarea>
+                            </div>
+
+                            <div class="int-interacciones__group">
+                                <label class="int-interacciones__label" for="resultadoInteraccion">Resultado</label>
+                                <input class="int-interacciones__input" type="text" id="resultadoInteraccion"
+                                    placeholder="Interesado, respondido, reservado...">
+                            </div>
+
+                            <div class="int-interacciones__group">
+                                <label class="int-interacciones__label" for="fechaProximaInteraccion">Fecha
+                                    próxima</label>
+                                <input class="int-interacciones__input" type="datetime-local"
+                                    id="fechaProximaInteraccion">
+                            </div>
+
+                            <div class="int-interacciones__group int-interacciones__group--full">
+                                <label class="int-interacciones__label" for="proximaAccionInteraccion">Próxima
+                                    acción</label>
+                                <input class="int-interacciones__input" type="text" id="proximaAccionInteraccion"
+                                    placeholder="Llamar, enviar presupuesto, agendar prueba...">
+                            </div>
+                        </div>
+
+                        <p class="int-interacciones__message" id="interaccionMensaje"></p>
+
+                        <div class="int-interacciones__actions">
+                            <button class="int-interacciones__button int-interacciones__button--primary" type="submit"
+                                id="submitInteractionButton">
+                                Guardar interacción
+                            </button>
+
+                            <button class="int-interacciones__button int-interacciones__button--secondary" type="button"
+                                id="cancelInteractionButton">
+                                Cancelar
+                            </button>
+                        </div>
+                    </form>
+                </section>
+
+            </main>
+
+        </div>
+
+    </div>
+
+    <script src="/js/auth.js"></script>
+    <script src="/js/interacciones-cliente.js"></script>
+    <script src="/js/barra.js"></script>
+</body>
+
+</html>
