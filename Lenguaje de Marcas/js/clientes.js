@@ -25,6 +25,7 @@ const logoutButton = document.querySelector("#logoutButton");
 const clienteFormPanel = document.querySelector("#clienteFormPanel");
 const newClientButton = document.querySelector("#newClientButton");
 
+
 let clientes = [];
 
 function cargarClientes() {

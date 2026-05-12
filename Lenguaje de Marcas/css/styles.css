@@ -53,6 +53,11 @@ body {
     min-height: 100vh;
     margin: 0;
     padding: 0;
+    background: radial-gradient(circle at top left, var(--color-tertiary), transparent 32%),
+        linear-gradient(135deg, var(--color-primary), var(--color-secondary) 45%, var(--color-tertiary));
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: row;
 }
 
 /* #endregion */
@@ -115,6 +120,18 @@ body {
     font-weight: 800;
     cursor: pointer;
     transition: transform var(--transition-base), box-shadow var(--transition-base), background var(--transition-base);
+}
+
+.input{
+    width: 100%;
+    padding: 13px 15px;
+    border: 1px solid rgba(244, 215, 220, 0.24);
+    border-radius: var(--radius-md);
+    background-color: rgba(255, 255, 255, 0.08);
+    color: var(--color-white);
+    font-family: var(--font-main);
+    font-size: 0.96rem;
+    outline: none;
 }
 
 /* #region  SIDEBAR */
@@ -419,6 +436,65 @@ body {
 
 /* #endregion */
 
+/* #region  TABLE */
+
+.table{
+    background-color: color-mix(var(--color-primary), transparent 50%);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+    border: 1px solid var(--color-border);
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    width: 100%;
+    margin: 25px;
+    height: fit-content;
+}
+
+.table__top{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 30px 0 30px;
+}
+
+.table__interaction{
+    display: flex;
+    gap: 15px;
+    flex-direction: row;
+    height: 50px;
+}
+
+.table__text{
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+}
+
+.table__attributes{
+    display: flex;
+    gap: 12px;
+    flex-direction: row;
+    justify-content: space-between;
+    background: color-mix(var(--color-light), transparent 90%);
+    padding: 0 30px;
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.table__attributesText{
+    font-size: 1rem;
+}
+
+.table__data{
+    display: flex;
+    flex-direction: column;
+    margin: 0 0 35px 25px;
+}
+
+/* #endregion */
+
 /* #endregion */
 
 /* #region LOGIN */
@@ -672,15 +748,7 @@ body {
 
 /* #endregion */
 
-/* #region  dashboard */
-
-.dashboard {
-    background: radial-gradient(circle at top left, var(--color-tertiary), transparent 32%),
-        linear-gradient(135deg, var(--color-primary), var(--color-secondary) 45%, var(--color-tertiary));
-    background-repeat: no-repeat;
-    display: flex;
-    flex-direction: row;
-}
+/* #region  DASHBOARD */
 
 .dash-total {
     display: flex;
@@ -1721,3 +1789,34 @@ body {
 }
 
 /* #endregion */
+
+/* #region VENTAS */
+
+.s-section{
+    display: flex;
+    flex: 1;
+    min-width: 0;
+}
+
+/* #endregion */
+
+/* #region COCHES */
+
+.c-section{
+    display: flex;
+    flex: 1;
+    min-width: 0;
+}
+
+/* #endregion */
+
+/* #region DETALLE VENTAS */
+
+.sd-section{
+    display: flex;
+    flex: 1;
+    min-width: 0;
+}
+
+/* #endregion */
+
