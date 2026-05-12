@@ -1,6 +1,6 @@
         document.querySelectorAll('.sidebar__link').forEach(link => {
             link.addEventListener('click', function (e) {
-                // Ripple
+
                 const ripple = document.createElement('span');
                 const rect = this.getBoundingClientRect();
                 const size = Math.max(rect.width, rect.height);
@@ -12,8 +12,7 @@
                 `;
                 this.appendChild(ripple);
                 setTimeout(() => ripple.remove(), 500);
- 
-                // Active state
+
                 document.querySelectorAll('.sidebar__link').forEach(l => l.classList.remove('sidebar__link--active'));
                 this.classList.add('sidebar__link--active');
             });

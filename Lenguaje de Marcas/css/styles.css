@@ -35,7 +35,7 @@
 
     --sidebar-collapsed: 80px;
     --sidebar-expanded: 260px;
-    --transition: 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* #endregion */
@@ -629,11 +629,14 @@ body {
 
 .dash-total {
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    align-items: start;
     justify-content: center;
     width: 100%;
     height: 600px;
-    margin-top: 50px;
+    margin-top: 125px;
+    gap: 50px;
+    padding: 50px;
 }
 
 .dash-total__div {
@@ -683,6 +686,15 @@ body {
     display: flex;
     width: 80%;
     height: 100%;
+}
+
+.dash-total__container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    width: 100%;
+    margin-left: -25px;
 }
 
 
