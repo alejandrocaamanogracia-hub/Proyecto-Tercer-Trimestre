@@ -126,10 +126,40 @@ public class VentaMenu {
     private void eliminarVenta() {
         System.out.println("\n--- Eliminar venta ---");
 
-        System.out.print("Introduce el ID de la venta: ");
+        List<Venta> ventas = ventaController.listarVentas();
+
+        if (ventas.isEmpty()) {
+            System.out.println("No hay ventas registradas.");
+            return;
+        }
+
+        System.out.println("Ventas disponibles:");
+
+        for (Venta venta : ventas) {
+            System.out.println(
+                    "ID: " + venta.getId()
+                            + " | ID Cliente: " + venta.getClienteId()
+                            + " | ID Usuario: " + venta.getUsuarioId()
+                            + " | Fecha: " + venta.getFecha()
+                            + " | Estado: " + venta.getEstado()
+                            + " | Total: " + venta.getTotal()
+            );
+        }
+
+        System.out.print("Introduce el ID de la venta que quieres eliminar: ");
         int id = ComprobacionOpcion.leerInt();
 
-        ventaController.eliminarVenta(id);
+        System.out.println("¿Seguro que quieres eliminar la venta con ID " + id + "?");
+        System.out.println("1. Sí");
+        System.out.println("2. No");
+
+        int confirmacion = ComprobacionOpcion.leerOpcion(1, 2);
+
+        if (confirmacion == 1) {
+            ventaController.eliminarVenta(id);
+        } else {
+            System.out.println("Eliminación cancelada.");
+        }
     }
 
     private void listarVentas() {

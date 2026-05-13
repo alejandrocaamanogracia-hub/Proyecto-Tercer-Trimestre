@@ -8,7 +8,7 @@ public interface InteraccionClienteRepository {
 
     void crearInteraccionCliente(InteraccionCliente interaccionCliente);
 
-    void eliminarInteraccionCliente(int id);
+    boolean eliminarInteraccionCliente(int id);
 
     List<InteraccionCliente> listarInteraccionesCliente();
 

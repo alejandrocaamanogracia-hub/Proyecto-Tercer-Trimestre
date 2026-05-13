@@ -8,7 +8,7 @@ public interface VentaRepository {
 
     void crearVenta(Venta venta);
 
-    void eliminarVenta(int id);
+    boolean eliminarVenta(int id);
 
     List<Venta> listarVentas();
 

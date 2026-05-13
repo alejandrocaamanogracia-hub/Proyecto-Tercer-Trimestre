@@ -83,8 +83,13 @@ public class CocheService {
             return;
         }
 
-        cocheRepository.eliminarCoche(id);
-        System.out.println("Coche eliminado correctamente.");
+        boolean eliminado = cocheRepository.eliminarCoche(id);
+
+        if (eliminado) {
+            System.out.println("Coche eliminado correctamente.");
+        } else {
+            System.out.println("No existe ningún coche con ese ID.");
+        }
     }
 
     public List<Coche> listarCoches() {

@@ -48,18 +48,22 @@ public class InteraccionClienteRepositoryImpl implements InteraccionClienteRepos
     }
 
     @Override
-    public void eliminarInteraccionCliente(int id) {
+    public boolean eliminarInteraccionCliente(int id) {
         String sql = "DELETE FROM interacciones_cliente WHERE id = ?";
 
         try (Connection connection = DataBaseConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setInt(1, id);
-            preparedStatement.executeUpdate();
+
+            int filasAfectadas = preparedStatement.executeUpdate();
+
+            return filasAfectadas > 0;
 
         } catch (SQLException e) {
             System.out.println("Error al eliminar la interaccion con el cliente.");
             e.printStackTrace();
+            return false;
         }
     }
 

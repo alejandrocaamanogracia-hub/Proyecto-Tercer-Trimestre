@@ -84,10 +84,38 @@ public class ClienteMenu {
     private void eliminarCliente() {
         System.out.println("\n--- Eliminar cliente ---");
 
-        System.out.print("Introduce el ID del cliente: ");
+        List<Cliente> clientes = clienteController.listarClientes();
+
+        if (clientes.isEmpty()) {
+            System.out.println("No hay clientes registrados.");
+            return;
+        }
+
+        System.out.println("Clientes disponibles:");
+
+        for (Cliente cliente : clientes) {
+            System.out.println(
+                    "ID: " + cliente.getId()
+                            + " | Nombre: " + cliente.getNombre()
+                            + " | Email: " + cliente.getEmail()
+                            + " | Teléfono: " + cliente.getTelefono()
+            );
+        }
+
+        System.out.print("Introduce el ID del cliente que quieres eliminar: ");
         int id = ComprobacionOpcion.leerInt();
 
-        clienteController.eliminarCliente(id);
+        System.out.println("¿Seguro que quieres eliminar el cliente con ID " + id + "?");
+        System.out.println("1. Sí");
+        System.out.println("2. No");
+
+        int confirmacion = ComprobacionOpcion.leerOpcion(1, 2);
+
+        if (confirmacion == 1) {
+            clienteController.eliminarCliente(id);
+        } else {
+            System.out.println("Eliminación cancelada.");
+        }
     }
 
     private void listarClientes() {

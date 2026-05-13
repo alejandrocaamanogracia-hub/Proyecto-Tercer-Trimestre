@@ -110,10 +110,38 @@ public class UsuarioMenu {
     private void eliminarUsuario() {
         System.out.println("\n--- Eliminar usuario ---");
 
-        System.out.print("Introduce el ID del usuario: ");
+        List<Usuario> usuarios = usuarioController.listarUsuarios();
+
+        if (usuarios.isEmpty()) {
+            System.out.println("No hay usuarios registrados.");
+            return;
+        }
+
+        System.out.println("Usuarios disponibles:");
+
+        for (Usuario usuario : usuarios) {
+            System.out.println(
+                    "ID: " + usuario.getId()
+                            + " | Nombre: " + usuario.getNombre()
+                            + " | Email: " + usuario.getEmail()
+                            + " | Rol: " + usuario.getRol()
+            );
+        }
+
+        System.out.print("Introduce el ID del usuario que quieres eliminar: ");
         int id = ComprobacionOpcion.leerInt();
 
-        usuarioController.eliminarUsuario(id);
+        System.out.println("¿Seguro que quieres eliminar el usuario con ID " + id + "?");
+        System.out.println("1. Sí");
+        System.out.println("2. No");
+
+        int confirmacion = ComprobacionOpcion.leerOpcion(1, 2);
+
+        if (confirmacion == 1) {
+            usuarioController.eliminarUsuario(id);
+        } else {
+            System.out.println("Eliminación cancelada.");
+        }
     }
 
     private void listarUsuarios() {

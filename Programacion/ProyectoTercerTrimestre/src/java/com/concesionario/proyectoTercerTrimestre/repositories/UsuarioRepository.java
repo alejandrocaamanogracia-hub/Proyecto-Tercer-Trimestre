@@ -8,7 +8,7 @@ public interface UsuarioRepository {
 
     void crearUsuario(Usuario usuario);
 
-    void eliminarUsuario(int id);
+    boolean eliminarUsuario(int id);
 
     List<Usuario> listarUsuarios();
 

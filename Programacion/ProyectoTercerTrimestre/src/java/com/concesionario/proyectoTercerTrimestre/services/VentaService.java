@@ -62,8 +62,13 @@ public class VentaService {
             return;
         }
 
-        ventaRepository.eliminarVenta(id);
-        System.out.println("Venta eliminada correctamente.");
+        boolean eliminado = ventaRepository.eliminarVenta(id);
+
+        if (eliminado) {
+            System.out.println("Venta eliminada correctamente.");
+        } else {
+            System.out.println("No existe ninguna venta con ese ID.");
+        }
     }
 
     public List<Venta> listarVentas() {

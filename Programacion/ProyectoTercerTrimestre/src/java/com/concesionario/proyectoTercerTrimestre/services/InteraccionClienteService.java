@@ -54,12 +54,17 @@ public class InteraccionClienteService {
 
     public void eliminarInteraccionCliente(int id) {
         if (id <= 0) {
-            System.out.println("El ID de la interaccion no es valido.");
+            System.out.println("El ID de la interaccion con cliente no es valido.");
             return;
         }
 
-        interaccionClienteRepository.eliminarInteraccionCliente(id);
-        System.out.println("Interaccion eliminada correctamente.");
+        boolean eliminado = interaccionClienteRepository.eliminarInteraccionCliente(id);
+
+        if (eliminado) {
+            System.out.println("Interaccion con cliente eliminada correctamente.");
+        } else {
+            System.out.println("No existe ninguna interaccion con cliente con ese ID.");
+        }
     }
 
     public List<InteraccionCliente> listarInteraccionesCliente() {

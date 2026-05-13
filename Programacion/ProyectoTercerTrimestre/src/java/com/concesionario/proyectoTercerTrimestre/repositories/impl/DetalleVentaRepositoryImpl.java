@@ -37,22 +37,24 @@ public class DetalleVentaRepositoryImpl implements DetalleVentaRepository {
     }
 
     @Override
-    public void eliminarDetalleVenta(int id) {
+    public boolean eliminarDetalleVenta(int id) {
         String sql = "DELETE FROM detalle_venta WHERE id = ?";
 
-        try {
-            Connection connection = DataBaseConnection.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        try (Connection connection = DataBaseConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setInt(1, id);
-            preparedStatement.executeUpdate();
+
+            int filasAfectadas = preparedStatement.executeUpdate();
+
+            return filasAfectadas > 0;
 
         } catch (SQLException e) {
             System.out.println("Error al eliminar el detalle de venta.");
             e.printStackTrace();
+            return false;
         }
     }
-
     @Override
     public List<DetalleVenta> listarDetallesVenta() {
         List<DetalleVenta> detallesVenta = new ArrayList<>();

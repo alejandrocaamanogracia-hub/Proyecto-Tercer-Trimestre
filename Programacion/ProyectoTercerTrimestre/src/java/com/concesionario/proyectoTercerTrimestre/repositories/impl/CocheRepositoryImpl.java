@@ -50,19 +50,22 @@ public class CocheRepositoryImpl implements CocheRepository {
     }
 
     @Override
-    public void eliminarCoche(int id) {
+    public boolean eliminarCoche(int id) {
         String sql = "DELETE FROM coches WHERE id = ?";
 
-        try {
-            Connection connection = DataBaseConnection.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        try (Connection connection = DataBaseConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setInt(1, id);
-            preparedStatement.executeUpdate();
+
+            int filasAfectadas = preparedStatement.executeUpdate();
+
+            return filasAfectadas > 0;
 
         } catch (SQLException e) {
             System.out.println("Error al eliminar el coche.");
             e.printStackTrace();
+            return false;
         }
     }
 

@@ -43,8 +43,13 @@ public class ClienteService {
             return;
         }
 
-        clienteRepository.eliminarCliente(id);
-        System.out.println("Cliente eliminado correctamente.");
+        boolean eliminado = clienteRepository.eliminarCliente(id);
+
+        if (eliminado) {
+            System.out.println("Cliente eliminado correctamente.");
+        } else {
+            System.out.println("No existe ningún cliente con ese ID.");
+        }
     }
 
     public List<Cliente> listarClientes() {

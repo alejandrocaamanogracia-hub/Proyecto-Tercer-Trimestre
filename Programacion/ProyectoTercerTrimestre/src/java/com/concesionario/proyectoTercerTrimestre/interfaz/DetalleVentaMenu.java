@@ -83,10 +83,38 @@ public class DetalleVentaMenu {
     private void eliminarDetalleVenta() {
         System.out.println("\n--- Eliminar detalle de venta ---");
 
-        System.out.print("Introduce el ID del detalle de venta: ");
-        int id = Integer.parseInt(scanner.nextLine());
+        List<DetalleVenta> detallesVenta = detalleVentaController.listarDetallesVenta();
 
-        detalleVentaController.eliminarDetalleVenta(id);
+        if (detallesVenta.isEmpty()) {
+            System.out.println("No hay detalles de venta registrados.");
+            return;
+        }
+
+        System.out.println("Detalles de venta disponibles:");
+
+        for (DetalleVenta detalleVenta : detallesVenta) {
+            System.out.println(
+                    "ID: " + detalleVenta.getId()
+                            + " | ID Venta: " + detalleVenta.getVentaId()
+                            + " | ID Coche: " + detalleVenta.getCocheId()
+                            + " | Cantidad: " + detalleVenta.getCantidad()
+            );
+        }
+
+        System.out.print("Introduce el ID del detalle de venta que quieres eliminar: ");
+        int id = ComprobacionOpcion.leerInt();
+
+        System.out.println("¿Seguro que quieres eliminar el detalle de venta con ID " + id + "?");
+        System.out.println("1. Sí");
+        System.out.println("2. No");
+
+        int confirmacion = ComprobacionOpcion.leerOpcion(1, 2);
+
+        if (confirmacion == 1) {
+            detalleVentaController.eliminarDetalleVenta(id);
+        } else {
+            System.out.println("Eliminación cancelada.");
+        }
     }
 
     private void listarDetallesVenta() {

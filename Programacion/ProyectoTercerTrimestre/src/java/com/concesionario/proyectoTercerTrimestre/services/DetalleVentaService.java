@@ -70,8 +70,13 @@ public class DetalleVentaService {
             return;
         }
 
-        detalleVentaRepository.eliminarDetalleVenta(id);
-        System.out.println("Detalle de venta eliminado correctamente.");
+        boolean eliminado = detalleVentaRepository.eliminarDetalleVenta(id);
+
+        if (eliminado) {
+            System.out.println("Detalle de venta eliminado correctamente.");
+        } else {
+            System.out.println("No existe ningún detalle de venta con ese ID.");
+        }
     }
 
     public List<DetalleVenta> listarDetallesVenta() {

@@ -43,19 +43,22 @@ public class VentaRepositoryImpl implements VentaRepository {
     }
 
     @Override
-    public void eliminarVenta(int id) {
+    public boolean eliminarVenta(int id) {
         String sql = "DELETE FROM ventas WHERE id = ?";
 
-        try {
-            Connection connection = DataBaseConnection.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        try (Connection connection = DataBaseConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setInt(1, id);
-            preparedStatement.executeUpdate();
+
+            int filasAfectadas = preparedStatement.executeUpdate();
+
+            return filasAfectadas > 0;
 
         } catch (SQLException e) {
             System.out.println("Error al eliminar la venta.");
             e.printStackTrace();
+            return false;
         }
     }
 

@@ -37,19 +37,22 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
     }
 
     @Override
-    public void eliminarUsuario(int id) {
+    public boolean eliminarUsuario(int id) {
         String sql = "DELETE FROM usuarios WHERE id = ?";
 
-        try {
-            Connection connection = DataBaseConnection.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        try (Connection connection = DataBaseConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setInt(1, id);
-            preparedStatement.executeUpdate();
+
+            int filasAfectadas = preparedStatement.executeUpdate();
+
+            return filasAfectadas > 0;
 
         } catch (SQLException e) {
             System.out.println("Error al eliminar el usuario.");
             e.printStackTrace();
+            return false;
         }
     }
 

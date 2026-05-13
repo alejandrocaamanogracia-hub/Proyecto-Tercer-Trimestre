@@ -8,7 +8,7 @@ public interface ClienteRepository {
 
     void crearCliente(Cliente cliente);
 
-    void eliminarCliente(int id);
+    boolean eliminarCliente(int id);
 
     List<Cliente> listarClientes();
 

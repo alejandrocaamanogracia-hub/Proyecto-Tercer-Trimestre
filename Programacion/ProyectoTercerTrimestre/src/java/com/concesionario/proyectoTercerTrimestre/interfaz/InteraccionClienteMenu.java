@@ -151,12 +151,41 @@ public class InteraccionClienteMenu {
     }
 
     private void eliminarInteraccionCliente() {
-        System.out.println("\n--- Eliminar interaccion ---");
+        System.out.println("\n--- Eliminar interacción cliente ---");
 
-        System.out.print("Introduce el ID de la interaccion: ");
+        List<InteraccionCliente> interaccionesCliente = interaccionClienteController.listarInteraccionesCliente();
+
+        if (interaccionesCliente.isEmpty()) {
+            System.out.println("No hay interacciones con clientes registradas.");
+            return;
+        }
+
+        System.out.println("Interacciones disponibles:");
+
+        for (InteraccionCliente interaccionCliente : interaccionesCliente) {
+            System.out.println(
+                    "ID: " + interaccionCliente.getId()
+                            + " | ID Cliente: " + interaccionCliente.getClienteId()
+                            + " | ID Usuario: " + interaccionCliente.getUsuarioId()
+                            + " | Tipo: " + interaccionCliente.getTipo()
+                            + " | Asunto: " + interaccionCliente.getAsunto()
+            );
+        }
+
+        System.out.print("Introduce el ID de la interacción que quieres eliminar: ");
         int id = ComprobacionOpcion.leerInt();
 
-        interaccionClienteController.eliminarInteraccionCliente(id);
+        System.out.println("¿Seguro que quieres eliminar la interacción con ID " + id + "?");
+        System.out.println("1. Sí");
+        System.out.println("2. No");
+
+        int confirmacion = ComprobacionOpcion.leerOpcion(1, 2);
+
+        if (confirmacion == 1) {
+            interaccionClienteController.eliminarInteraccionCliente(id);
+        } else {
+            System.out.println("Eliminación cancelada.");
+        }
     }
 
     private void listarInteraccionesCliente() {

@@ -124,21 +124,14 @@ public class CocheMenu {
 
         int opcion = ComprobacionOpcion.leerOpcion(1, 5);
 
-        switch (opcion) {
-            case 1:
-                return Combustible.GASOLINA;
-            case 2:
-                return Combustible.DIESEL;
-            case 3:
-                return Combustible.HIBRIDO;
-            case 4:
-                return Combustible.ELECTRICO;
-            case 5:
-                return Combustible.GLP;
-            default:
-                System.out.println("Opcion no valida. Se asigna Gasolina por defecto.");
-                return Combustible.GASOLINA;
-        }
+        return switch (opcion) {
+            case 1 -> Combustible.GASOLINA;
+            case 2 -> Combustible.DIESEL;
+            case 3 -> Combustible.HIBRIDO;
+            case 4 -> Combustible.ELECTRICO;
+            case 5 -> Combustible.GLP;
+            default -> Combustible.GASOLINA;
+        };
     }
 
     private TipoCambio seleccionarTipoCambio() {
@@ -149,15 +142,11 @@ public class CocheMenu {
 
         int opcion = ComprobacionOpcion.leerOpcion(1, 2);
 
-        switch (opcion) {
-            case 1:
-                return TipoCambio.MANUAL;
-            case 2:
-                return TipoCambio.AUTOMATICO;
-            default:
-                System.out.println("Opcion no valida. Se asigna Manual por defecto.");
-                return TipoCambio.MANUAL;
-        }
+        return switch (opcion) {
+            case 1 -> TipoCambio.MANUAL;
+            case 2 -> TipoCambio.AUTOMATICO;
+            default -> TipoCambio.MANUAL;
+        };
     }
 
     private EstadoCoche seleccionarEstadoCoche() {
@@ -169,26 +158,50 @@ public class CocheMenu {
 
         int opcion = ComprobacionOpcion.leerOpcion(1, 3);
 
-        switch (opcion) {
-            case 1:
-                return EstadoCoche.DISPONIBLE;
-            case 2:
-                return EstadoCoche.RESERVADO;
-            case 3:
-                return EstadoCoche.VENDIDO;
-            default:
-                System.out.println("Opcion no valida. Se asigna Disponible por defecto.");
-                return EstadoCoche.DISPONIBLE;
-        }
+        return switch (opcion) {
+            case 1 -> EstadoCoche.DISPONIBLE;
+            case 2 -> EstadoCoche.RESERVADO;
+            case 3 -> EstadoCoche.VENDIDO;
+            default -> EstadoCoche.DISPONIBLE;
+        };
     }
 
     private void eliminarCoche() {
         System.out.println("\n--- Eliminar coche ---");
 
-        System.out.print("Introduce el ID del coche: ");
+        List<Coche> coches = cocheController.listarCoches();
+
+        if (coches.isEmpty()) {
+            System.out.println("No hay coches registrados.");
+            return;
+        }
+
+        System.out.println("Coches disponibles:");
+
+        for (Coche coche : coches) {
+            System.out.println(
+                    "ID: " + coche.getId()
+                            + " | Marca: " + coche.getMarca()
+                            + " | Modelo: " + coche.getModelo()
+                            + " | Matrícula: " + coche.getMatricula()
+                            + " | Estado: " + coche.getEstado()
+            );
+        }
+
+        System.out.print("Introduce el ID del coche que quieres eliminar: ");
         int id = ComprobacionOpcion.leerInt();
 
-        cocheController.eliminarCoche(id);
+        System.out.println("¿Seguro que quieres eliminar el coche con ID " + id + "?");
+        System.out.println("1. Sí");
+        System.out.println("2. No");
+
+        int confirmacion = ComprobacionOpcion.leerOpcion(1, 2);
+
+        if (confirmacion == 1) {
+            cocheController.eliminarCoche(id);
+        } else {
+            System.out.println("Eliminación cancelada.");
+        }
     }
 
     private void listarCoches() {
