@@ -106,22 +106,9 @@
 
             </div>
 
-            <div class="table__attributes">
-                <h2 class="table__attributesText">ID</h2>
-                <h2 class="table__attributesText">Marca</h2>
-                <h2 class="table__attributesText">Modelo</h2>
-                <h2 class="table__attributesText">Anio</h2>
-                <h2 class="table__attributesText">Cambio</h2>
-                <h2 class="table__attributesText">Combustible</h2>
-                <h2 class="table__attributesText">Precio</h2>
-                <h2 class="table__attributesText">Acciones</h2>
-            </div>
-
             <div class="table__data">
                 <div class="table__dataBox">
-
                     <p class="text">No hay coches para mostrar</p>
-
                 </div>
             </div>
 
@@ -129,30 +116,33 @@
 
     </div>
 
-    <div class="c-creation" id="c-creation">
+    <div class="creation" id="creation">
 
-        <h2 class="heading headign--align">Crear un coche <span class="material-symbols-rounded sidebar__icon icon__close">Close</span></h2>
+        <h2 class="heading headign--align">
+            Crear un coche
+            <span class="material-symbols-rounded sidebar__icon icon__close">close</span>
+        </h2>
 
-        <form class="form" id="carForm">
+        <div class="form" id="carForm">
 
             <div class="form__group">
                 <label class="text">Marca</label>
-                <input id = "brand" placeholder="Marca del coche" type="text" id="marca" name="marca" class="input" required>
+                <input id="brand" placeholder="Marca del coche" type="text" name="marca" class="input" required>
             </div>
 
             <div class="form__group">
                 <label class="text">Modelo</label>
-                <input id="model" placeholder="Modelo del coche" type="text" id="modelo" name="modelo" class="input" required>
+                <input id="model" placeholder="Modelo del coche" type="text" name="modelo" class="input" required>
             </div>
 
-                <div class="form__group">
+            <div class="form__group">
                 <label class="text">Año</label>
-                <input id="year" placeholder="Año del coche" type="number" id="anio" name="anio" class="input" required>
+                <input id="year" placeholder="Año del coche" type="number" name="anio" class="input" required>
             </div>
 
             <div class="form__group">
                 <label class="text">Cambio</label>
-                <select placeholder="Selecciona un tipo de cambio" id="cambio" name="cambio" class="input" required>
+                <select id="cambio" name="cambio" class="input" required>
                     <option value="">Selecciona un tipo de cambio</option>
                     <option value="Manual">Manual</option>
                     <option value="Automático">Automático</option>
@@ -161,7 +151,7 @@
 
             <div class="form__group">
                 <label class="text">Combustible</label>
-                <select placeholder="Selecciona un tipo de combustible" id="combustible" name="combustible" class="input" required>
+                <select id="combustible" name="combustible" class="input" required>
                     <option value="">Selecciona un tipo de combustible</option>
                     <option value="Gasolina">Gasolina</option>
                     <option value="Diésel">Diésel</option>
@@ -172,17 +162,18 @@
 
             <div class="form__group">
                 <label class="text">Precio</label>
-                <input placeholder="Precio del coche" type="number" id="precio" name="precio" class="input" required>
+                <input id="precio" placeholder="Precio del coche" type="number" name="precio" class="input" required>
             </div>
 
-            <button type="submit" class="button button--primary" id="btn--submitCar">Crear coche</button>
+            <button type="button" class="button button--primary" id="btn--submitCar">Crear coche</button>
+
+        </div>
 
     </div>
 
-    </section>
-
+    <script src="/js/auth.js"></script>
     <script type="module" src="/js/coches.js"></script>
-    
+
 </body>
 
 </html>

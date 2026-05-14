@@ -28,7 +28,7 @@ const newUserButton = document.querySelector("#newUserButton");
 let usuarios = [];
 
 function cargarUsuarios() {
-    const usuariosGuardados = sessionStorage.getItem("usuarios");
+    const usuariosGuardados = localStorage.getItem("usuarios");
 
     if (usuariosGuardados) {
         usuarios = JSON.parse(usuariosGuardados);
@@ -48,7 +48,7 @@ function cargarUsuarios() {
 }
 
 function guardarUsuarios() {
-    sessionStorage.setItem("usuarios", JSON.stringify(usuarios));
+    localStorage.setItem("usuarios", JSON.stringify(usuarios));
 }
 
 function mostrarMensajeUsuario(mensaje, tipo) {
@@ -108,28 +108,22 @@ function pintarUsuarios(listaUsuarios) {
     }
 
     listaUsuarios.forEach((usuario) => {
-        const fila = document.createElement("tr");
-        fila.classList.add("usu-usuarios__row");
+        const card = document.createElement("div");
+        card.classList.add("table__dataItem");
 
-        fila.innerHTML = `
-            <td data-label="ID">${usuario.id}</td>
-            <td data-label="Nombre">${usuario.nombre}</td>
-            <td data-label="Email">${usuario.email}</td>
-            <td data-label="Rol">${usuario.rol}</td>
-            <td data-label="Contraseña">••••••••</td>
-            <td data-label="Acciones">
-                <div class="usu-usuarios__table-actions">
-                    <button class="usu-usuarios__icon-button usu-usuarios__icon-button--edit" data-action="edit" data-id="${usuario.id}">
-                        Editar
-                    </button>
-                    <button class="usu-usuarios__icon-button usu-usuarios__icon-button--delete" data-action="delete" data-id="${usuario.id}">
-                        Eliminar
-                    </button>
-                </div>
-            </td>
+        card.innerHTML = `
+            <p class="table__attributesText"><strong>ID:</strong> ${usuario.id}</p>
+            <p class="table__attributesText"><strong>Nombre:</strong> ${usuario.nombre}</p>
+            <p class="table__attributesText"><strong>Email:</strong> ${usuario.email}</p>
+            <p class="table__attributesText"><strong>Rol:</strong> ${usuario.rol}</p>
+            <p class="table__attributesText"><strong>Contraseña:</strong> ••••••••</p>
+            <div class="table__actions">
+                <button class="input" data-action="edit" data-id="${usuario.id}">Editar</button>
+                <button class="button" data-action="delete" data-id="${usuario.id}">Eliminar</button>
+            </div>
         `;
 
-        usuariosTableBody.appendChild(fila);
+        usuariosTableBody.appendChild(card);
     });
 }
 

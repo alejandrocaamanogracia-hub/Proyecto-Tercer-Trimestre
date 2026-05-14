@@ -108,14 +108,14 @@ body {
     font-weight: 800;
 }
 
-.headign--align{
+.headign--align {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
 }
 
-.icon__close{
+.icon__close {
     font-size: 1.5rem;
     color: var(--color-muted);
     cursor: pointer;
@@ -140,14 +140,14 @@ body {
     transition: transform var(--transition-base), box-shadow var(--transition-base), background var(--transition-base);
 }
 
-.blur{
+.blur {
     filter: blur(4px);
     opacity: 0.5;
     pointer-events: none;
     user-select: none;
 }
 
-.input{
+.input {
     width: 100%;
     padding: 13px 15px;
     border: 1px solid rgba(244, 215, 220, 0.24);
@@ -182,6 +182,28 @@ select.input {
 option {
     background-color: var(--color-primary);
     color: var(--color-white);
+}
+
+.creation {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    background-color: color-mix(var(--color-primary), transparent 10%);
+    padding: 30px;
+    border-radius: var(--radius-lg);
+    height: fit-content;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
+}
+
+.form {
+    margin-top: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
 }
 
 
@@ -489,7 +511,7 @@ option {
 
 /* #region  TABLE */
 
-.table{
+.table {
     background-color: color-mix(var(--color-primary), transparent 50%);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-card);
@@ -501,7 +523,7 @@ option {
     height: fit-content;
 }
 
-.table__top{
+.table__top {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -510,20 +532,20 @@ option {
     margin-bottom: 35px;
 }
 
-.table__interaction{
+.table__interaction {
     display: flex;
     gap: 15px;
     flex-direction: row;
     height: 50px;
 }
 
-.table__text{
+.table__text {
     display: flex;
     gap: 10px;
     flex-direction: column;
 }
 
-.table__attributes{
+.table__attributes {
     display: grid;
     background: color-mix(var(--color-light), transparent 90%);
     padding: 0 30px;
@@ -531,32 +553,63 @@ option {
     gap: 0;
 }
 
-.table__attributesText{
-    font-size: 1rem;
-    text-align: left;
-    width: 100%;
-    margin-top: 30px;
+.table__attributesText {
+    font-size: 0.95rem;
+    color: var(--color-text);
+    margin: 8px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(244, 215, 220, 0.1);
+    padding-bottom: 8px;
 }
 
-.table__dataBox{
+.table__attributesText strong {
+    color: var(--color-light);
+    font-weight: 700;
+}
+
+.table__dataBox {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+    padding: 30px;
+}
+
+.table__dataItem {
     display: flex;
     flex-direction: column;
-}
-
-.table__dataItem{
-    display: grid;
     color: var(--color-white);
     font-family: var(--font-main);
     font-size: 0.96rem;
-    border-top: 1px solid var(--color-border);
-    padding: 0 30px;
+    padding: 24px;
+    background: rgba(244, 215, 220, 0.05);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    transition: transform var(--transition-base), background-color var(--transition-base);
 }
 
-.table__actions{
+.table__dataItem:hover {
+    background: rgba(244, 215, 220, 0.08);
+    transform: translateY(-5px);
+}
+
+.table__actions {
     display: flex;
-    gap: 10px;
-    margin-top: 12px;
-    padding-bottom: 18px;
+    flex-direction: row;
+    gap: 12px;
+    margin-top: auto;
+    padding-top: 20px;
+}
+
+.table__actions .button,
+.table__actions .input {
+    flex: 1;
+    width: auto;
+    padding: 10px;
+    font-size: 0.85rem;
+    height: auto;
+    cursor: pointer;
 }
 
 /* #endregion */
@@ -877,7 +930,7 @@ option {
     height: 100%;
 }
 
-.dash-total__container{
+.dash-total__container {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1858,7 +1911,7 @@ option {
 
 /* #region VENTAS */
 
-.s-section{
+.s-section {
     display: flex;
     flex: 1;
     min-width: 0;
@@ -1868,45 +1921,20 @@ option {
 
 /* #region COCHES */
 
-.c-section{
+.c-section {
     display: flex;
     flex: 1;
     min-width: 0;
 }
-
-.c-creation{
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-    background-color: color-mix(var(--color-primary), transparent 10%);
-    padding: 30px;
-    border-radius: var(--radius-lg);
-    height: fit-content;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    display: none;
-}
-
-.form{
-    margin-top: 25px;
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-}
-
-
 
 /* #endregion */
 
 /* #region DETALLE VENTAS */
 
-.sd-section{
+.sd-section {
     display: flex;
     flex: 1;
     min-width: 0;
 }
 
 /* #endregion */
-

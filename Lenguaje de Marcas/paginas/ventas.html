@@ -90,7 +90,7 @@
 
         </aside>
 
-        <div class="table">
+        <div class="table" id="s-section">
 
             <div class="table__top">
 
@@ -101,29 +101,77 @@
 
                 <div class="table__interaction">
                     <input type="text" class="input" placeholder="Buscar venta...">
-                    <button class="button">Nueva venta</button>
+                    <button class="button" id="btn__newSale">Nueva venta</button>
                 </div>
 
             </div>
 
-            <div class="table__attributes">
-                <h2 class="table__attributesText">ID</h2>
-                <h2 class="table__attributesText">Cliente</h2>
-                <h2 class="table__attributesText">Usuario</h2>
-                <h2 class="table__attributesText">Fecha</h2>
-                <h2 class="table__attributesText">Estado</h2>
-                <h2 class="table__attributesText">Total</h2>
-            </div>
-
             <div class="table__data">
-                <p class="text">No hay clientes para mostrar</p>
+                <div class="table__dataBox">
+                    <p class="text">No hay ventas para mostrar</p>
+                </div>
             </div>
 
         </div>
 
     </div>
 
-    </section>
+    <div class="creation" id="s-creation">
+
+        <h2 class="heading headign--align">
+            Crear una venta
+            <span class="material-symbols-rounded sidebar__icon icon__close">close</span>
+        </h2>
+
+        <div class="form" id="saleForm">
+
+            <div class="form__group">
+                <label class="text">Cliente</label>
+                <select id="cliente" name="cliente" class="input" required>
+                    <option value="">Selecciona un cliente</option>
+                </select>
+            </div>
+
+            <div class="form__group">
+                <label class="text">Usuario (Vendedor)</label>
+                <select id="usuario" name="usuario" class="input" required>
+                    <option value="">Selecciona un vendedor</option>
+                </select>
+            </div>
+
+            <div class="form__group">
+                <label class="text">Estado</label>
+                <select id="estado" name="estado" class="input" required>
+                    <option value="Pendiente">Pendiente</option>
+                    <option value="Completada">Completada</option>
+                    <option value="Cancelada">Cancelada</option>
+                </select>
+            </div>
+
+            <div class="sidebar__divider" style="margin: 20px 0;"></div>
+            <p class="text" style="font-weight: 700; color: var(--color-light);">Detalle de venta</p>
+
+            <div class="form__group">
+                <label class="text">Coche</label>
+                <select id="coche" name="coche" class="input" required>
+                    <option value="">Selecciona un coche</option>
+                </select>
+            </div>
+
+            <div class="form__group">
+                <label class="text">Cantidad</label>
+                <input id="cantidad" placeholder="Cantidad" type="number" name="cantidad" class="input" value="1"
+                    required>
+            </div>
+
+            <button type="button" class="button button--primary" id="btn--submitSale">Registrar Venta</button>
+
+        </div>
+
+    </div>
+
+    <script src="/js/auth.js"></script>
+    <script type="module" src="/js/ventas.js"></script>
 
 </body>
 

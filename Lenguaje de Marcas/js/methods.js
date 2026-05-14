@@ -1,11 +1,16 @@
-function create(item, values, container, list) {
+function create(item, values, container, list, fields, storageKey, onEdit) {
     const element = document.createElement('div');
     element.classList.add('table__dataItem');
 
-    values.forEach(value => {
+    values.forEach((value, index) => {
         const data = document.createElement('p');
         data.classList.add('table__attributesText');
-        data.textContent = value;
+
+        const attrName = document.createElement('strong');
+        attrName.textContent = fields[index].charAt(0).toUpperCase() + fields[index].slice(1) + ':  ';
+
+        data.appendChild(attrName);
+        data.appendChild(document.createTextNode(value ?? '—'));
         element.appendChild(data);
     });
 
@@ -15,68 +20,67 @@ function create(item, values, container, list) {
     const editButton = document.createElement('button');
     editButton.textContent = 'Editar';
     editButton.classList.add('input');
-    actions.appendChild(editButton);
-    element.appendChild(actions);
 
     const deleteButton = document.createElement('button');
     deleteButton.textContent = 'Eliminar';
     deleteButton.classList.add('button');
+
+    actions.appendChild(editButton);
     actions.appendChild(deleteButton);
     element.appendChild(actions);
 
     deleteButton.addEventListener('click', () => {
-        const index = list.findIndex(c => c.id === item.id);
-        
-        if (index !== -1) {
-            list.splice(index, 1);
-            localStorage.setItem('misCoches', JSON.stringify(list));
-            container.removeChild(element);
+        if (!confirm('¿Seguro que quieres eliminar este elemento?')) return;
+
+        const fullList = JSON.parse(localStorage.getItem(storageKey)) || list;
+        const indexInFull = fullList.findIndex(c => c.id === item.id);
+
+        if (indexInFull !== -1) {
+            fullList.splice(indexInFull, 1);
+            localStorage.setItem(storageKey, JSON.stringify(fullList));
+
+            const indexInCurrent = list.findIndex(c => c.id === item.id);
+            if (indexInCurrent !== -1) list.splice(indexInCurrent, 1);
+
+            element.remove();
+
+            if (fullList.length === 0) {
+                container.innerHTML = '<p class="text">No hay elementos para mostrar</p>';
+            }
         }
     });
 
-    editButton.addEventListener('click', () => {updateCar(item)});
+    // Evento editar
+    editButton.addEventListener('click', () => onEdit?.(item));
 
     container.appendChild(element);
 }
 
-export function loadData(dataList, fields) {
-    
-    const container = document.querySelector('.table__dataBox'); 
+export function loadData(dataList, fields, storageKey, onEdit) {
+    const container = document.querySelector('.table__dataBox');
+    if (!container) return;
 
     container.innerHTML = '';
 
-    const columns = document.querySelectorAll('.table__attributes .table__attributesText').length;
-    const gridTemplate = `repeat(${columns}, 1fr)`; 
-
-    const header = document.querySelector('.table__attributes');
-    if (header) {
-        header.style.gridTemplateColumns = gridTemplate;
+    if (!dataList.length) {
+        container.innerHTML = '<p class="text">No hay elementos para mostrar</p>';
+        return;
     }
 
     dataList.forEach(item => {
-
         const values = fields.map(field => item[field]);
-        create(item, values, container, dataList);
-
-        const lastRow = container.lastElementChild;
-        if (lastRow) {
-            lastRow.style.gridTemplateColumns = `repeat(${columns}, 1fr)`;
-        }
+        create(item, values, container, dataList, fields, storageKey, onEdit);
     });
-    
 }
 
-export function openCreate(section, form){
-    const sectionBlur = document.getElementById(section);
-    sectionBlur.classList.add('blur');
-    const formElement = document.getElementById(form);
-    formElement.style.display = 'block';
+export function openCreate(sectionId, formId) {
+    document.getElementById(sectionId)?.classList.add('blur');
+    const form = document.getElementById(formId);
+    if (form) form.style.display = 'flex';
 }
 
-export function closeCreate(section, form){
-    const sectionBlur = document.getElementById(section);
-    sectionBlur.classList.remove('blur');
-    const formElement = document.getElementById(form);
-    formElement.style.display = 'none';
-
+export function closeCreate(sectionId, formId) {
+    document.getElementById(sectionId)?.classList.remove('blur');
+    const form = document.getElementById(formId);
+    if (form) form.style.display = 'none';
 }

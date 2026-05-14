@@ -47,7 +47,7 @@ let usuarios = [];
 let fechaCalendario = new Date();
 
 function cargarClientesAuxiliares() {
-    const clientesGuardados = sessionStorage.getItem("clientes");
+    const clientesGuardados = localStorage.getItem("clientes");
 
     if (clientesGuardados) {
         clientes = JSON.parse(clientesGuardados);
@@ -63,7 +63,7 @@ function cargarClientesAuxiliares() {
 }
 
 function cargarUsuariosAuxiliares() {
-    const usuariosGuardados = sessionStorage.getItem("usuarios");
+    const usuariosGuardados = localStorage.getItem("usuarios");
 
     if (usuariosGuardados) {
         usuarios = JSON.parse(usuariosGuardados);
@@ -102,7 +102,7 @@ function obtenerNombreUsuario(id) {
 }
 
 function cargarInteracciones() {
-    const interaccionesGuardadas = sessionStorage.getItem("interaccionesCliente");
+    const interaccionesGuardadas = localStorage.getItem("interaccionesCliente");
 
     if (interaccionesGuardadas) {
         interacciones = JSON.parse(interaccionesGuardadas);
@@ -155,7 +155,7 @@ function cargarInteracciones() {
 }
 
 function guardarInteracciones() {
-    sessionStorage.setItem("interaccionesCliente", JSON.stringify(interacciones));
+    localStorage.setItem("interaccionesCliente", JSON.stringify(interacciones));
 }
 
 function generarNuevoIdInteraccion() {
@@ -239,31 +239,25 @@ function pintarInteracciones(listaInteracciones) {
     }
 
     listaInteracciones.forEach((interaccion) => {
-        const fila = document.createElement("tr");
-        fila.classList.add("int-interacciones__row");
+        const card = document.createElement("div");
+        card.classList.add("table__dataItem");
 
-        fila.innerHTML = `
-            <td data-label="ID">${interaccion.id}</td>
-            <td data-label="Cliente">${obtenerNombreCliente(interaccion.clienteId)}</td>
-            <td data-label="Usuario">${obtenerNombreUsuario(interaccion.usuarioId)}</td>
-            <td data-label="Tipo">${interaccion.tipo}</td>
-            <td data-label="Fecha">${formatearFecha(interaccion.fecha)}</td>
-            <td data-label="Asunto">${interaccion.asunto}</td>
-            <td data-label="Próxima acción">${interaccion.proximaAccion || "-"}</td>
-            <td data-label="Fecha próxima">${formatearFecha(interaccion.fechaProxima)}</td>
-            <td data-label="Acciones">
-                <div class="int-interacciones__table-actions">
-                    <button class="int-interacciones__icon-button int-interacciones__icon-button--edit" data-action="edit" data-id="${interaccion.id}">
-                        Editar
-                    </button>
-                    <button class="int-interacciones__icon-button int-interacciones__icon-button--delete" data-action="delete" data-id="${interaccion.id}">
-                        Eliminar
-                    </button>
-                </div>
-            </td>
+        card.innerHTML = `
+            <p class="table__attributesText"><strong>ID:</strong> ${interaccion.id}</p>
+            <p class="table__attributesText"><strong>Cliente:</strong> ${obtenerNombreCliente(interaccion.clienteId)}</p>
+            <p class="table__attributesText"><strong>Usuario:</strong> ${obtenerNombreUsuario(interaccion.usuarioId)}</p>
+            <p class="table__attributesText"><strong>Tipo:</strong> ${interaccion.tipo}</p>
+            <p class="table__attributesText"><strong>Fecha:</strong> ${formatearFecha(interaccion.fecha)}</p>
+            <p class="table__attributesText"><strong>Asunto:</strong> ${interaccion.asunto}</p>
+            <p class="table__attributesText"><strong>Próxima acción:</strong> ${interaccion.proximaAccion || "-"}</p>
+            <p class="table__attributesText"><strong>Fecha próxima:</strong> ${formatearFecha(interaccion.fechaProxima)}</p>
+            <div class="table__actions">
+                <button class="input" data-action="edit" data-id="${interaccion.id}">Editar</button>
+                <button class="button" data-action="delete" data-id="${interaccion.id}">Eliminar</button>
+            </div>
         `;
 
-        interaccionesTableBody.appendChild(fila);
+        interaccionesTableBody.appendChild(card);
     });
 }
 
