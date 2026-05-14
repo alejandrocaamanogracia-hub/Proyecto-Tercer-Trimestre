@@ -1,7 +1,5 @@
 import { loadData, openCreate, closeCreate } from './methods.js';
 
-if (window.protegerPagina) window.protegerPagina();
-
 const STORAGE_KEY = 'misCoches';
 const FIELDS = ['id', 'marca', 'modelo', 'anio', 'cambio', 'combustible', 'precio'];
 
@@ -36,10 +34,10 @@ document.addEventListener('DOMContentLoaded', () => {
     setupSearch();
 });
 
-btnCreate?.addEventListener('click', () => openCreate('c-section', 'creation'));
+btnCreate?.addEventListener('click', () => openCreate('c-section', 'c-creation'));
 
 btnClose?.addEventListener('click', () => {
-    closeCreate('c-section', 'creation');
+    closeCreate('c-section', 'c-creation');
     clearForm();
 });
 
@@ -91,7 +89,7 @@ function newCar() {
 
     cars.push(nuevoCoche);
     saveAndRender();
-    closeCreate('c-section', 'creation');
+    closeCreate('c-section', 'c-creation');
     clearForm();
 }
 
@@ -104,7 +102,7 @@ function updateCar(item) {
     document.getElementById('combustible').value = item.combustible;
     document.getElementById('precio').value = item.precio;
 
-    openCreate('c-section', 'creation');
+    openCreate('c-section', 'c-creation');
 
     const newSubmit = btnSubmit.cloneNode(true);
     btnSubmit.parentNode.replaceChild(newSubmit, btnSubmit);
@@ -120,7 +118,7 @@ function updateCar(item) {
         if (index !== -1) {
             cars[index] = { ...cars[index], ...values };
             saveAndRender();
-            closeCreate('c-section', 'creation');
+            closeCreate('c-section', 'c-creation');
             clearForm();
             newSubmit.textContent = 'Crear coche';
         }

@@ -29,7 +29,7 @@ const newClientButton = document.querySelector("#newClientButton");
 let clientes = [];
 
 function cargarClientes() {
-    const clientesGuardados = localStorage.getItem("clientes");
+    const clientesGuardados = sessionStorage.getItem("clientes");
 
     if (clientesGuardados) {
         clientes = JSON.parse(clientesGuardados);
@@ -49,7 +49,7 @@ function cargarClientes() {
 }
 
 function guardarClientes() {
-    localStorage.setItem("clientes", JSON.stringify(clientes));
+    sessionStorage.setItem("clientes", JSON.stringify(clientes));
 }
 
 function mostrarMensaje(mensaje, tipo) {
@@ -109,22 +109,28 @@ function pintarClientes(listaClientes) {
     }
 
     listaClientes.forEach((cliente) => {
-        const card = document.createElement("div");
-        card.classList.add("table__dataItem");
+        const fila = document.createElement("tr");
+        fila.classList.add("cli-clientes__row");
 
-        card.innerHTML = `
-            <p class="table__attributesText"><strong>ID:</strong> ${cliente.id}</p>
-            <p class="table__attributesText"><strong>Nombre:</strong> ${cliente.nombre}</p>
-            <p class="table__attributesText"><strong>Email:</strong> ${cliente.email}</p>
-            <p class="table__attributesText"><strong>Teléfono:</strong> ${cliente.telefono}</p>
-            <p class="table__attributesText"><strong>Dirección:</strong> ${cliente.direccion}</p>
-            <div class="table__actions">
-                <button class="input" data-action="edit" data-id="${cliente.id}">Editar</button>
-                <button class="button" data-action="delete" data-id="${cliente.id}">Eliminar</button>
-            </div>
+        fila.innerHTML = `
+            <td data-label="ID">${cliente.id}</td>
+            <td data-label="Nombre">${cliente.nombre}</td>
+            <td data-label="Email">${cliente.email}</td>
+            <td data-label="Teléfono">${cliente.telefono}</td>
+            <td data-label="Dirección">${cliente.direccion}</td>
+            <td data-label="Acciones">
+                <div class="cli-clientes__table-actions">
+                    <button class="cli-clientes__icon-button cli-clientes__icon-button--edit" data-action="edit" data-id="${cliente.id}">
+                        Editar
+                    </button>
+                    <button class="cli-clientes__icon-button cli-clientes__icon-button--delete" data-action="delete" data-id="${cliente.id}">
+                        Eliminar
+                    </button>
+                </div>
+            </td>
         `;
 
-        clientesTableBody.appendChild(card);
+        clientesTableBody.appendChild(fila);
     });
 }
 
