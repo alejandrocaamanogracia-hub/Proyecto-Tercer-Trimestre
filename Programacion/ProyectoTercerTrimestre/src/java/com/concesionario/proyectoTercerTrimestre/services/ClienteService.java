@@ -96,39 +96,50 @@ public class ClienteService {
 
     public void modificarCliente(int id, Cliente cliente) {
 
-        if (id <= 0 || id > clienteRepository.listarClientes().size()) {
-            System.out.println("El id no es valido");
+        if (id <= 0) {
+            System.out.println("El id no es valido.");
             return;
         }
 
-        if (cliente.getDireccion() != null && cliente.getDireccion().isBlank()) {
-            System.out.println("La direccion no puede estar en blanco");
+        Cliente clienteExistente = clienteRepository.buscarCliente(id);
+
+        if (clienteExistente == null) {
+            System.out.println("No existe ningun cliente con ese ID.");
             return;
         }
 
-        if (cliente.getTelefono() != null && cliente.getTelefono().isBlank()) {
-            System.out.println("El telefono no puede estar en blanco");
+        if (cliente.getNombre() == null || cliente.getNombre().isBlank()) {
+            System.out.println("El nombre no puede estar vacio.");
             return;
         }
 
-        if (cliente.getNombre() != null && cliente.getNombre().isBlank()) {
-            System.out.println("El nombre no puede estar en blanco");
+        if (cliente.getEmail() == null || cliente.getEmail().isBlank()) {
+            System.out.println("El email no puede estar vacio.");
             return;
         }
 
-        if (cliente.getEmail() != null && cliente.getEmail().isBlank()) {
-            System.out.println("El email no puede estar en blanco");
+        if (!cliente.getEmail().contains("@")) {
+            System.out.println("El email debe tener un formato valido.");
+            return;
+        }
+
+        if (cliente.getTelefono() == null || cliente.getTelefono().isBlank()) {
+            System.out.println("El telefono no puede estar vacio.");
+            return;
+        }
+
+        if (cliente.getDireccion() == null || cliente.getDireccion().isBlank()) {
+            System.out.println("La direccion no puede estar vacia.");
             return;
         }
 
         clienteRepository.modificarCliente(id, cliente);
-
+        System.out.println("Cliente modificado correctamente.");
     }
 
     public Cliente buscarCliente(int id) {
-
         if (id <= 0) {
-            System.out.println("El ID del cliente no es válido.");
+            System.out.println("El ID del cliente no es valido.");
             return null;
         }
 
@@ -136,10 +147,10 @@ public class ClienteService {
 
         if (cliente == null) {
             System.out.println("No existe un cliente con ese ID.");
+            return null;
         }
 
         return cliente;
-
     }
 
 }

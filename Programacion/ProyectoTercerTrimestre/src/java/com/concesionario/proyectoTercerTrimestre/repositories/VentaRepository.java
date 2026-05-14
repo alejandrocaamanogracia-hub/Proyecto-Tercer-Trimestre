@@ -17,4 +17,8 @@ public interface VentaRepository {
 
     Venta buscarVenta(int id);
 
+    boolean existeCliente(int clienteId);
+
+    boolean existeUsuario(int usuarioId);
+
 }

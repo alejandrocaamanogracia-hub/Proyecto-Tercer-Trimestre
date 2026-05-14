@@ -91,88 +91,59 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
 
 
     @Override
-    public void modificarUsuario(int id, Usuario usuario){
+    public void modificarUsuario(int id, Usuario usuario) {
+        String sql = """
+            UPDATE usuarios
+            SET nombre = ?, email = ?, password_hash = ?, rol = ?
+            WHERE id = ?
+            """;
 
-        String sql = "UPDATE usuarios SET nombre = ? WHERE id = ?";
+        try (Connection connection = DataBaseConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-        try (Connection connection = DataBaseConnection.getConnection()){
+            preparedStatement.setString(1, usuario.getNombre());
+            preparedStatement.setString(2, usuario.getEmail());
+            preparedStatement.setString(3, usuario.getPasswordHash());
+            preparedStatement.setString(4, usuario.getRol().getValorDb());
+            preparedStatement.setInt(5, id);
 
-            if (usuario.getNombre() != null){
+            preparedStatement.executeUpdate();
 
-                PreparedStatement preparedStatement = connection.prepareStatement(sql);
-                preparedStatement.setString(1, usuario.getNombre());
-                preparedStatement.setInt(2, id);
-                preparedStatement.executeUpdate();
-
-            }
-
-            sql = "UPDATE usuarios SET email = ? WHERE id = ?";
-
-            if (usuario.getEmail() != null){
-
-                PreparedStatement preparedStatement = connection.prepareStatement(sql);
-                preparedStatement.setString(1, usuario.getEmail());
-                preparedStatement.setInt(2, id);
-                preparedStatement.executeUpdate();
-
-            }
-
-            sql = "UPDATE usuarios SET password_hash = ? WHERE id = ?";
-
-            if (usuario.getPasswordHash() != null){
-
-                PreparedStatement preparedStatement = connection.prepareStatement(sql);
-                preparedStatement.setString(1, usuario.getPasswordHash());
-                preparedStatement.setInt(2, id);
-                preparedStatement.executeUpdate();
-
-            }
-
-            sql = "UPDATE usuarios SET rol = ? WHERE id = ?";
-
-            if (usuario.getRol() != null){
-
-                PreparedStatement preparedStatement = connection.prepareStatement(sql);
-                preparedStatement.setString(1, usuario.getRol().getValorDb());
-                preparedStatement.setInt(2, id);
-                preparedStatement.executeUpdate();
-
-            }
-
-        }catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println("Error al modificar el usuario.");
             e.printStackTrace();
         }
-
     }
 
     @Override
     public Usuario buscarUsuario(int id) {
-
-        Usuario usuario = new Usuario();
         String sql = "SELECT * FROM usuarios WHERE id = ?";
 
-        try (Connection connection = DataBaseConnection.getConnection()){
+        try (Connection connection = DataBaseConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, id);
+
             ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
+
+            if (resultSet.next()) {
+                Usuario usuario = new Usuario();
+
                 usuario.setId(resultSet.getInt("id"));
                 usuario.setNombre(resultSet.getString("nombre"));
                 usuario.setEmail(resultSet.getString("email"));
                 usuario.setRol(RolUsuario.fromDb(resultSet.getString("rol")));
                 usuario.setPasswordHash(resultSet.getString("password_hash"));
+
+                return usuario;
             }
 
-        }catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println("Error al buscar el usuario.");
             e.printStackTrace();
         }
 
-        return usuario;
-
+        return null;
     }
-
 
 }

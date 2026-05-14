@@ -1,8 +1,7 @@
 package com.concesionario.proyectoTercerTrimestre.interfaz;
 
-import com.concesionario.proyectoTercerTrimestre.controller.CocheController;
+
 import com.concesionario.proyectoTercerTrimestre.controller.DetalleVentaController;
-import com.concesionario.proyectoTercerTrimestre.controller.VentaController;
 import com.concesionario.proyectoTercerTrimestre.entities.*;
 import com.concesionario.proyectoTercerTrimestre.utils.ComprobacionOpcion;
 
@@ -137,10 +136,8 @@ public class DetalleVentaMenu {
     }
 
     private void modificarDetalleVenta() {
+        System.out.println("\n--- Modificar detalle de venta ---");
 
-        DetalleVenta detalleVenta = new DetalleVenta();
-
-        System.out.println("Que detalle venta quieres modificar: ");
         List<DetalleVenta> detalleVentas = detalleVentaController.listarDetallesVenta();
 
         if (detalleVentas.isEmpty()) {
@@ -148,92 +145,147 @@ public class DetalleVentaMenu {
             return;
         }
 
+        System.out.println("Que detalle de venta quieres modificar: ");
+
         int iterador = 1;
-        for (DetalleVenta detalleVenta1 : detalleVentas) {
-            System.out.println(iterador++ + " - " + detalleVenta1.getId());
+        for (DetalleVenta detalleVentaActual : detalleVentas) {
+            System.out.println(
+                    iterador + ". ID: " + detalleVentaActual.getId()
+                            + " | ID Venta: " + detalleVentaActual.getVentaId()
+                            + " | ID Coche: " + detalleVentaActual.getCocheId()
+                            + " | Cantidad: " + detalleVentaActual.getCantidad()
+            );
+            iterador++;
         }
 
         int opcion = ComprobacionOpcion.leerOpcion(1, detalleVentas.size());
 
-        int idDetalleVenta = detalleVentas.get(opcion - 1).getId();
+        DetalleVenta detalleVentaActual = detalleVentas.get(opcion - 1);
+        int idDetalleVenta = detalleVentaActual.getId();
 
-        System.out.println("Modificar id de la venta");
+        DetalleVenta detalleVentaModificado = new DetalleVenta();
+
+        detalleVentaModificado.setVentaId(detalleVentaActual.getVentaId());
+        detalleVentaModificado.setCocheId(detalleVentaActual.getCocheId());
+        detalleVentaModificado.setCantidad(detalleVentaActual.getCantidad());
+
+        System.out.println("\nModificar ID de la venta actual: " + detalleVentaActual.getVentaId());
         System.out.println("1. Si");
         System.out.println("2. No");
 
-        int opcion2 = ComprobacionOpcion.leerOpcion(1, 2);
-
-        switch (opcion2) {
-            case 1 -> {
-                System.out.println("Introduce el id de la venta: ");
-                int ventaId = ComprobacionOpcion.leerInt();
-                detalleVenta.setVentaId(ventaId);
-            }
-            case 2 -> {
-                detalleVenta.setVentaId(-1);
-            }
+        if (ComprobacionOpcion.leerOpcion(1, 2) == 1) {
+            detalleVentaModificado.setVentaId(pedirVentaExistente());
         }
 
-        System.out.println("Modificar id del coche");
+        System.out.println("\nModificar ID del coche actual: " + detalleVentaActual.getCocheId());
         System.out.println("1. Si");
         System.out.println("2. No");
 
-        opcion2 = ComprobacionOpcion.leerOpcion(1, 2);
-
-        switch (opcion2) {
-            case 1 -> {
-                System.out.println("Introduce el id del coche: ");
-                int cocheId = ComprobacionOpcion.leerInt();
-                detalleVenta.setCocheId(cocheId);
-            }
-            case 2 -> {
-                detalleVenta.setCocheId(-1);
-            }
+        if (ComprobacionOpcion.leerOpcion(1, 2) == 1) {
+            detalleVentaModificado.setCocheId(pedirCocheDisponibleParaModificar(idDetalleVenta));
         }
 
-        System.out.println("Modificar la cantidad");
+        System.out.println("\nModificar cantidad actual: " + detalleVentaActual.getCantidad());
         System.out.println("1. Si");
         System.out.println("2. No");
 
-        opcion2 = ComprobacionOpcion.leerOpcion(1, 2);
-
-        switch (opcion2) {
-            case 1 -> {
-                System.out.println("Introduce la cantidad: ");
-                int cantidad = ComprobacionOpcion.leerInt();
-                detalleVenta.setCantidad(cantidad);
-            }
-            case 2 -> {
-                detalleVenta.setCantidad(-1);
-            }
+        if (ComprobacionOpcion.leerOpcion(1, 2) == 1) {
+            detalleVentaModificado.setCantidad(
+                    ComprobacionOpcion.leerIntMinimo("Introduce la cantidad: ", 1)
+            );
         }
 
-        detalleVentaController.modificarDetalleVenta(idDetalleVenta, detalleVenta);
+        detalleVentaController.modificarDetalleVenta(idDetalleVenta, detalleVentaModificado);
+    }
+
+    private int pedirVentaExistente() {
+        int ventaId;
+        boolean existe;
+
+        do {
+            ventaId = ComprobacionOpcion.leerIntMinimo("Introduce el ID de la venta: ", 1);
+            existe = detalleVentaController.existeVenta(ventaId);
+
+            if (!existe) {
+                System.out.println("No existe ninguna venta con ese ID.");
+            }
+
+        } while (!existe);
+
+        return ventaId;
+    }
+
+    private int pedirCocheExistente() {
+        int cocheId;
+        boolean existe;
+
+        do {
+            cocheId = ComprobacionOpcion.leerIntMinimo("Introduce el ID del coche: ", 1);
+            existe = detalleVentaController.existeCoche(cocheId);
+
+            if (!existe) {
+                System.out.println("No existe ningun coche con ese ID.");
+            }
+
+        } while (!existe);
+
+        return cocheId;
+    }
+
+    private int pedirCocheDisponibleParaModificar(int idDetalleVentaActual) {
+        int cocheId;
+        boolean cocheExiste;
+        boolean cocheYaUsado = false;
+
+        do {
+            cocheId = ComprobacionOpcion.leerIntMinimo("Introduce el ID del coche: ", 1);
+
+            cocheExiste = detalleVentaController.existeCoche(cocheId);
+
+            if (!cocheExiste) {
+                System.out.println("No existe ningun coche con ese ID.");
+                cocheYaUsado = false;
+                continue;
+            }
+
+            cocheYaUsado = detalleVentaController.existeDetalleVentaConCocheExcluyendoId(cocheId, idDetalleVentaActual);
+
+            if (cocheYaUsado) {
+                System.out.println("Ese coche ya esta asignado a otro detalle de venta.");
+            }
+
+        } while (!cocheExiste || cocheYaUsado);
+
+        return cocheId;
     }
 
     public void buscarDetalleVenta() {
+        System.out.println("\n--- Buscar detalle de venta ---");
 
         List<DetalleVenta> detalleVentas = detalleVentaController.listarDetallesVenta();
 
         if (detalleVentas.isEmpty()) {
-            System.out.println("No hay detalles venta registrados.");
+            System.out.println("No hay detalles de venta registrados.");
             return;
         }
 
-        System.out.println("Que detalles venta quieres ver: ");
+        System.out.println("Que detalle de venta quieres ver: ");
 
         for (DetalleVenta detalleVenta : detalleVentas) {
-            System.out.println(detalleVenta.getId());
+            System.out.println(
+                    detalleVenta.getId()
+                            + ". ID Venta: " + detalleVenta.getVentaId()
+                            + " | ID Coche: " + detalleVenta.getCocheId()
+                            + " | Cantidad: " + detalleVenta.getCantidad()
+            );
         }
 
-        DetalleVenta detalleVenta1 = detalleVentaController.buscarDetalleVenta(ComprobacionOpcion.leerInt());
+        System.out.print("Introduce el ID del detalle de venta: ");
+        DetalleVenta detalleVenta = detalleVentaController.buscarDetalleVenta(ComprobacionOpcion.leerInt());
 
-        if (detalleVenta1 == null) {
-            System.out.println("No existe el coche con ese id");
-        }else {
-            System.out.println(detalleVenta1.toString());
+        if (detalleVenta != null) {
+            System.out.println(detalleVenta);
         }
-
     }
 
 }

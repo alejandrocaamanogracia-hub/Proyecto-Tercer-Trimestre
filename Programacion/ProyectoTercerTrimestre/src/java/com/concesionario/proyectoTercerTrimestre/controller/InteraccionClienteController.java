@@ -3,6 +3,8 @@ package com.concesionario.proyectoTercerTrimestre.controller;
 import com.concesionario.proyectoTercerTrimestre.entities.InteraccionCliente;
 import com.concesionario.proyectoTercerTrimestre.entities.TipoInteraccion;
 import com.concesionario.proyectoTercerTrimestre.services.InteraccionClienteService;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -51,6 +53,14 @@ public class InteraccionClienteController {
 
     public InteraccionCliente buscarInteraccionCliente(int id) {
         return interaccionClienteService.buscarInteraccionCliente(id);
+    }
+
+    public boolean existeCliente(int clienteId) {
+        return interaccionClienteService.existeCliente(clienteId);
+    }
+
+    public boolean existeUsuario(int usuarioId) {
+        return interaccionClienteService.existeUsuario(usuarioId);
     }
 
 }

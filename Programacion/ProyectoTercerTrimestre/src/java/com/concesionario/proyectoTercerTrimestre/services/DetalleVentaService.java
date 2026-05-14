@@ -119,7 +119,6 @@ public class DetalleVentaService {
     }
 
     public void modificarDetalleVenta(int id, DetalleVenta detalleVenta) {
-
         if (id <= 0) {
             System.out.println("El ID del detalle de venta no es valido.");
             return;
@@ -130,18 +129,52 @@ public class DetalleVentaService {
             return;
         }
 
-        if (detalleVenta.getVentaId() != -1 && detalleVenta.getVentaId() <= 0) {
+        DetalleVenta detalleVentaExistente = detalleVentaRepository.buscarDetalleVenta(id);
+
+        if (detalleVentaExistente == null) {
+            System.out.println("No existe ningun detalle de venta con ese ID.");
+            return;
+        }
+
+        if (detalleVenta.getVentaId() <= 0) {
             System.out.println("El ID de la venta no es valido.");
             return;
         }
 
-        if (detalleVenta.getCocheId() != -1 && detalleVenta.getCocheId() <= 0) {
+        if (!detalleVentaRepository.existeVenta(detalleVenta.getVentaId())) {
+            System.out.println("No existe ninguna venta con ese ID.");
+            return;
+        }
+
+        if (detalleVenta.getCocheId() <= 0) {
             System.out.println("El ID del coche no es valido.");
             return;
         }
 
-        if (detalleVenta.getCantidad() != -1 && detalleVenta.getCantidad() <= 0) {
+        if (!detalleVentaRepository.existeCoche(detalleVenta.getCocheId())) {
+            System.out.println("No existe ningun coche con ese ID.");
+            return;
+        }
+
+        if (detalleVenta.getCantidad() <= 0) {
             System.out.println("La cantidad debe ser mayor que 0.");
+            return;
+        }
+
+        if (detalleVentaRepository.existeDetalleVentaConVentaYCocheExcluyendoId(
+                detalleVenta.getVentaId(),
+                detalleVenta.getCocheId(),
+                id
+        )) {
+            System.out.println("Ya existe un detalle de venta con esa venta y ese coche.");
+            return;
+        }
+
+        if (detalleVentaRepository.existeDetalleVentaConCocheExcluyendoId(
+                detalleVenta.getCocheId(),
+                id
+        )) {
+            System.out.println("Ese coche ya esta asignado a otro detalle de venta.");
             return;
         }
 
@@ -149,21 +182,44 @@ public class DetalleVentaService {
         System.out.println("Detalle de venta modificado correctamente.");
     }
 
-    public DetalleVenta buscarDetalleVenta(int id) {
+    public boolean existeVenta(int ventaId) {
+        if (ventaId <= 0) {
+            return false;
+        }
 
+        return detalleVentaRepository.existeVenta(ventaId);
+    }
+
+    public boolean existeCoche(int cocheId) {
+        if (cocheId <= 0) {
+            return false;
+        }
+
+        return detalleVentaRepository.existeCoche(cocheId);
+    }
+
+    public DetalleVenta buscarDetalleVenta(int id) {
         if (id <= 0) {
             System.out.println("El ID del detalle de venta no es valido.");
+            return null;
         }
 
         DetalleVenta detalleVenta = detalleVentaRepository.buscarDetalleVenta(id);
 
-        if (detalleVenta == null){
+        if (detalleVenta == null) {
             System.out.println("Detalle de venta no encontrado.");
             return null;
         }
 
         return detalleVenta;
+    }
 
+    public boolean existeDetalleVentaConCocheExcluyendoId(int cocheId, int idDetalleVenta) {
+        if (cocheId <= 0 || idDetalleVenta <= 0) {
+            return false;
+        }
+
+        return detalleVentaRepository.existeDetalleVentaConCocheExcluyendoId(cocheId, idDetalleVenta);
     }
 
 

@@ -23,4 +23,8 @@ public interface DetalleVentaRepository {
     boolean existeDetalleVentaConVentaYCoche(int ventaId, int cocheId);
 
     boolean existeDetalleVentaConCoche(int cocheId);
+
+    boolean existeDetalleVentaConVentaYCocheExcluyendoId(int ventaId, int cocheId, int idDetalleVenta);
+
+    boolean existeDetalleVentaConCocheExcluyendoId(int cocheId, int idDetalleVenta);
 }

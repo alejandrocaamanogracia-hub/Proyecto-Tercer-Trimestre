@@ -88,88 +88,60 @@ public class ClienteRepositoryImpl implements ClienteRepository {
 
 
     @Override
-    public void modificarCliente(int id,  Cliente cliente) {
+    public void modificarCliente(int id, Cliente cliente) {
 
-        String sql = "UPDATE clientes SET nombre = ? WHERE id = ?";
+        String sql = """
+            UPDATE clientes 
+            SET nombre = ?, email = ?, telefono = ?, direccion = ?
+            WHERE id = ?
+            """;
 
-        try (Connection connection = DataBaseConnection.getConnection()){
+        try (Connection connection = DataBaseConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            if (cliente.getNombre() != null) {
+            preparedStatement.setString(1, cliente.getNombre());
+            preparedStatement.setString(2, cliente.getEmail());
+            preparedStatement.setString(3, cliente.getTelefono());
+            preparedStatement.setString(4, cliente.getDireccion());
+            preparedStatement.setInt(5, id);
 
-                PreparedStatement preparedStatement = connection.prepareStatement(sql);
-                preparedStatement.setString(1, cliente.getNombre());
-                preparedStatement.setInt(2, id);
-                preparedStatement.executeUpdate();
+            preparedStatement.executeUpdate();
 
-            }
-
-            sql = "UPDATE clientes SET email = ? WHERE id = ?";
-
-            if (cliente.getEmail() != null) {
-
-                PreparedStatement preparedStatement = connection.prepareStatement(sql);
-                preparedStatement.setString(1, cliente.getEmail());
-                preparedStatement.setInt(2, id);
-                preparedStatement.executeUpdate();
-
-            }
-
-            sql = "UPDATE clientes SET telefono = ? WHERE id = ?";
-
-            if (cliente.getTelefono() != null) {
-
-                PreparedStatement preparedStatement = connection.prepareStatement(sql);
-                preparedStatement.setString(1, cliente.getTelefono());
-                preparedStatement.setInt(2, id);
-                preparedStatement.executeUpdate();
-
-            }
-
-            sql = "UPDATE clientes SET direccion = ? WHERE id = ?";
-
-            if (cliente.getDireccion() != null) {
-
-                PreparedStatement preparedStatement = connection.prepareStatement(sql);
-                preparedStatement.setString(1, cliente.getDireccion());
-                preparedStatement.setInt(2, id);
-                preparedStatement.executeUpdate();
-
-            }
-
-        }catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println("Error al modificar el cliente.");
             e.printStackTrace();
         }
-
     }
 
     @Override
-    public Cliente buscarCliente(int id){
-
-        Cliente cliente = new Cliente();
-
+    public Cliente buscarCliente(int id) {
         String sql = "SELECT * FROM clientes WHERE id = ?";
 
-        try (Connection connection = DataBaseConnection.getConnection()){
+        try (Connection connection = DataBaseConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, id);
+
             ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
+
+            if (resultSet.next()) {
+                Cliente cliente = new Cliente();
+
                 cliente.setId(resultSet.getInt("id"));
                 cliente.setNombre(resultSet.getString("nombre"));
                 cliente.setEmail(resultSet.getString("email"));
                 cliente.setTelefono(resultSet.getString("telefono"));
                 cliente.setDireccion(resultSet.getString("direccion"));
+
+                return cliente;
             }
 
-        }catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println("Error al ver el cliente.");
             e.printStackTrace();
         }
 
-        return cliente;
-
+        return null;
     }
 
 }

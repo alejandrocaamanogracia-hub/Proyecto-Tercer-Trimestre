@@ -48,8 +48,10 @@ public class CocheMenu {
                     break;
                 case 5:
                     modificarCoches();
+                    break;
                 case 6:
                     buscarCoche();
+                    break;
                 case 0:
                     System.out.println("Volviendo al menu principal...");
                     break;
@@ -223,262 +225,169 @@ public class CocheMenu {
         cocheController.exportarCochesTxt();
     }
 
-    private void modificarCoches(){
+    private void modificarCoches() {
+        System.out.println("\n--- Modificar coche ---");
 
-        Coche coche = new Coche();
+        List<Coche> coches = cocheController.listarCoches();
+
+        if (coches.isEmpty()) {
+            System.out.println("No hay coches registrados.");
+            return;
+        }
 
         System.out.println("Que coche quieres modificar: ");
-        List<Coche> coches = cocheController.listarCoches();
+
         int iterador = 1;
-        for (Coche coche1 : coches){
-            System.out.println(iterador + ". " + coche1.getMatricula());
+        for (Coche cocheActual : coches) {
+            System.out.println(
+                    iterador + ". ID: " + cocheActual.getId()
+                            + " | Matricula: " + cocheActual.getMatricula()
+                            + " | Marca: " + cocheActual.getMarca()
+                            + " | Modelo: " + cocheActual.getModelo()
+                            + " | Precio: " + cocheActual.getPrecio()
+            );
             iterador++;
         }
 
-        int opcion;
-        int opcion2;
+        int opcion = ComprobacionOpcion.leerOpcion(1, coches.size());
 
-        opcion = ComprobacionOpcion.leerOpcion(1, coches.size());
+        Coche cocheActual = coches.get(opcion - 1);
+        int idCoche = cocheActual.getId();
 
-        System.out.println("Modificar marca");
+        Coche cocheModificado = new Coche();
+
+        cocheModificado.setMarca(cocheActual.getMarca());
+        cocheModificado.setModelo(cocheActual.getModelo());
+        cocheModificado.setVersion(cocheActual.getVersion());
+        cocheModificado.setMatricula(cocheActual.getMatricula());
+        cocheModificado.setBastidor(cocheActual.getBastidor());
+        cocheModificado.setAnio(cocheActual.getAnio());
+        cocheModificado.setKilometros(cocheActual.getKilometros());
+        cocheModificado.setCombustible(cocheActual.getCombustible());
+        cocheModificado.setCambio(cocheActual.getCambio());
+        cocheModificado.setColor(cocheActual.getColor());
+        cocheModificado.setPrecio(cocheActual.getPrecio());
+        cocheModificado.setEstado(cocheActual.getEstado());
+
+        System.out.println("\nModificar marca actual: " + cocheActual.getMarca());
         System.out.println("1. Si");
         System.out.println("2. No");
 
-        opcion2 = ComprobacionOpcion.leerOpcion(1, 2);
-
-        switch (opcion2) {
-
-            case 1 -> {
-                System.out.println("Introduce la marca del coche: ");
-                coche.setMarca(scanner.nextLine());
-            }case 2 -> {
-                coche.setMarca(null);
-            }
-
+        if (ComprobacionOpcion.leerOpcion(1, 2) == 1) {
+            cocheModificado.setMarca(
+                    ComprobacionOpcion.leerTextoObligatorio("Introduce la marca del coche: ")
+            );
         }
 
-        System.out.println("Modificar modelo");
+        System.out.println("\nModificar modelo actual: " + cocheActual.getModelo());
         System.out.println("1. Si");
         System.out.println("2. No");
 
-        opcion2 = ComprobacionOpcion.leerOpcion(1, 2);
-
-        switch (opcion2) {
-
-            case 1 -> {
-                System.out.println("Introduce el modelo del coche: ");
-                coche.setModelo(scanner.nextLine());
-            }case 2 -> {
-                coche.setModelo(null);
-            }
-
+        if (ComprobacionOpcion.leerOpcion(1, 2) == 1) {
+            cocheModificado.setModelo(
+                    ComprobacionOpcion.leerTextoObligatorio("Introduce el modelo del coche: ")
+            );
         }
 
-        System.out.println("Modificar version");
+        System.out.println("\nModificar version actual: " + cocheActual.getVersion());
         System.out.println("1. Si");
         System.out.println("2. No");
 
-        opcion2 = ComprobacionOpcion.leerOpcion(1, 2);
-
-        switch (opcion2) {
-
-            case 1 -> {
-                System.out.println("Introduce la version del coche: ");
-                coche.setVersion(scanner.nextLine());
-            }case 2 -> {
-                coche.setVersion(null);
-            }
-
+        if (ComprobacionOpcion.leerOpcion(1, 2) == 1) {
+            cocheModificado.setVersion(
+                    ComprobacionOpcion.leerTextoObligatorio("Introduce la version del coche: ")
+            );
         }
 
-        System.out.println("Modificar matricula");
+        System.out.println("\nModificar matricula actual: " + cocheActual.getMatricula());
         System.out.println("1. Si");
         System.out.println("2. No");
 
-        opcion2 = ComprobacionOpcion.leerOpcion(1, 2);
-
-        switch (opcion2) {
-
-            case 1 -> {
-                System.out.println("Introduce la matricula: ");
-                coche.setMatricula(scanner.nextLine());
-            }case 2 -> {
-                coche.setMatricula(null);
-            }
-
+        if (ComprobacionOpcion.leerOpcion(1, 2) == 1) {
+            cocheModificado.setMatricula(
+                    ComprobacionOpcion.leerTextoObligatorio("Introduce la matricula: ")
+            );
         }
 
-        System.out.println("Modificar bastidor");
+        System.out.println("\nModificar bastidor actual: " + cocheActual.getBastidor());
         System.out.println("1. Si");
         System.out.println("2. No");
 
-        opcion2 = ComprobacionOpcion.leerOpcion(1, 2);
-
-        switch (opcion2) {
-
-            case 1 -> {
-                System.out.println("Introduce el bastidor del coche: ");
-                coche.setBastidor(scanner.nextLine());
-            }case 2 -> {
-                coche.setBastidor(null);
-            }
-
+        if (ComprobacionOpcion.leerOpcion(1, 2) == 1) {
+            cocheModificado.setBastidor(
+                    ComprobacionOpcion.leerTextoObligatorio("Introduce el bastidor del coche: ")
+            );
         }
 
-        System.out.println("Modificar anio");
+        System.out.println("\nModificar anio actual: " + cocheActual.getAnio());
         System.out.println("1. Si");
         System.out.println("2. No");
 
-        opcion2 = ComprobacionOpcion.leerOpcion(1, 2);
-
-        switch (opcion2) {
-
-            case 1 -> {
-                System.out.println("Introduce el año del coche: ");
-
-                int anio = -1;
-
-                while (true) {
-                    if (scanner.hasNextInt()) {
-                        anio = scanner.nextInt();
-                        scanner.nextLine();
-
-                        if (anio >= 1900) {
-                            break;
-                        } else {
-                            System.out.println("El año debe ser mayor o igual a 1900:");
-                        }
-
-                    } else {
-                        System.out.println("Debes introducir un número válido:");
-                        scanner.nextLine();
-                    }
-                }
-
-                coche.setAnio(anio);
-
-            }case 2 -> {
-                coche.setAnio(-1);
-            }
-
+        if (ComprobacionOpcion.leerOpcion(1, 2) == 1) {
+            cocheModificado.setAnio(
+                    ComprobacionOpcion.leerIntMinimo("Introduce el anio del coche: ", 1900)
+            );
         }
 
-        System.out.println("Modificar kilometros");
+        System.out.println("\nModificar kilometros actuales: " + cocheActual.getKilometros());
         System.out.println("1. Si");
         System.out.println("2. No");
 
-        opcion2 = ComprobacionOpcion.leerOpcion(1, 2);
-
-        switch (opcion2) {
-
-            case 1 -> {
-                System.out.println("Introduce los kilometros del coche: ");
-                if (scanner.hasNextInt()) {
-                    coche.setKilometros(scanner.nextInt());
-                    scanner.nextLine();
-                } else {
-                    System.out.println("Error: debes introducir un número.");
-                    scanner.nextLine();
-                }
-            }case 2 -> {
-                coche.setKilometros(-1);
-            }
-
+        if (ComprobacionOpcion.leerOpcion(1, 2) == 1) {
+            cocheModificado.setKilometros(
+                    ComprobacionOpcion.leerIntMinimo("Introduce los kilometros del coche: ", 0)
+            );
         }
 
-        System.out.println("Modificar combustible");
+        System.out.println("\nModificar combustible actual: " + cocheActual.getCombustible());
         System.out.println("1. Si");
         System.out.println("2. No");
 
-        opcion2 = ComprobacionOpcion.leerOpcion(1, 2);
-
-        switch (opcion2) {
-
-            case 1 -> {
-                coche.setCombustible(seleccionarCombustible());
-            }case 2 -> {
-                coche.setCombustible(null);
-            }
-
+        if (ComprobacionOpcion.leerOpcion(1, 2) == 1) {
+            cocheModificado.setCombustible(seleccionarCombustible());
         }
 
-        System.out.println("Modificar cambio");
+        System.out.println("\nModificar cambio actual: " + cocheActual.getCambio());
         System.out.println("1. Si");
         System.out.println("2. No");
 
-        opcion2 = ComprobacionOpcion.leerOpcion(1, 2);
-
-        switch (opcion2) {
-
-            case 1 -> {
-                coche.setCambio(seleccionarTipoCambio());
-            }case 2 -> {
-                coche.setCambio(null);
-            }
-
+        if (ComprobacionOpcion.leerOpcion(1, 2) == 1) {
+            cocheModificado.setCambio(seleccionarTipoCambio());
         }
 
-        System.out.println("Modificar color");
+        System.out.println("\nModificar color actual: " + cocheActual.getColor());
         System.out.println("1. Si");
         System.out.println("2. No");
 
-        opcion2 = ComprobacionOpcion.leerOpcion(1, 2);
-
-        switch (opcion2) {
-
-            case 1 -> {
-                System.out.println("Introduce el color del coche: ");
-                coche.setColor(scanner.nextLine());
-            }case 2 -> {
-                coche.setColor(null);
-            }
-
+        if (ComprobacionOpcion.leerOpcion(1, 2) == 1) {
+            cocheModificado.setColor(
+                    ComprobacionOpcion.leerTextoObligatorio("Introduce el color del coche: ")
+            );
         }
 
-        System.out.println("Modificar precio");
+        System.out.println("\nModificar precio actual: " + cocheActual.getPrecio());
         System.out.println("1. Si");
         System.out.println("2. No");
 
-        opcion2 = ComprobacionOpcion.leerOpcion(1, 2);
-
-        switch (opcion2) {
-
-            case 1 -> {
-                System.out.println("Introduce el precio del coche: ");
-                if (scanner.hasNextInt()) {
-                    coche.setPrecio(scanner.nextInt());
-                    scanner.nextLine();
-                } else {
-                    System.out.println("Error: debes introducir un número.");
-                    scanner.nextLine();
-                }
-            }case 2 -> {
-                coche.setPrecio(-1);
-            }
-
+        if (ComprobacionOpcion.leerOpcion(1, 2) == 1) {
+            cocheModificado.setPrecio(
+                    ComprobacionOpcion.leerDoubleMinimo("Introduce el precio del coche: ", 0)
+            );
         }
 
-        System.out.println("Modificar estado");
+        System.out.println("\nModificar estado actual: " + cocheActual.getEstado());
         System.out.println("1. Si");
         System.out.println("2. No");
 
-        opcion2 = ComprobacionOpcion.leerOpcion(1, 2);
-
-        switch (opcion2) {
-
-            case 1 -> {
-                coche.setEstado(seleccionarEstadoCoche());
-            }case 2 -> {
-                coche.setEstado(null);
-            }
-
+        if (ComprobacionOpcion.leerOpcion(1, 2) == 1) {
+            cocheModificado.setEstado(seleccionarEstadoCoche());
         }
 
-        cocheController.modificarCoche(opcion, coche);
-
+        cocheController.modificarCoche(idCoche, cocheModificado);
     }
 
     public void buscarCoche() {
+        System.out.println("\n--- Buscar coche ---");
 
         List<Coche> coches = cocheController.listarCoches();
 
@@ -490,17 +399,20 @@ public class CocheMenu {
         System.out.println("Que coche quieres ver: ");
 
         for (Coche coche : coches) {
-            System.out.println(coche.getId() +  ". " + coche.getMatricula());
+            System.out.println(
+                    coche.getId() + ". "
+                            + coche.getMatricula()
+                            + " | " + coche.getMarca()
+                            + " " + coche.getModelo()
+            );
         }
 
+        System.out.print("Introduce el ID del coche: ");
         Coche coche = cocheController.buscarCoche(ComprobacionOpcion.leerInt());
 
         if (coche != null) {
-            System.out.println(coche.toString());
-        }else  {
-            System.out.println("No existe el coche con ese id");
+            System.out.println(coche);
         }
-
     }
 
 }

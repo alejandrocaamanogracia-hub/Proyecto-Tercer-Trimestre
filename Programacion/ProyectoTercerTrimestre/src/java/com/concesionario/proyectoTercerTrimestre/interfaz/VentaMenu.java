@@ -182,139 +182,126 @@ public class VentaMenu {
     }
 
     private void modificarVenta() {
+        System.out.println("\n--- Modificar venta ---");
 
-        Venta venta = new Venta();
+        List<Venta> ventas = ventaController.listarVentas();
+
+        if (ventas.isEmpty()) {
+            System.out.println("No hay ventas registradas.");
+            return;
+        }
 
         System.out.println("Que venta quieres modificar: ");
-        List<Venta> ventas = ventaController.listarVentas();
+
         int iterador = 1;
-        for (Venta venta1 : ventas) {
-            System.out.println( iterador++ + ". " + venta1);
+        for (Venta ventaActual : ventas) {
+            System.out.println(
+                    iterador + ". ID: " + ventaActual.getId()
+                            + " | ID Cliente: " + ventaActual.getClienteId()
+                            + " | ID Usuario: " + ventaActual.getUsuarioId()
+                            + " | Fecha: " + ventaActual.getFecha()
+                            + " | Estado: " + ventaActual.getEstado()
+                            + " | Total: " + ventaActual.getTotal()
+            );
+            iterador++;
         }
 
-        int opcion;
-        int opcion2;
+        int opcion = ComprobacionOpcion.leerOpcion(1, ventas.size());
 
-        opcion = ComprobacionOpcion.leerOpcion(1, ventas.size());
+        Venta ventaActual = ventas.get(opcion - 1);
+        int idVenta = ventaActual.getId();
 
-        System.out.println("Modificar id del cliente");
+        Venta ventaModificada = new Venta();
+
+        ventaModificada.setClienteId(ventaActual.getClienteId());
+        ventaModificada.setUsuarioId(ventaActual.getUsuarioId());
+        ventaModificada.setFecha(ventaActual.getFecha());
+        ventaModificada.setEstado(ventaActual.getEstado());
+        ventaModificada.setTotal(ventaActual.getTotal());
+
+        System.out.println("\nModificar ID del cliente actual: " + ventaActual.getClienteId());
         System.out.println("1. Si");
         System.out.println("2. No");
 
-        opcion2 = ComprobacionOpcion.leerOpcion(1, 2);
-
-        switch (opcion2) {
-
-            case 1 ->{
-                System.out.println("Introduce el id del cliente: ");
-                while (scanner.hasNextInt()) {
-                    opcion2 = scanner.nextInt();
-                }
-                venta.setClienteId(opcion2);
-
-            }case 2 ->{
-                venta.setClienteId(-1);
-            }
-
+        if (ComprobacionOpcion.leerOpcion(1, 2) == 1) {
+            ventaModificada.setClienteId(pedirClienteExistente());
         }
 
-        System.out.println("Modificar id del usuario");
+        System.out.println("\nModificar ID del usuario actual: " + ventaActual.getUsuarioId());
         System.out.println("1. Si");
         System.out.println("2. No");
 
-        opcion2 = ComprobacionOpcion.leerOpcion(1, 2);
-
-        switch (opcion2) {
-
-            case 1 ->{
-
-                System.out.println("Introduce el id del usuario: ");
-                while (scanner.hasNextInt()) {
-                    opcion2 = scanner.nextInt();
-                }
-
-                venta.setUsuarioId(opcion2);
-
-            }case 2 ->{
-                venta.setUsuarioId(-1);
-            }
-
+        if (ComprobacionOpcion.leerOpcion(1, 2) == 1) {
+            ventaModificada.setUsuarioId(pedirUsuarioExistente());
         }
 
-        System.out.println("Modificar la fecha");
+        System.out.println("\nModificar fecha actual: " + ventaActual.getFecha());
         System.out.println("1. Si");
         System.out.println("2. No");
 
-        opcion2 = ComprobacionOpcion.leerOpcion(1, 2);
-
-        switch (opcion2) {
-
-            case 1 -> {
-                System.out.print("Fecha venta (yyyy-MM-dd), vacío para hoy: ");
-
-                LocalDate fecha = null;
-
-                while (true) {
-                    String input = scanner.nextLine();
-
-                    if (input.isBlank()) {
-                        fecha = LocalDate.now();
-                        break;
-                    }
-
-                    try {
-                        fecha = LocalDate.parse(input, formatter);
-                        break;
-                    } catch (DateTimeParseException e) {
-                        System.out.print("Formato incorrecto. Introduce yyyy-MM-dd: ");
-                    }
-                }
-
-                venta.setFecha(fecha);
-            }case 2 ->{
-                venta.setFecha(null);
-            }
-
+        if (ComprobacionOpcion.leerOpcion(1, 2) == 1) {
+            ventaModificada.setFecha(
+                    ComprobacionOpcion.leerFecha("Fecha venta (yyyy-MM-dd), vacio para hoy: ", formatter)
+            );
         }
 
-        System.out.println("Modificar estado");
+        System.out.println("\nModificar estado actual: " + ventaActual.getEstado());
         System.out.println("1. Si");
         System.out.println("2. No");
 
-        opcion2 = ComprobacionOpcion.leerOpcion(1, 2);
-
-        switch (opcion2) {
-
-            case 1 ->{
-                venta.setEstado(seleccionarEstadoVenta());
-            }case 2 ->{
-                venta.setEstado(null);
-            }
-
+        if (ComprobacionOpcion.leerOpcion(1, 2) == 1) {
+            ventaModificada.setEstado(seleccionarEstadoVenta());
         }
 
-        System.out.println("Modificar el total");
+        System.out.println("\nModificar total actual: " + ventaActual.getTotal());
         System.out.println("1. Si");
         System.out.println("2. No");
 
-        opcion2 = ComprobacionOpcion.leerOpcion(1, 2);
-
-        switch (opcion2) {
-
-            case 1 ->{
-                System.out.println("Introduce el total: ");
-                venta.setTotal(Integer.parseInt(scanner.nextLine()));
-            }case 2 ->{
-                venta.setTotal(-1);
-            }
-
+        if (ComprobacionOpcion.leerOpcion(1, 2) == 1) {
+            ventaModificada.setTotal(
+                    ComprobacionOpcion.leerDoubleMinimo("Introduce el total: ", 0)
+            );
         }
 
-        ventaController.modificarVenta(opcion, venta);
+        ventaController.modificarVenta(idVenta, ventaModificada);
+    }
 
+    private int pedirClienteExistente() {
+        int clienteId;
+        boolean existe;
+
+        do {
+            clienteId = ComprobacionOpcion.leerIntMinimo("Introduce el ID del cliente: ", 1);
+            existe = ventaController.existeCliente(clienteId);
+
+            if (!existe) {
+                System.out.println("No existe ningun cliente con ese ID.");
+            }
+
+        } while (!existe);
+
+        return clienteId;
+    }
+
+    private int pedirUsuarioExistente() {
+        int usuarioId;
+        boolean existe;
+
+        do {
+            usuarioId = ComprobacionOpcion.leerIntMinimo("Introduce el ID del usuario: ", 1);
+            existe = ventaController.existeUsuario(usuarioId);
+
+            if (!existe) {
+                System.out.println("No existe ningun usuario con ese ID.");
+            }
+
+        } while (!existe);
+
+        return usuarioId;
     }
 
     public void buscarVentas() {
+        System.out.println("\n--- Buscar venta ---");
 
         List<Venta> ventas = ventaController.listarVentas();
 
@@ -326,17 +313,21 @@ public class VentaMenu {
         System.out.println("Que venta quieres ver: ");
 
         for (Venta venta : ventas) {
-            System.out.println(venta.getId());
+            System.out.println(
+                    venta.getId()
+                            + ". ID Cliente: " + venta.getClienteId()
+                            + " | ID Usuario: " + venta.getUsuarioId()
+                            + " | Fecha: " + venta.getFecha()
+                            + " | Total: " + venta.getTotal()
+            );
         }
 
+        System.out.print("Introduce el ID de la venta: ");
         Venta venta = ventaController.buscarVenta(ComprobacionOpcion.leerInt());
 
         if (venta != null) {
-            System.out.println(venta.toString());
-        }else {
-            System.out.println("No existe un venta con ese id");
+            System.out.println(venta);
         }
-
     }
 
 }

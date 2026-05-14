@@ -149,33 +149,84 @@ public class CocheService {
         }
     }
 
-    public void modificarCoche(int id, Coche coche){
-
-        if (id <= 0 || id > cocheRepository.listarCoches().size()) {
+    public void modificarCoche(int id, Coche coche) {
+        if (id <= 0) {
             System.out.println("El ID del coche no es valido.");
             return;
         }
 
-        if (coche.getAnio() < -1){
-            System.out.println("El anio del coche no puede ser negativo.");
+        Coche cocheExistente = cocheRepository.buscarCoche(id);
+
+        if (cocheExistente == null) {
+            System.out.println("No existe ningun coche con ese ID.");
             return;
         }
 
-        if (coche.getPrecio() < -1) {
-            System.out.println("El precio no puede ser negativo");
+        if (coche.getMarca() == null || coche.getMarca().isBlank()) {
+            System.out.println("La marca no puede estar vacia.");
             return;
         }
 
-        if (coche.getKilometros() < -1){
-            System.out.println("Los kilometros no pueden ser negativos");
+        if (coche.getModelo() == null || coche.getModelo().isBlank()) {
+            System.out.println("El modelo no puede estar vacio.");
+            return;
+        }
+
+        if (coche.getVersion() == null || coche.getVersion().isBlank()) {
+            System.out.println("La version no puede estar vacia.");
+            return;
+        }
+
+        if (coche.getMatricula() == null || coche.getMatricula().isBlank()) {
+            System.out.println("La matricula no puede estar vacia.");
+            return;
+        }
+
+        if (coche.getBastidor() == null || coche.getBastidor().isBlank()) {
+            System.out.println("El bastidor no puede estar vacio.");
+            return;
+        }
+
+        if (coche.getAnio() < 1900) {
+            System.out.println("El anio del coche debe ser mayor o igual a 1900.");
+            return;
+        }
+
+        if (coche.getKilometros() < 0) {
+            System.out.println("Los kilometros no pueden ser negativos.");
+            return;
+        }
+
+        if (coche.getCombustible() == null) {
+            System.out.println("El combustible no puede estar vacio.");
+            return;
+        }
+
+        if (coche.getCambio() == null) {
+            System.out.println("El cambio no puede estar vacio.");
+            return;
+        }
+
+        if (coche.getColor() == null || coche.getColor().isBlank()) {
+            System.out.println("El color no puede estar vacio.");
+            return;
+        }
+
+        if (coche.getPrecio() < 0) {
+            System.out.println("El precio no puede ser negativo.");
+            return;
+        }
+
+        if (coche.getEstado() == null) {
+            System.out.println("El estado no puede estar vacio.");
+            return;
         }
 
         cocheRepository.modificarCoche(id, coche);
-
+        System.out.println("Coche modificado correctamente.");
     }
 
-    public Coche buscarCoche(int id){
-
+    public Coche buscarCoche(int id) {
         if (id <= 0) {
             System.out.println("El ID del coche no es valido.");
             return null;
@@ -183,13 +234,12 @@ public class CocheService {
 
         Coche coche = cocheRepository.buscarCoche(id);
 
-        if (coche == null){
+        if (coche == null) {
             System.out.println("Coche no encontrado.");
             return null;
         }
 
         return coche;
-
     }
 
 }

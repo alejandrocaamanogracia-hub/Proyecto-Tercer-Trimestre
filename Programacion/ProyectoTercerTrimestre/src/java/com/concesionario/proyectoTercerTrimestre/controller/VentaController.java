@@ -41,4 +41,12 @@ public class VentaController {
         return ventaService.buscarVenta(id);
     }
 
+    public boolean existeCliente(int clienteId) {
+        return ventaService.existeCliente(clienteId);
+    }
+
+    public boolean existeUsuario(int usuarioId) {
+        return ventaService.existeUsuario(usuarioId);
+    }
+
 }

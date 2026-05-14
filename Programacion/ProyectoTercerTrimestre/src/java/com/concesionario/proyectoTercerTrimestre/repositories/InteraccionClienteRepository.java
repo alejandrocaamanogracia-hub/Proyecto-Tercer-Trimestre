@@ -17,4 +17,8 @@ public interface InteraccionClienteRepository {
 
     InteraccionCliente bucarInteraccionCliente(int id);
 
+    boolean existeCliente(int clienteId);
+
+    boolean existeUsuario(int usuarioId);
+
 }
