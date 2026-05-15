@@ -140,4 +140,22 @@ public class ComprobacionOpcion {
 
         return id;
     }
+
+    public static String leerEmailObligatorio(String mensaje) {
+        String email;
+
+        do {
+            System.out.print(mensaje);
+            email = leerTexto();
+
+            if (email.isBlank()) {
+                System.out.println("El email no puede estar vacio.");
+            } else if (!email.contains("@")) {
+                System.out.println("El email debe tener un formato valido.");
+            }
+
+        } while (email.isBlank() || !email.contains("@"));
+
+        return email;
+    }
 }

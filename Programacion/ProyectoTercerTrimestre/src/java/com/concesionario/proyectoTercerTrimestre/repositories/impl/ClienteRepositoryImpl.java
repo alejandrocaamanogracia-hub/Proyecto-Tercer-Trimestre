@@ -17,9 +17,8 @@ public class ClienteRepositoryImpl implements ClienteRepository {
     public void crearCliente(Cliente cliente) {
         String sql = "INSERT INTO clientes (nombre, email, telefono, direccion) VALUES (?, ?, ?, ?)";
 
-        try {
-            Connection connection = DataBaseConnection.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        try (Connection connection = DataBaseConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setString(1, cliente.getNombre());
             preparedStatement.setString(2, cliente.getEmail());
@@ -60,13 +59,11 @@ public class ClienteRepositoryImpl implements ClienteRepository {
 
         String sql = "SELECT id, nombre, email, telefono, direccion FROM clientes ORDER BY id";
 
-        try {
-            Connection connection = DataBaseConnection.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            ResultSet resultSet = preparedStatement.executeQuery();
+        try (Connection connection = DataBaseConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
 
             while (resultSet.next()) {
-
                 Cliente cliente = new Cliente();
 
                 cliente.setId(resultSet.getInt("id"));

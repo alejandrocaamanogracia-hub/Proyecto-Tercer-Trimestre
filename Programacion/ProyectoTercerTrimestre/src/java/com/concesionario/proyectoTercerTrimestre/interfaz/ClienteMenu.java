@@ -5,15 +5,14 @@ import com.concesionario.proyectoTercerTrimestre.entities.Cliente;
 import com.concesionario.proyectoTercerTrimestre.utils.ComprobacionOpcion;
 
 import java.util.List;
-import java.util.Scanner;
+
 
 public class ClienteMenu {
 
-    private final Scanner scanner;
+
     private final ClienteController clienteController;
 
     public ClienteMenu() {
-        this.scanner = new Scanner(System.in);
         this.clienteController = new ClienteController();
     }
 
@@ -31,7 +30,7 @@ public class ClienteMenu {
             System.out.println("0. Volver");
             System.out.print("Elige una opcion: ");
 
-            opcion = ComprobacionOpcion.leerInt();;
+            opcion = ComprobacionOpcion.leerInt();
 
             switch (opcion) {
                 case 1:
@@ -66,17 +65,10 @@ public class ClienteMenu {
     private void crearCliente() {
         System.out.println("\n--- Crear cliente ---");
 
-        System.out.print("Nombre: ");
-        String nombre = scanner.nextLine();
-
-        System.out.print("Email: ");
-        String email = scanner.nextLine();
-
-        System.out.print("Telefono: ");
-        String telefono = scanner.nextLine();
-
-        System.out.print("Direccion: ");
-        String direccion = scanner.nextLine();
+        String nombre = ComprobacionOpcion.leerTextoObligatorio("Nombre: ");
+        String email = ComprobacionOpcion.leerEmailObligatorio("Email: ");
+        String telefono = ComprobacionOpcion.leerTextoObligatorio("Telefono: ");
+        String direccion = ComprobacionOpcion.leerTextoObligatorio("Direccion: ");
 
         clienteController.crearCliente(nombre, email, telefono, direccion);
     }
@@ -193,7 +185,7 @@ public class ClienteMenu {
 
         if (opcion2 == 1) {
             clienteModificado.setEmail(
-                    ComprobacionOpcion.leerTextoObligatorio("Introduce el email: ")
+                    ComprobacionOpcion.leerEmailObligatorio("Introduce el email: ")
             );
         }
 

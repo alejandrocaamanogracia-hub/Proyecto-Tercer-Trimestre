@@ -18,6 +18,7 @@ public class ClienteService {
     }
 
     public void crearCliente(Cliente cliente) {
+
         if (cliente == null) {
             System.out.println("El cliente no puede ser nulo.");
             return;
@@ -30,6 +31,16 @@ public class ClienteService {
 
         if (cliente.getEmail() == null || cliente.getEmail().isBlank()) {
             System.out.println("El email del cliente es obligatorio.");
+            return;
+        }
+
+        if (!cliente.getEmail().contains("@")) {
+            System.out.println("El email debe tener un formato valido.");
+            return;
+        }
+
+        if (cliente.getTelefono() == null || cliente.getTelefono().isBlank()) {
+            System.out.println("El telefono del cliente es obligatorio.");
             return;
         }
 
