@@ -35,7 +35,7 @@ CREATE TABLE coches (
     modelo VARCHAR(100) NOT NULL,
     version VARCHAR(100),
     matricula VARCHAR(20) UNIQUE,
-    bastidor VARCHAR(50) UNIQUE,
+    bastidor VARCHAR(50) NOT NULL UNIQUE,
     anio INT,
     kilometros INT DEFAULT 0,
     combustible VARCHAR(50),
@@ -97,16 +97,13 @@ CREATE TABLE detalle_venta (
         UNIQUE (coche_id)
 );
 
--- =========================
--- TABLA INTERACCIONES_CLIENTE
--- =========================
 CREATE TABLE interacciones_cliente (
     id INT AUTO_INCREMENT PRIMARY KEY,
     cliente_id INT NOT NULL,
     usuario_id INT NOT NULL,
     tipo VARCHAR(50) NOT NULL,
     fecha DATETIME NOT NULL,
-    asunto VARCHAR(150),
+    asunto VARCHAR(150) NOT NULL,
     descripcion TEXT,
     resultado VARCHAR(100),
     proxima_accion VARCHAR(150),
