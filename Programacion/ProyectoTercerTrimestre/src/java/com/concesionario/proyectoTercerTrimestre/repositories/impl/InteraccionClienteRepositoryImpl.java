@@ -151,7 +151,7 @@ public class InteraccionClienteRepositoryImpl implements InteraccionClienteRepos
     }
 
     @Override
-    public InteraccionCliente bucarInteraccionCliente(int id) {
+    public InteraccionCliente buscarInteraccionCliente(int id) {
         String sql = "SELECT * FROM interacciones_cliente WHERE id = ?";
 
         try (Connection connection = DataBaseConnection.getConnection();

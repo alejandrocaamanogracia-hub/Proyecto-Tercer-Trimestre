@@ -28,8 +28,18 @@ public class InteraccionClienteService {
             return;
         }
 
+        if (!interaccionClienteRepository.existeCliente(interaccionCliente.getClienteId())) {
+            System.out.println("No existe ningun cliente con ese ID.");
+            return;
+        }
+
         if (interaccionCliente.getUsuarioId() <= 0) {
             System.out.println("El ID del usuario no es valido.");
+            return;
+        }
+
+        if (!interaccionClienteRepository.existeUsuario(interaccionCliente.getUsuarioId())) {
+            System.out.println("No existe ningun usuario con ese ID.");
             return;
         }
 
@@ -124,7 +134,7 @@ public class InteraccionClienteService {
             return;
         }
 
-        InteraccionCliente interaccionExistente = interaccionClienteRepository.bucarInteraccionCliente(id);
+        InteraccionCliente interaccionExistente = interaccionClienteRepository.buscarInteraccionCliente(id);
 
         if (interaccionExistente == null) {
             System.out.println("No existe ninguna interaccion con ese ID.");
@@ -191,7 +201,7 @@ public class InteraccionClienteService {
             return null;
         }
 
-        InteraccionCliente interaccionCliente = interaccionClienteRepository.bucarInteraccionCliente(id);
+        InteraccionCliente interaccionCliente = interaccionClienteRepository.buscarInteraccionCliente(id);
 
         if (interaccionCliente == null) {
             System.out.println("No existe ninguna interaccion con ese ID.");

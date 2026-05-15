@@ -1,13 +1,12 @@
 package com.concesionario.proyectoTercerTrimestre.interfaz;
 
-import com.concesionario.proyectoTercerTrimestre.controller.ClienteController;
+
 import com.concesionario.proyectoTercerTrimestre.controller.InteraccionClienteController;
-import com.concesionario.proyectoTercerTrimestre.controller.UsuarioController;
 import com.concesionario.proyectoTercerTrimestre.entities.*;
-import com.concesionario.proyectoTercerTrimestre.repositories.InteraccionClienteRepository;
+
 import com.concesionario.proyectoTercerTrimestre.utils.ComprobacionOpcion;
 
-import java.time.LocalDate;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -16,12 +15,11 @@ import java.util.Scanner;
 
 public class InteraccionClienteMenu {
 
-    private final Scanner scanner;
+
     private final InteraccionClienteController interaccionClienteController;
     private final DateTimeFormatter formatter;
 
     public InteraccionClienteMenu() {
-        this.scanner = new Scanner(System.in);
         this.interaccionClienteController = new InteraccionClienteController();
         this.formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
     }
@@ -75,36 +73,34 @@ public class InteraccionClienteMenu {
     private void crearInteraccionCliente() {
         System.out.println("\n--- Crear interaccion con cliente ---");
 
-        System.out.print("ID Cliente: ");
-        int clienteId = ComprobacionOpcion.leerInt();
+        int clienteId = ComprobacionOpcion.leerIdExistente(
+                "Introduce el ID del cliente: ",
+                interaccionClienteController::existeCliente,
+                "No existe ningun cliente con ese ID."
+        );
 
-        System.out.print("ID Usuario: ");
-        int usuarioId = ComprobacionOpcion.leerInt();
+        int usuarioId = ComprobacionOpcion.leerIdExistente(
+                "Introduce el ID del usuario: ",
+                interaccionClienteController::existeUsuario,
+                "No existe ningun usuario con ese ID."
+        );
 
         TipoInteraccion tipo = seleccionarTipoInteraccion();
 
         LocalDateTime fecha = LocalDateTime.now();
 
-        System.out.print("Asunto: ");
-        String asunto = scanner.nextLine();
+        String asunto = ComprobacionOpcion.leerTextoObligatorio("Asunto: ");
 
         System.out.print("Descripcion: ");
-        String descripcion = scanner.nextLine();
+        String descripcion = ComprobacionOpcion.leerTexto();
 
         System.out.print("Resultado: ");
-        String resultado = scanner.nextLine();
+        String resultado = ComprobacionOpcion.leerTexto();
 
         System.out.print("Proxima accion: ");
-        String proximaAccion = scanner.nextLine();
+        String proximaAccion = ComprobacionOpcion.leerTexto();
 
-        System.out.print("Fecha proxima (yyyy-MM-dd HH:mm) o vacio si no hay: ");
-        String fechaProximaTexto = scanner.nextLine();
-
-        LocalDateTime fechaProxima = null;
-
-        if (!fechaProximaTexto.isBlank()) {
-            fechaProxima = LocalDateTime.parse(fechaProximaTexto, formatter);
-        }
+        LocalDateTime fechaProxima = leerFechaHoraOpcional();
 
         interaccionClienteController.crearInteraccionCliente(
                 clienteId,
@@ -112,9 +108,9 @@ public class InteraccionClienteMenu {
                 tipo,
                 fecha,
                 asunto,
-                descripcion,
-                resultado,
-                proximaAccion,
+                descripcion.isBlank() ? null : descripcion,
+                resultado.isBlank() ? null : resultado,
+                proximaAccion.isBlank() ? null : proximaAccion,
                 fechaProxima
         );
     }

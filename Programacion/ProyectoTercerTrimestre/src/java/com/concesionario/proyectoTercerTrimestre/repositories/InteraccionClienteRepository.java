@@ -15,7 +15,7 @@ public interface InteraccionClienteRepository {
 
     void modificarInteraccionCliente(int id, InteraccionCliente interaccionCliente);
 
-    InteraccionCliente bucarInteraccionCliente(int id);
+    InteraccionCliente buscarInteraccionCliente(int id);
 
     boolean existeCliente(int clienteId);
 

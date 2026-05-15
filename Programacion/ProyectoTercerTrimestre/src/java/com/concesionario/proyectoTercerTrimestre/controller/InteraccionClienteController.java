@@ -4,9 +4,9 @@ import com.concesionario.proyectoTercerTrimestre.entities.InteraccionCliente;
 import com.concesionario.proyectoTercerTrimestre.entities.TipoInteraccion;
 import com.concesionario.proyectoTercerTrimestre.services.InteraccionClienteService;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeParseException;
 
-import java.time.LocalDateTime;
+
+
 import java.util.List;
 
 public class InteraccionClienteController {
@@ -49,7 +49,9 @@ public class InteraccionClienteController {
         interaccionClienteService.exportarInteraccionesClienteTxt();
     }
 
-    public void modificarInteraccionCliente(int id, InteraccionCliente interaccionCliente) {interaccionClienteService.modificarInteraccionCliente(id, interaccionCliente);}
+    public void modificarInteraccionCliente(int id, InteraccionCliente interaccionCliente) {
+        interaccionClienteService.modificarInteraccionCliente(id, interaccionCliente);
+    }
 
     public InteraccionCliente buscarInteraccionCliente(int id) {
         return interaccionClienteService.buscarInteraccionCliente(id);
