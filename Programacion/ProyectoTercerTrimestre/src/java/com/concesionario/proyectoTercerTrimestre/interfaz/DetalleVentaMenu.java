@@ -10,11 +10,10 @@ import java.util.Scanner;
 
 public class DetalleVentaMenu {
 
-    private final Scanner scanner;
+
     private final DetalleVentaController detalleVentaController;
 
     public DetalleVentaMenu() {
-        this.scanner = new Scanner(System.in);
         this.detalleVentaController = new DetalleVentaController();
     }
 
@@ -67,16 +66,40 @@ public class DetalleVentaMenu {
     private void crearDetalleVenta() {
         System.out.println("\n--- Crear detalle de venta ---");
 
-        System.out.print("ID Venta: ");
-        int ventaId = ComprobacionOpcion.leerInt();
+        int ventaId = pedirVentaExistente();
 
-        System.out.print("ID Coche: ");
-        int cocheId = ComprobacionOpcion.leerInt();
+        int cocheId = pedirCocheDisponibleParaCrear();
 
-        System.out.print("Cantidad: ");
-        int cantidad = ComprobacionOpcion.leerInt();
+        int cantidad = ComprobacionOpcion.leerIntMinimo("Cantidad: ", 1);
 
         detalleVentaController.crearDetalleVenta(ventaId, cocheId, cantidad);
+    }
+
+    private int pedirCocheDisponibleParaCrear() {
+        int cocheId;
+        boolean cocheExiste;
+        boolean cocheYaUsado;
+
+        do {
+            cocheId = ComprobacionOpcion.leerIntMinimo("Introduce el ID del coche: ", 1);
+
+            cocheExiste = detalleVentaController.existeCoche(cocheId);
+
+            if (!cocheExiste) {
+                System.out.println("No existe ningun coche con ese ID.");
+                cocheYaUsado = false;
+                continue;
+            }
+
+            cocheYaUsado = detalleVentaController.existeDetalleVentaConCoche(cocheId);
+
+            if (cocheYaUsado) {
+                System.out.println("Ese coche ya esta asignado a otro detalle de venta.");
+            }
+
+        } while (!cocheExiste || cocheYaUsado);
+
+        return cocheId;
     }
 
     private void eliminarDetalleVenta() {
@@ -213,23 +236,6 @@ public class DetalleVentaMenu {
         } while (!existe);
 
         return ventaId;
-    }
-
-    private int pedirCocheExistente() {
-        int cocheId;
-        boolean existe;
-
-        do {
-            cocheId = ComprobacionOpcion.leerIntMinimo("Introduce el ID del coche: ", 1);
-            existe = detalleVentaController.existeCoche(cocheId);
-
-            if (!existe) {
-                System.out.println("No existe ningun coche con ese ID.");
-            }
-
-        } while (!existe);
-
-        return cocheId;
     }
 
     private int pedirCocheDisponibleParaModificar(int idDetalleVentaActual) {

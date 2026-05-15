@@ -50,4 +50,8 @@ public class DetalleVentaController {
         return detalleVentaService.existeDetalleVentaConCocheExcluyendoId(cocheId, idDetalleVenta);
     }
 
+    public boolean existeDetalleVentaConCoche(int cocheId) {
+        return detalleVentaService.existeDetalleVentaConCoche(cocheId);
+    }
+
 }

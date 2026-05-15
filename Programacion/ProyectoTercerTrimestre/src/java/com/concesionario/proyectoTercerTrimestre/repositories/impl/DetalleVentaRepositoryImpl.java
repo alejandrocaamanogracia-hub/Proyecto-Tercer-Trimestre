@@ -15,18 +15,14 @@ public class DetalleVentaRepositoryImpl implements DetalleVentaRepository {
 
     @Override
     public void crearDetalleVenta(DetalleVenta detalleVenta) {
+        String sql = "INSERT INTO detalle_venta (venta_id, coche_id, cantidad) VALUES (?, ?, ?)";
 
-        String sql = "INSERT INTO detalle_venta (venta_id, coche_id, cantidad) " +
-                "VALUES (?, ?, ?)";
-
-        try {
-            Connection connection = DataBaseConnection.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        try (Connection connection = DataBaseConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setInt(1, detalleVenta.getVentaId());
             preparedStatement.setInt(2, detalleVenta.getCocheId());
             preparedStatement.setInt(3, detalleVenta.getCantidad());
-
 
             preparedStatement.executeUpdate();
 
@@ -55,18 +51,20 @@ public class DetalleVentaRepositoryImpl implements DetalleVentaRepository {
             return false;
         }
     }
+
     @Override
     public List<DetalleVenta> listarDetallesVenta() {
         List<DetalleVenta> detallesVenta = new ArrayList<>();
 
-        String sql = "SELECT id, venta_id, coche_id, cantidad " +
-                "FROM detalle_venta " +
-                "ORDER BY id";
+        String sql = """
+            SELECT id, venta_id, coche_id, cantidad
+            FROM detalle_venta
+            ORDER BY id
+            """;
 
-        try {
-            Connection connection = DataBaseConnection.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            ResultSet resultSet = preparedStatement.executeQuery();
+        try (Connection connection = DataBaseConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
 
             while (resultSet.next()) {
                 DetalleVenta detalleVenta = new DetalleVenta();
@@ -75,7 +73,6 @@ public class DetalleVentaRepositoryImpl implements DetalleVentaRepository {
                 detalleVenta.setVentaId(resultSet.getInt("venta_id"));
                 detalleVenta.setCocheId(resultSet.getInt("coche_id"));
                 detalleVenta.setCantidad(resultSet.getInt("cantidad"));
-
 
                 detallesVenta.add(detalleVenta);
             }
@@ -210,7 +207,7 @@ public class DetalleVentaRepositoryImpl implements DetalleVentaRepository {
             e.printStackTrace();
         }
 
-        return true;
+        return false;
     }
 
     @Override
@@ -233,7 +230,7 @@ public class DetalleVentaRepositoryImpl implements DetalleVentaRepository {
             e.printStackTrace();
         }
 
-        return true;
+        return false;
     }
 
     @Override

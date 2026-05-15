@@ -222,6 +222,14 @@ public class DetalleVentaService {
         return detalleVentaRepository.existeDetalleVentaConCocheExcluyendoId(cocheId, idDetalleVenta);
     }
 
+    public boolean existeDetalleVentaConCoche(int cocheId) {
+        if (cocheId <= 0) {
+            return false;
+        }
+
+        return detalleVentaRepository.existeDetalleVentaConCoche(cocheId);
+    }
+
 
 
 }
