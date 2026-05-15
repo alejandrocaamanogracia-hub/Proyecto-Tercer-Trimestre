@@ -6,8 +6,6 @@ import com.concesionario.proyectoTercerTrimestre.repositories.VentaRepository;
 import com.concesionario.proyectoTercerTrimestre.entities.EstadoVenta;
 
 
-import java.sql.*;
-
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -21,12 +19,10 @@ public class VentaRepositoryImpl implements VentaRepository {
 
     @Override
     public void crearVenta(Venta venta) {
-        String sql = "INSERT INTO ventas (cliente_id, usuario_id, fecha, estado, total) " +
-                "VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO ventas (cliente_id, usuario_id, fecha, estado, total) VALUES (?, ?, ?, ?, ?)";
 
-        try {
-            Connection connection = DataBaseConnection.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        try (Connection connection = DataBaseConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setInt(1, venta.getClienteId());
             preparedStatement.setInt(2, venta.getUsuarioId());
@@ -66,14 +62,15 @@ public class VentaRepositoryImpl implements VentaRepository {
     public List<Venta> listarVentas() {
         List<Venta> ventas = new ArrayList<>();
 
-        String sql = "SELECT id, cliente_id, usuario_id, fecha, estado, total " +
-                "FROM ventas " +
-                "ORDER BY id";
+        String sql = """
+            SELECT id, cliente_id, usuario_id, fecha, estado, total
+            FROM ventas
+            ORDER BY id
+            """;
 
-        try {
-            Connection connection = DataBaseConnection.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            ResultSet resultSet = preparedStatement.executeQuery();
+        try (Connection connection = DataBaseConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
 
             while (resultSet.next()) {
                 Venta venta = new Venta();

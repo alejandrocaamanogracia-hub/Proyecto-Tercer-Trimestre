@@ -1,25 +1,23 @@
 package com.concesionario.proyectoTercerTrimestre.interfaz;
 
-import com.concesionario.proyectoTercerTrimestre.controller.ClienteController;
-import com.concesionario.proyectoTercerTrimestre.controller.UsuarioController;
+
 import com.concesionario.proyectoTercerTrimestre.controller.VentaController;
 import com.concesionario.proyectoTercerTrimestre.entities.*;
 import com.concesionario.proyectoTercerTrimestre.utils.ComprobacionOpcion;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
+
 import java.util.List;
-import java.util.Scanner;
+
 
 public class VentaMenu {
 
-    private final Scanner scanner;
+
     private final VentaController ventaController;
     private final DateTimeFormatter formatter;
 
     public VentaMenu() {
-        this.scanner = new Scanner(System.in);
         this.ventaController = new VentaController();
         this.formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     }
@@ -73,27 +71,26 @@ public class VentaMenu {
     private void crearVenta() {
         System.out.println("\n--- Crear venta ---");
 
-        System.out.print("ID Cliente: ");
-        int clienteId = ComprobacionOpcion.leerInt();
+        int clienteId = ComprobacionOpcion.leerIdExistente(
+                "Introduce el ID del cliente: ",
+                ventaController::existeCliente,
+                "No existe ningun cliente con ese ID."
+        );
 
-        System.out.print("ID Usuario: ");
-        int usuarioId = ComprobacionOpcion.leerInt();
+        int usuarioId = ComprobacionOpcion.leerIdExistente(
+                "Introduce el ID del usuario: ",
+                ventaController::existeUsuario,
+                "No existe ningun usuario con ese ID."
+        );
 
-        System.out.print("Fecha venta (yyyy-MM-dd), vacio para hoy: ");
-        String fechaTexto = scanner.nextLine();
-
-        LocalDate fecha;
-
-        if (fechaTexto.isBlank()) {
-            fecha = LocalDate.now();
-        } else {
-            fecha = LocalDate.parse(fechaTexto, formatter);
-        }
+        LocalDate fecha = ComprobacionOpcion.leerFecha(
+                "Fecha venta (yyyy-MM-dd), vacio para hoy: ",
+                formatter
+        );
 
         EstadoVenta estado = seleccionarEstadoVenta();
 
-        System.out.print("Total: ");
-        double total = ComprobacionOpcion.leerDouble();
+        double total = ComprobacionOpcion.leerDoubleMinimo("Total: ", 0);
 
         ventaController.crearVenta(clienteId, usuarioId, fecha, estado, total);
     }

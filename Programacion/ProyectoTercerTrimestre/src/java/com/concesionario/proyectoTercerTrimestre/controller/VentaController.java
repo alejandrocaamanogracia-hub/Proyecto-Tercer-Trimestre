@@ -1,6 +1,6 @@
 package com.concesionario.proyectoTercerTrimestre.controller;
 
-import com.concesionario.proyectoTercerTrimestre.entities.DetalleVenta;
+
 import com.concesionario.proyectoTercerTrimestre.entities.EstadoVenta;
 import com.concesionario.proyectoTercerTrimestre.entities.Venta;
 import com.concesionario.proyectoTercerTrimestre.services.VentaService;

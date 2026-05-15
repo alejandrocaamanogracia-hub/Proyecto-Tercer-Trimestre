@@ -1,11 +1,7 @@
 package com.concesionario.proyectoTercerTrimestre.services;
 
 import com.concesionario.proyectoTercerTrimestre.entities.Venta;
-import com.concesionario.proyectoTercerTrimestre.repositories.ClienteRepository;
-import com.concesionario.proyectoTercerTrimestre.repositories.UsuarioRepository;
 import com.concesionario.proyectoTercerTrimestre.repositories.VentaRepository;
-import com.concesionario.proyectoTercerTrimestre.repositories.impl.ClienteRepositoryImpl;
-import com.concesionario.proyectoTercerTrimestre.repositories.impl.UsuarioRepositoryImpl;
 import com.concesionario.proyectoTercerTrimestre.repositories.impl.VentaRepositoryImpl;
 
 import java.io.BufferedWriter;
@@ -32,8 +28,18 @@ public class VentaService {
             return;
         }
 
+        if (!ventaRepository.existeCliente(venta.getClienteId())) {
+            System.out.println("No existe ningun cliente con ese ID.");
+            return;
+        }
+
         if (venta.getUsuarioId() <= 0) {
             System.out.println("El ID del usuario no es valido.");
+            return;
+        }
+
+        if (!ventaRepository.existeUsuario(venta.getUsuarioId())) {
+            System.out.println("No existe ningun usuario con ese ID.");
             return;
         }
 
