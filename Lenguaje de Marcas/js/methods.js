@@ -121,12 +121,50 @@ export function loadData(dataList, fields, storageKey, onEdit) {
     });
 }
 
+export function initTheme() {
+    const theme = localStorage.getItem('theme') || 'dark';
+    if (theme === 'light') {
+        document.documentElement.classList.add('light-mode');
+        updateThemeIcon(true);
+    }
+}
+
+export function toggleTheme() {
+    const isLight = document.documentElement.classList.toggle('light-mode');
+    localStorage.setItem('theme', isLight ? 'light' : 'dark');
+    updateThemeIcon(isLight);
+}
+
+function updateThemeIcon(isLight) {
+    const icon = document.getElementById('themeIcon');
+    const text = document.getElementById('themeText');
+    if (icon) icon.textContent = isLight ? 'dark_mode' : 'light_mode';
+    if (text) text.textContent = isLight ? 'Modo oscuro' : 'Modo claro';
+}
+
 window.updateSidebarBadges = updateSidebarBadges;
 window.initializeData = initializeData;
+window.toggleTheme = toggleTheme;
 
-// Initialize on load if not already done
 document.addEventListener('DOMContentLoaded', () => {
     initializeData();
+    initTheme();
+
+    const themeBtn = document.getElementById('themeToggle');
+    if (themeBtn) {
+        themeBtn.addEventListener('click', toggleTheme);
+    }
+
+    const logoutBtn = document.getElementById('logoutButton');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', () => {
+            if (typeof cerrarSesion === 'function') {
+                cerrarSesion();
+            } else if (window.cerrarSesion) {
+                window.cerrarSesion();
+            }
+        });
+    }
 });
 
 export function openCreate(sectionId, formId) {

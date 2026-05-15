@@ -6,6 +6,14 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeData();
     updateDashboardMetrics();
     updateSidebarBadges();
+
+    // Ensure logout button works
+    const logoutBtn = document.getElementById('logoutButton');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', () => {
+            if (window.cerrarSesion) window.cerrarSesion();
+        });
+    }
 });
 
 function updateDashboardMetrics() {

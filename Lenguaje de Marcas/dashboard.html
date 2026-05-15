@@ -10,117 +10,134 @@
 
 </head>
 
-<body>
+<body class="dashboard">
 
-    <aside class="sidebar" id="sidebar">
+    <section class="dash-section" id="">
 
-        <div class="sidebar__brand">
-            <div class="logo">DF</div>
-            <div class="sidebar__brand-text">
-                <span class="sidebar__brand-name">DriveFlow</span>
-                <span class="sidebar__brand-sub">CRM</span>
-            </div>
-        </div>
+        <aside class="sidebar" id="sidebar">
 
-        <nav class="sidebar__nav">
-
-            <span class="sidebar__label">Principal</span>
-
-            <a class="sidebar__link sidebar__link--active" href="./dashboard.html" data-tooltip="Dashboard">
-                <span class="material-symbols-rounded sidebar__icon">dashboard</span>
-                <span class="sidebar__text">Dashboard</span>
-            </a>
-
-            <div class="sidebar__divider"></div>
-            <span class="sidebar__label">Gestión</span>
-
-            <a class="sidebar__link" href="./paginas/clientes.html" data-tooltip="Clientes">
-                <span class="material-symbols-rounded sidebar__icon">groups</span>
-                <span class="sidebar__text">Clientes</span>
-                <span id="badge-clientes" class="sidebar__badge">25</span>
-            </a>
-
-            <a class="sidebar__link" href="./paginas/usuarios.html" data-tooltip="Usuarios">
-                <span class="material-symbols-rounded sidebar__icon">badge</span>
-                <span class="sidebar__text">Usuarios</span>
-                <span id="badge-usuarios" class="sidebar__badge">8</span>
-            </a>
-
-            <a class="sidebar__link" href="./paginas/coches.html" data-tooltip="Coches">
-                <span class="material-symbols-rounded sidebar__icon">directions_car</span>
-                <span class="sidebar__text">Coches</span>
-                <span id="badge-coches" class="sidebar__badge">56</span>
-            </a>
-
-            <div class="sidebar__divider"></div>
-            <span class="sidebar__label">Comercial</span>
-
-            <a class="sidebar__link" href="./paginas/ventas.html" data-tooltip="Ventas">
-                <span class="material-symbols-rounded sidebar__icon">payments</span>
-                <span class="sidebar__text">Ventas</span>
-            </a>
-
-            <a class="sidebar__link" href="./paginas/detalle-ventas.html" data-tooltip="Detalle ventas">
-                <span class="material-symbols-rounded sidebar__icon">receipt_long</span>
-                <span class="sidebar__text">Detalle ventas</span>
-            </a>
-
-            <a class="sidebar__link" href="./paginas/interacciones-cliente.html" data-tooltip="Interacciones">
-                <span class="material-symbols-rounded sidebar__icon">forum</span>
-                <span class="sidebar__text">Interacciones</span>
-            </a>
-
-        </nav>
-
-        <div class="sidebar__footer">
-            <div class="sidebar__profile">
-                <div class="sidebar__avatar">JP</div>
-                <div class="sidebar__profile-info">
-                    <div class="sidebar__profile-name">Juan Pérez</div>
-                    <div class="sidebar__profile-role">Administrador</div>
+            <div class="sidebar__brand">
+                <div class="logo">DF</div>
+                <div class="sidebar__brand-text">
+                    <span class="sidebar__brand-name">DriveFlow</span>
+                    <span class="sidebar__brand-sub">CRM</span>
                 </div>
             </div>
-        </div>
 
-    </aside>
+            <nav class="sidebar__nav">
 
-    <section class="dash-total">
+                <span class="sidebar__label">Principal</span>
 
-        <h1 class="title">Dashboard</h1>
+                <a class="sidebar__link sidebar__link--active" href="./dashboard.html" data-tooltip="Dashboard">
+                    <span class="material-symbols-rounded sidebar__icon">dashboard</span>
+                    <span class="sidebar__text">Dashboard</span>
+                </a>
 
-        <div class="dash-total__container">
+                <div class="sidebar__divider"></div>
+                <span class="sidebar__label">Gestión</span>
 
-            <aside class="dash-total__left">
+                <a class="sidebar__link" href="./paginas/clientes.html" data-tooltip="Clientes">
+                    <span class="material-symbols-rounded sidebar__icon">groups</span>
+                    <span class="sidebar__text">Clientes</span>
+                    <span id="badge-clientes" class="sidebar__badge">25</span>
+                </a>
 
-                <div class="dash-total__div">
-                    <span class="material-symbols-rounded">payments</span>
-                    <h2 class="heading"><span class="text">Total de ventas en el mes: </span> <br> <span id="total-ventas">1.000.000</span> €</h2>
+                <a class="sidebar__link" href="./paginas/usuarios.html" data-tooltip="Usuarios">
+                    <span class="material-symbols-rounded sidebar__icon">badge</span>
+                    <span class="sidebar__text">Usuarios</span>
+                    <span id="badge-usuarios" class="sidebar__badge">8</span>
+                </a>
+
+                <a class="sidebar__link" href="./paginas/coches.html" data-tooltip="Coches">
+                    <span class="material-symbols-rounded sidebar__icon">directions_car</span>
+                    <span class="sidebar__text">Coches</span>
+                    <span id="badge-coches" class="sidebar__badge">56</span>
+                </a>
+
+                <div class="sidebar__divider"></div>
+                <span class="sidebar__label">Comercial</span>
+
+                <a class="sidebar__link" href="./paginas/ventas.html" data-tooltip="Ventas">
+                    <span class="material-symbols-rounded sidebar__icon">payments</span>
+                    <span class="sidebar__text">Ventas</span>
+                </a>
+
+                <a class="sidebar__link" href="./paginas/detalle-ventas.html" data-tooltip="Detalle ventas">
+                    <span class="material-symbols-rounded sidebar__icon">receipt_long</span>
+                    <span class="sidebar__text">Detalle ventas</span>
+                </a>
+
+                <a class="sidebar__link" href="./paginas/interacciones-cliente.html" data-tooltip="Interacciones">
+                    <span class="material-symbols-rounded sidebar__icon">forum</span>
+                    <span class="sidebar__text">Interacciones</span>
+                </a>
+
+                <div class="sidebar__divider"></div>
+                <button class="sidebar__link" type="button" id="themeToggle" data-tooltip="Cambiar tema">
+                    <span class="material-symbols-rounded sidebar__icon" id="themeIcon">light_mode</span>
+                    <span id="themeText" class="sidebar__text">Modo claro</span>
+                </button>
+
+                <button class="sidebar__link" type="button" id="logoutButton" data-tooltip="Cerrar sesión">
+                    <span class="material-symbols-rounded sidebar__icon">logout</span>
+                    <span class="sidebar__text">Cerrar sesión</span>
+                </button>
+
+            </nav>
+
+            <div class="sidebar__footer">
+                <div class="sidebar__profile">
+                    <div class="sidebar__avatar">JP</div>
+                    <div class="sidebar__profile-info">
+                        <div class="sidebar__profile-name">Juan Pérez</div>
+                        <div class="sidebar__profile-role">Administrador</div>
+                    </div>
+                </div>
+            </div>
+
+        </aside>
+
+        <div class="dash-total">
+
+            <h1 class="heading">Dashboard</h1>
+
+            <div class="dash-total__container">
+
+                <div class="dash-total__top">
+
+                    <div class="dash-total__div">
+                        <span class="material-symbols-rounded">payments</span>
+                        <h2 class="heading"><span class="text">Total de ventas en el mes: </span> <br> <span
+                                id="total-ventas"></span> €</h2>
+                    </div>
+
+                    <div class="dash-total__div">
+                        <span class="material-symbols-rounded">badge</span>
+                        <h2 class="heading"><span class="text">Total de usuarios: </span> <br> <span
+                                id="total-usuarios"></span></h2>
+                    </div>
+
+                    <div class="dash-total__div">
+                        <span class="material-symbols-rounded">groups</span>
+                        <h2 class="heading"><span class="text">Total de clientes: </span> <br> <span
+                                id="total-clientes"></span></h2>
+                    </div>
+
+                    <div class="dash-total__div">
+                        <span class="material-symbols-rounded">directions_car</span>
+                        <h2 class="heading"><span class="text">Total de coches: </span> <br> <span
+                                id="total-coches"></span></h2>
+                    </div>
+
                 </div>
 
-                <div class="dash-total__div">
-                    <span class="material-symbols-rounded">badge</span>
-                    <h2 class="heading"><span class="text">Total de usuarios: </span> <br> <span id="total-usuarios">25</span></h2>
-                </div>
 
-                <div class="dash-total__div">
-                    <span class="material-symbols-rounded">groups</span>
-                    <h2 class="heading"><span class="text">Total de clientes: </span> <br> <span id="total-clientes">25</span></h2>
-                </div>
-
-                <div class="dash-total__div">
-                    <span class="material-symbols-rounded">directions_car</span>
-                    <h2 class="heading"><span class="text">Total de coches: </span> <br> <span id="total-coches">56</span></h2>
-                </div>
-
-            </aside>
-
-            <aside class="dash-total__right">
 
                 <div class="dash-total__div">
 
                     <h1 class="heading">Últimas ventas</h1>
 
-                    <div id="ultimas-ventas-container">
+                    <div id="ultimas-ventas-container" class="dash-total__LastSales">
                         <div class="dash-total__innerDiv">
                             <div class="dash-total__textContainer">
                                 <h2 class="text">2026-02-10</h2>
@@ -151,7 +168,9 @@
 
                 </div>
 
-            </aside>
+
+
+            </div>
 
         </div>
 

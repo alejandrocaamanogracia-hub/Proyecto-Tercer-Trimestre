@@ -39,6 +39,75 @@
     --transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+:root.light-mode {
+    --color-primary: #f0f2f5;
+    --color-secondary: #ffffff;
+    --color-tertiary: #e4e6eb;
+    --color-white: #1c1e21;
+    --color-text: #2d3436;
+    --color-muted: #65676b;
+    --color-card: rgba(255, 255, 255, 0.9);
+    --color-border: rgba(0, 0, 0, 0.1);
+    --shadow-card: 0 12px 30px rgba(0, 0, 0, 0.1);
+    --color-light: #03182b;
+}
+
+/* Light mode specific overrides */
+.light-mode body {
+    background: radial-gradient(circle at top left, var(--color-tertiary), transparent 32%),
+        linear-gradient(135deg, var(--color-primary), var(--color-secondary) 45%, var(--color-tertiary));
+}
+
+.light-mode .sidebar {
+    background: rgba(255, 255, 255, 0.92);
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.light-mode .sidebar__link--active {
+    color: #ffffff !important;
+}
+
+.light-mode .sidebar__link--active .sidebar__badge {
+    color: #ffffff;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.light-mode .sidebar__label {
+    color: rgba(0, 0, 0, 0.4);
+}
+
+.light-mode .table {
+    background-color: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(10px);
+}
+
+.light-mode .table__dataItem {
+    background: rgba(0, 0, 0, 0.03);
+    border-color: rgba(0, 0, 0, 0.05);
+}
+
+.light-mode .table__dataItem:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.light-mode .input {
+    background-color: rgba(0, 0, 0, 0.05);
+    border-color: rgba(0, 0, 0, 0.1);
+    color: var(--color-text);
+}
+
+.light-mode .sidebar__profile:hover {
+    background: rgba(0, 0, 0, 0.04);
+}
+
+.light-mode .sidebar__profile-name {
+    color: var(--color-text);
+}
+
+.light-mode .sidebar__brand-name {
+    color: var(--color-text);
+}
+
 /* #endregion */
 
 /* #region RESET */
@@ -528,6 +597,8 @@ option {
     align-items: center;
     padding: 30px 30px 0 30px;
     margin-bottom: 35px;
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: 35px;
 }
 
 .table__interaction {
@@ -867,15 +938,23 @@ option {
 
 /* #region  DASHBOARD */
 
+.dash-section {
+    display: flex;
+    flex: 1;
+    min-width: 0;
+}
+
 .dash-total {
+    background-color: color-mix(var(--color-primary), transparent 50%);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+    border: 1px solid var(--color-border);
     display: flex;
     flex-direction: column;
-    align-items: start;
-    justify-content: center;
-    width: 100%;
-    margin-top: 15px;
-    gap: 50px;
-    padding: 50px;
+    width: 95%;
+    height: fit-content;
+    margin: 50px;
+    padding: 35px;
 }
 
 .dash-total__div {
@@ -883,7 +962,7 @@ option {
     padding: 30px;
     border: 1px solid var(--color-border);
     border-radius: var(--radius-lg);
-    background-color: color-mix(var(--color-primary), transparent 50%);
+    background-color: color-mix(var(--color-light), transparent 90%);
     box-shadow: var(--shadow-card);
     backdrop-filter: blur(18px);
     text-align: center;
@@ -898,7 +977,6 @@ option {
 .dash-total__innerDiv {
     display: flex;
     align-items: center;
-    gap: 12px;
     flex-direction: row;
     border: 1px solid var(--color-border);
     background-color: color-mix(rgba(0, 0, 0, 0.295), transparent 30%);
@@ -912,27 +990,28 @@ option {
     font-size: 3rem;
 }
 
-.dash-total__left {
+.dash-total__top {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     gap: 15px;
     margin-right: 15px;
     height: 100%;
 }
 
-.dash-total__right {
-    display: flex;
-    width: 80%;
-    height: 100%;
-}
-
 .dash-total__container {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: row;
+    flex-direction: column;
     width: 100%;
-    margin-left: -25px;
+    margin: 0;
+    margin-top: 25px;
+    gap: 25px;
+}
+
+.dash-total__LastSales {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(280px, 1fr));
+    gap: 24px;
+    width: 100%;
 }
 
 
@@ -982,7 +1061,7 @@ option {
 .cli-clientes__list-section {
     border: 1px solid var(--color-border);
     border-radius: var(--radius-lg);
-    background-color: rgba(3, 24, 43, 0.76);
+    background-color: color-mix(var(--color-primary), transparent 50%);
     box-shadow: var(--shadow-card);
     backdrop-filter: blur(16px);
 }
@@ -1256,7 +1335,7 @@ option {
 .usu-usuarios__list-section {
     border: 1px solid var(--color-border);
     border-radius: var(--radius-lg);
-    background-color: rgba(3, 24, 43, 0.76);
+    background-color: color-mix(var(--color-primary, transparent 50%));
     box-shadow: var(--shadow-card);
     backdrop-filter: blur(16px);
 }
@@ -1540,7 +1619,7 @@ option {
 .int-interacciones__panel {
     border: 1px solid var(--color-border);
     border-radius: var(--radius-lg);
-    background-color: rgba(3, 24, 43, 0.76);
+    background-color: color-mix(var(--color-primary), transparent 50%);
     box-shadow: var(--shadow-card);
     backdrop-filter: blur(16px);
 }
@@ -1654,9 +1733,9 @@ option {
 .int-interacciones__calendar-day {
     min-height: 110px;
     padding: 10px;
-    border: 1px solid rgba(244, 215, 220, 0.12);
+    border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
-    background-color: rgba(255, 255, 255, 0.05);
+    background-color: color-mix(var(--color-primary), transparent 50%);
 }
 
 .int-interacciones__calendar-day--empty {
