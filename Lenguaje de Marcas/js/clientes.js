@@ -29,27 +29,19 @@ const newClientButton = document.querySelector("#newClientButton");
 let clientes = [];
 
 function cargarClientes() {
-    const clientesGuardados = sessionStorage.getItem("clientes");
+    const clientesGuardados = localStorage.getItem("clientes");
 
     if (clientesGuardados) {
         clientes = JSON.parse(clientesGuardados);
-
-        if (clientes.length > 0) {
-            return;
-        }
+    } else {
+        // If not found (shouldn't happen with methods.js), use empty and it will be populated by methods.js on next load
+        clientes = [];
     }
-
-    clientes = [
-        new Cliente(1, "Carlos Martínez", "carlos.martinez@email.com", "600111222", "Calle Mayor 12, Madrid"),
-        new Cliente(2, "Laura Sánchez", "laura.sanchez@email.com", "600333444", "Avenida Andalucía 45, Sevilla"),
-        new Cliente(3, "Miguel Torres", "miguel.torres@email.com", "600555666", "Calle Valencia 8, Barcelona")
-    ];
-
-    guardarClientes();
 }
 
 function guardarClientes() {
-    sessionStorage.setItem("clientes", JSON.stringify(clientes));
+    localStorage.setItem("clientes", JSON.stringify(clientes));
+    if (window.updateSidebarBadges) window.updateSidebarBadges();
 }
 
 function mostrarMensaje(mensaje, tipo) {

@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DriveFlow CRM | Clientes</title>
 
-    <link rel="stylesheet" href="/css/styles.css">
-    <link rel="stylesheet" href="/css/medias.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/medias.css">
 
 </head>
 
@@ -29,7 +29,7 @@
 
                 <span class="sidebar__label">Principal</span>
 
-                <a class="sidebar__link" href="dashboard.html" data-tooltip="Dashboard">
+                <a class="sidebar__link" href="../dashboard.html" data-tooltip="Dashboard">
                     <span class="material-symbols-rounded sidebar__icon">dashboard</span>
                     <span class="sidebar__text">Dashboard</span>
                 </a>
@@ -40,19 +40,19 @@
                 <a class="sidebar__link sidebar__link--active" href="clientes.html" data-tooltip="Clientes">
                     <span class="material-symbols-rounded sidebar__icon">groups</span>
                     <span class="sidebar__text">Clientes</span>
-                    <span class="sidebar__badge">25</span>
+                    <span id="badge-clientes" class="sidebar__badge">25</span>
                 </a>
 
                 <a class="sidebar__link" href="usuarios.html" data-tooltip="Usuarios">
                     <span class="material-symbols-rounded sidebar__icon">badge</span>
                     <span class="sidebar__text">Usuarios</span>
-                    <span class="sidebar__badge">8</span>
+                    <span id="badge-usuarios" class="sidebar__badge">8</span>
                 </a>
 
                 <a class="sidebar__link" href="coches.html" data-tooltip="Coches">
                     <span class="material-symbols-rounded sidebar__icon">directions_car</span>
                     <span class="sidebar__text">Coches</span>
-                    <span class="sidebar__badge">56</span>
+                    <span id="badge-coches" class="sidebar__badge">56</span>
                 </a>
 
                 <div class="sidebar__divider"></div>
@@ -100,7 +100,7 @@
                     <div class="cli-clientes__toolbar">
                         <div>
                             <h2 class="cli-clientes__list-title">Listado de clientes</h2>
-                            <p class="cli-clientes__list-text">Datos guardados en SessionStorage durante la sesión.</p>
+                            <p class="cli-clientes__list-text">Datos guardados en LocalStorage de forma persistente.</p>
                         </div>
 
                         <div class="cli-clientes__toolbar-actions">
@@ -187,9 +187,10 @@
 
     </div>
 
-    <script src="/js/auth.js"></script>
-    <script src="/js/clientes.js"></script>
-    <script src="/js/barra.js"></script>
+    <script src="../js/auth.js"></script>
+    <script type="module" src="../js/methods.js"></script>
+    <script src="../js/clientes.js"></script>
+    <script src="../js/barra.js"></script>
 </body>
 
 </html>

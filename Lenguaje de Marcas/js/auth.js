@@ -38,14 +38,16 @@ function guardarUsuarioActivo(usuario) {
 
 function cerrarSesion() {
     sessionStorage.removeItem("usuarioActivo");
-    window.location.href = "../index.html";
+    const isRoot = !window.location.pathname.includes('/paginas/');
+    window.location.href = isRoot ? "index.html" : "../index.html";
 }
 
 function protegerPagina() {
     const usuarioActivo = obtenerUsuarioActivo();
 
     if (!usuarioActivo) {
-        window.location.href = "../index.html";
+        const isRoot = !window.location.pathname.includes('/paginas/');
+        window.location.href = isRoot ? "index.html" : "../index.html";
     }
 }
 
@@ -54,5 +56,11 @@ function validarLogin(email, password) {
         return usuario.email === email && usuario.password === password;
     });
 }
+
+window.protegerPagina = protegerPagina;
+window.cerrarSesion = cerrarSesion;
+window.validarLogin = validarLogin;
+window.obtenerUsuarioActivo = obtenerUsuarioActivo;
+window.guardarUsuarioActivo = guardarUsuarioActivo;
 
 /* #endregion */

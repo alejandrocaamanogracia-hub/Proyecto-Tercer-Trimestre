@@ -47,7 +47,7 @@ let usuarios = [];
 let fechaCalendario = new Date();
 
 function cargarClientesAuxiliares() {
-    const clientesGuardados = sessionStorage.getItem("clientes");
+    const clientesGuardados = localStorage.getItem("clientes");
 
     if (clientesGuardados) {
         clientes = JSON.parse(clientesGuardados);
@@ -63,7 +63,7 @@ function cargarClientesAuxiliares() {
 }
 
 function cargarUsuariosAuxiliares() {
-    const usuariosGuardados = sessionStorage.getItem("usuarios");
+    const usuariosGuardados = localStorage.getItem("usuarios");
 
     if (usuariosGuardados) {
         usuarios = JSON.parse(usuariosGuardados);
@@ -102,7 +102,7 @@ function obtenerNombreUsuario(id) {
 }
 
 function cargarInteracciones() {
-    const interaccionesGuardadas = sessionStorage.getItem("interaccionesCliente");
+    const interaccionesGuardadas = localStorage.getItem("interaccionesCliente");
 
     if (interaccionesGuardadas) {
         interacciones = JSON.parse(interaccionesGuardadas);
@@ -155,7 +155,8 @@ function cargarInteracciones() {
 }
 
 function guardarInteracciones() {
-    sessionStorage.setItem("interaccionesCliente", JSON.stringify(interacciones));
+    localStorage.setItem("interaccionesCliente", JSON.stringify(interacciones));
+    if (window.updateSidebarBadges) window.updateSidebarBadges();
 }
 
 function generarNuevoIdInteraccion() {

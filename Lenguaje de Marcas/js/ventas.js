@@ -1,4 +1,4 @@
-import { loadData, openCreate, closeCreate } from './methods.js';
+import { loadData, openCreate, closeCreate, updateSidebarBadges } from './methods.js';
 
 if (window.protegerPagina) window.protegerPagina();
 
@@ -32,9 +32,9 @@ function setupSelectors() {
     const usuarioSel = document.getElementById('usuario');
     const cocheSel = document.getElementById('coche');
 
-    const clientes = JSON.parse(sessionStorage.getItem('clientes')) || [];
-    const usuarios = JSON.parse(sessionStorage.getItem('usuarios')) || [];
-    const coches = JSON.parse(localStorage.getItem('misCoches')) || [];
+    const clientes = JSON.parse(localStorage.getItem('clientes')) || [];
+    const usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
+    const coches = JSON.parse(localStorage.getItem('coches')) || [];
 
     clientes.forEach(c => {
         const opt = document.createElement('option');
@@ -99,6 +99,7 @@ function createSale() {
     localStorage.setItem(DETAILS_KEY, JSON.stringify(details));
 
     loadData(sales, FIELDS, STORAGE_KEY, null);
+    updateSidebarBadges();
     closeCreate('s-section', 's-creation');
     document.getElementById('saleForm').reset();
 }

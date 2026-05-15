@@ -1,6 +1,8 @@
-import { loadData, openCreate, closeCreate } from './methods.js';
+import { loadData, openCreate, closeCreate, updateSidebarBadges } from './methods.js';
 
-const STORAGE_KEY = 'misCoches';
+if (window.protegerPagina) window.protegerPagina();
+
+const STORAGE_KEY = 'coches';
 const FIELDS = ['id', 'marca', 'modelo', 'anio', 'cambio', 'combustible', 'precio'];
 
 const btnCreate = document.getElementById('btn__newCar');
@@ -19,17 +21,12 @@ class Car {
     }
 }
 
-let cars = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [
-    new Car(1, 'Toyota', 'Corolla', 2020, 'Automático', 20000, 'Gasolina'),
-    new Car(2, 'Honda', 'Civic', 2019, 'Manual', 18000, 'Gasolina')
-];
-
-
-if (!localStorage.getItem(STORAGE_KEY)) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(cars));
-}
+let cars = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
 
 document.addEventListener('DOMContentLoaded', () => {
+    if (cars.length === 0) {
+        cars = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+    }
     loadData(cars, FIELDS, STORAGE_KEY, updateCar);
     setupSearch();
 });

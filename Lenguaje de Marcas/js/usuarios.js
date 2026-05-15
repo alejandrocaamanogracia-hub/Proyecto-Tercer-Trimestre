@@ -28,27 +28,19 @@ const newUserButton = document.querySelector("#newUserButton");
 let usuarios = [];
 
 function cargarUsuarios() {
-    const usuariosGuardados = sessionStorage.getItem("usuarios");
+    const usuariosGuardados = localStorage.getItem("usuarios");
 
     if (usuariosGuardados) {
         usuarios = JSON.parse(usuariosGuardados);
-
-        if (usuarios.length > 0) {
-            return;
-        }
+    } else {
+        // If not found, use empty
+        usuarios = [];
     }
-
-    usuarios = [
-        new UsuarioCRM(1, "Admin Principal", "admin@driveflow.com", "Administrador", "admin123"),
-        new UsuarioCRM(2, "Pedro López", "pedro@driveflow.com", "Comercial", "comercial123"),
-        new UsuarioCRM(3, "Marta Fernández", "marta@driveflow.com", "Gestor", "gestor123")
-    ];
-
-    guardarUsuarios();
 }
 
 function guardarUsuarios() {
-    sessionStorage.setItem("usuarios", JSON.stringify(usuarios));
+    localStorage.setItem("usuarios", JSON.stringify(usuarios));
+    if (window.updateSidebarBadges) window.updateSidebarBadges();
 }
 
 function mostrarMensajeUsuario(mensaje, tipo) {

@@ -26,7 +26,7 @@
 
             <span class="sidebar__label">Principal</span>
 
-            <a class="sidebar__link sidebar__link--active" href="./index.html" data-tooltip="Dashboard">
+            <a class="sidebar__link sidebar__link--active" href="./dashboard.html" data-tooltip="Dashboard">
                 <span class="material-symbols-rounded sidebar__icon">dashboard</span>
                 <span class="sidebar__text">Dashboard</span>
             </a>
@@ -37,35 +37,35 @@
             <a class="sidebar__link" href="./paginas/clientes.html" data-tooltip="Clientes">
                 <span class="material-symbols-rounded sidebar__icon">groups</span>
                 <span class="sidebar__text">Clientes</span>
-                <span class="sidebar__badge">25</span>
+                <span id="badge-clientes" class="sidebar__badge">25</span>
             </a>
 
             <a class="sidebar__link" href="./paginas/usuarios.html" data-tooltip="Usuarios">
                 <span class="material-symbols-rounded sidebar__icon">badge</span>
                 <span class="sidebar__text">Usuarios</span>
-                <span class="sidebar__badge">8</span>
+                <span id="badge-usuarios" class="sidebar__badge">8</span>
             </a>
 
-            <a class="sidebar__link" href="./coches.html" data-tooltip="Coches">
+            <a class="sidebar__link" href="./paginas/coches.html" data-tooltip="Coches">
                 <span class="material-symbols-rounded sidebar__icon">directions_car</span>
                 <span class="sidebar__text">Coches</span>
-                <span class="sidebar__badge">56</span>
+                <span id="badge-coches" class="sidebar__badge">56</span>
             </a>
 
             <div class="sidebar__divider"></div>
             <span class="sidebar__label">Comercial</span>
 
-            <a class="sidebar__link" href="./ventas.html" data-tooltip="Ventas">
+            <a class="sidebar__link" href="./paginas/ventas.html" data-tooltip="Ventas">
                 <span class="material-symbols-rounded sidebar__icon">payments</span>
                 <span class="sidebar__text">Ventas</span>
             </a>
 
-            <a class="sidebar__link" href="./detalle-ventas.html" data-tooltip="Detalle ventas">
+            <a class="sidebar__link" href="./paginas/detalle-ventas.html" data-tooltip="Detalle ventas">
                 <span class="material-symbols-rounded sidebar__icon">receipt_long</span>
                 <span class="sidebar__text">Detalle ventas</span>
             </a>
 
-            <a class="sidebar__link" href="/paginas/interacciones-cliente.html" data-tooltip="Interacciones">
+            <a class="sidebar__link" href="./paginas/interacciones-cliente.html" data-tooltip="Interacciones">
                 <span class="material-symbols-rounded sidebar__icon">forum</span>
                 <span class="sidebar__text">Interacciones</span>
             </a>
@@ -94,22 +94,22 @@
 
                 <div class="dash-total__div">
                     <span class="material-symbols-rounded">payments</span>
-                    <h2 class="heading"><span class="text">Total de ventas en el mes: </span> <br> 1.000.000 €</h2>
+                    <h2 class="heading"><span class="text">Total de ventas en el mes: </span> <br> <span id="total-ventas">1.000.000</span> €</h2>
                 </div>
 
                 <div class="dash-total__div">
                     <span class="material-symbols-rounded">badge</span>
-                    <h2 class="heading"><span class="text">Total de usuarios: </span> <br> 25</h2>
+                    <h2 class="heading"><span class="text">Total de usuarios: </span> <br> <span id="total-usuarios">25</span></h2>
                 </div>
 
                 <div class="dash-total__div">
                     <span class="material-symbols-rounded">groups</span>
-                    <h2 class="heading"><span class="text">Total de clientes: </span> <br> 25</h2>
+                    <h2 class="heading"><span class="text">Total de clientes: </span> <br> <span id="total-clientes">25</span></h2>
                 </div>
 
                 <div class="dash-total__div">
                     <span class="material-symbols-rounded">directions_car</span>
-                    <h2 class="heading"><span class="text">Total de coches: </span> <br> 56</h2>
+                    <h2 class="heading"><span class="text">Total de coches: </span> <br> <span id="total-coches">56</span></h2>
                 </div>
 
             </aside>
@@ -120,31 +120,33 @@
 
                     <h1 class="heading">Últimas ventas</h1>
 
-                    <div class="dash-total__innerDiv">
-                        <div class="dash-total__textContainer">
-                            <h2 class="text">2026-02-10</h2>
-                            <h2 class="heading">Alejandro Caamaño</h2>
-                            <h2 class="text">Atendido por: Juan Pérez</h2>
+                    <div id="ultimas-ventas-container">
+                        <div class="dash-total__innerDiv">
+                            <div class="dash-total__textContainer">
+                                <h2 class="text">2026-02-10</h2>
+                                <h2 class="heading">Alejandro Caamaño</h2>
+                                <h2 class="text">Atendido por: Juan Pérez</h2>
+                            </div>
+                            <h1 class="heading">20.000 €</h1>
                         </div>
-                        <h1 class="heading">20.000 €</h1>
-                    </div>
 
-                    <div class="dash-total__innerDiv">
-                        <div class="dash-total__textContainer">
-                            <h2 class="text">2026-02-10</h2>
-                            <h2 class="heading">Alejandro Caamaño</h2>
-                            <h2 class="text">Atendido por: Juan Pérez</h2>
+                        <div class="dash-total__innerDiv">
+                            <div class="dash-total__textContainer">
+                                <h2 class="text">2026-02-10</h2>
+                                <h2 class="heading">Alejandro Caamaño</h2>
+                                <h2 class="text">Atendido por: Juan Pérez</h2>
+                            </div>
+                            <h1 class="heading">20.000 €</h1>
                         </div>
-                        <h1 class="heading">20.000 €</h1>
-                    </div>
 
-                    <div class="dash-total__innerDiv">
-                        <div class="dash-total__textContainer">
-                            <h2 class="text">2026-02-10</h2>
-                            <h2 class="heading">Alejandro Caamaño</h2>
-                            <h2 class="text">Atendido por: Juan Pérez</h2>
+                        <div class="dash-total__innerDiv">
+                            <div class="dash-total__textContainer">
+                                <h2 class="text">2026-02-10</h2>
+                                <h2 class="heading">Alejandro Caamaño</h2>
+                                <h2 class="text">Atendido por: Juan Pérez</h2>
+                            </div>
+                            <h1 class="heading">20.000 €</h1>
                         </div>
-                        <h1 class="heading">20.000 €</h1>
                     </div>
 
                 </div>
@@ -155,7 +157,9 @@
 
     </section>
 
+    <script src="./js/auth.js"></script>
     <script src="./js/barra.js"></script>
+    <script type="module" src="./js/dashboard.js"></script>
 
 </body>
 
