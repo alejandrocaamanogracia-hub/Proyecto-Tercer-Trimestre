@@ -33,18 +33,13 @@ public class CocheService {
             return;
         }
 
-        if (coche.getMatricula() == null || coche.getMatricula().isBlank()) {
-            System.out.println("La matricula del coche es obligatoria.");
-            return;
-        }
-
         if (coche.getBastidor() == null || coche.getBastidor().isBlank()) {
             System.out.println("El bastidor del coche es obligatorio.");
             return;
         }
 
         if (coche.getAnio() < 1900) {
-            System.out.println("El año del coche no es valido.");
+            System.out.println("El anio del coche no es valido.");
             return;
         }
 
@@ -55,16 +50,6 @@ public class CocheService {
 
         if (coche.getPrecio() < 0) {
             System.out.println("El precio no puede ser negativo.");
-            return;
-        }
-
-        if (coche.getCombustible() == null) {
-            System.out.println("El combustible del coche es obligatorio.");
-            return;
-        }
-
-        if (coche.getCambio() == null) {
-            System.out.println("El cambio del coche es obligatorio.");
             return;
         }
 
@@ -172,16 +157,6 @@ public class CocheService {
             return;
         }
 
-        if (coche.getVersion() == null || coche.getVersion().isBlank()) {
-            System.out.println("La version no puede estar vacia.");
-            return;
-        }
-
-        if (coche.getMatricula() == null || coche.getMatricula().isBlank()) {
-            System.out.println("La matricula no puede estar vacia.");
-            return;
-        }
-
         if (coche.getBastidor() == null || coche.getBastidor().isBlank()) {
             System.out.println("El bastidor no puede estar vacio.");
             return;
@@ -194,21 +169,6 @@ public class CocheService {
 
         if (coche.getKilometros() < 0) {
             System.out.println("Los kilometros no pueden ser negativos.");
-            return;
-        }
-
-        if (coche.getCombustible() == null) {
-            System.out.println("El combustible no puede estar vacio.");
-            return;
-        }
-
-        if (coche.getCambio() == null) {
-            System.out.println("El cambio no puede estar vacio.");
-            return;
-        }
-
-        if (coche.getColor() == null || coche.getColor().isBlank()) {
-            System.out.println("El color no puede estar vacio.");
             return;
         }
 

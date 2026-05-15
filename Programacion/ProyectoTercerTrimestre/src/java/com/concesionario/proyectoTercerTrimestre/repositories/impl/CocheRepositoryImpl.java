@@ -19,14 +19,13 @@ public class CocheRepositoryImpl implements CocheRepository {
     @Override
     public void crearCoche(Coche coche) {
         String sql = """
-                INSERT INTO coches 
-                (marca, modelo, version, matricula, bastidor, anio, kilometros, combustible, cambio, color, precio, estado)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-                """;
+            INSERT INTO coches 
+            (marca, modelo, version, matricula, bastidor, anio, kilometros, combustible, cambio, color, precio, estado)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            """;
 
-        try {
-            Connection connection = DataBaseConnection.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        try (Connection connection = DataBaseConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setString(1, coche.getMarca());
             preparedStatement.setString(2, coche.getModelo());
@@ -35,8 +34,19 @@ public class CocheRepositoryImpl implements CocheRepository {
             preparedStatement.setString(5, coche.getBastidor());
             preparedStatement.setInt(6, coche.getAnio());
             preparedStatement.setInt(7, coche.getKilometros());
-            preparedStatement.setString(8, coche.getCombustible().getValorDb());
-            preparedStatement.setString(9, coche.getCambio().getValorDb());
+
+            if (coche.getCombustible() != null) {
+                preparedStatement.setString(8, coche.getCombustible().getValorDb());
+            } else {
+                preparedStatement.setString(8, null);
+            }
+
+            if (coche.getCambio() != null) {
+                preparedStatement.setString(9, coche.getCambio().getValorDb());
+            } else {
+                preparedStatement.setString(9, null);
+            }
+
             preparedStatement.setString(10, coche.getColor());
             preparedStatement.setDouble(11, coche.getPrecio());
             preparedStatement.setString(12, coche.getEstado().getValorDb());
@@ -74,16 +84,15 @@ public class CocheRepositoryImpl implements CocheRepository {
         List<Coche> coches = new ArrayList<>();
 
         String sql = """
-                SELECT id, marca, modelo, version, matricula, bastidor, anio, kilometros,
-                       combustible, cambio, color, precio, estado
-                FROM coches
-                ORDER BY id
-                """;
+            SELECT id, marca, modelo, version, matricula, bastidor, anio, kilometros,
+                   combustible, cambio, color, precio, estado
+            FROM coches
+            ORDER BY id
+            """;
 
-        try {
-            Connection connection = DataBaseConnection.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            ResultSet resultSet = preparedStatement.executeQuery();
+        try (Connection connection = DataBaseConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
 
             while (resultSet.next()) {
                 Coche coche = new Coche();
@@ -134,8 +143,19 @@ public class CocheRepositoryImpl implements CocheRepository {
             preparedStatement.setString(5, coche.getBastidor());
             preparedStatement.setInt(6, coche.getAnio());
             preparedStatement.setInt(7, coche.getKilometros());
-            preparedStatement.setString(8, coche.getCombustible().getValorDb());
-            preparedStatement.setString(9, coche.getCambio().getValorDb());
+
+            if (coche.getCombustible() != null) {
+                preparedStatement.setString(8, coche.getCombustible().getValorDb());
+            } else {
+                preparedStatement.setString(8, null);
+            }
+
+            if (coche.getCambio() != null) {
+                preparedStatement.setString(9, coche.getCambio().getValorDb());
+            } else {
+                preparedStatement.setString(9, null);
+            }
+
             preparedStatement.setString(10, coche.getColor());
             preparedStatement.setDouble(11, coche.getPrecio());
             preparedStatement.setString(12, coche.getEstado().getValorDb());

@@ -5,15 +5,14 @@ import com.concesionario.proyectoTercerTrimestre.entities.*;
 import com.concesionario.proyectoTercerTrimestre.utils.ComprobacionOpcion;
 
 import java.util.List;
-import java.util.Scanner;
+
 
 public class CocheMenu {
 
-    private final Scanner scanner;
+
     private final CocheController cocheController;
 
     public CocheMenu() {
-        this.scanner = new Scanner(System.in);
         this.cocheController = new CocheController();
     }
 
@@ -66,50 +65,43 @@ public class CocheMenu {
     private void crearCoche() {
         System.out.println("\n--- Crear coche ---");
 
-        System.out.print("Marca: ");
-        String marca = scanner.nextLine();
-
-        System.out.print("Modelo: ");
-        String modelo = scanner.nextLine();
+        String marca = ComprobacionOpcion.leerTextoObligatorio("Marca: ");
+        String modelo = ComprobacionOpcion.leerTextoObligatorio("Modelo: ");
 
         System.out.print("Version: ");
-        String version = scanner.nextLine();
+        String version = ComprobacionOpcion.leerTexto();
 
         System.out.print("Matricula: ");
-        String matricula = scanner.nextLine();
+        String matricula = ComprobacionOpcion.leerTexto();
 
-        System.out.print("Bastidor: ");
-        String bastidor = scanner.nextLine();
+        String bastidor = ComprobacionOpcion.leerTextoObligatorio("Bastidor: ");
 
-        System.out.print("Anio: ");
-        int anio = ComprobacionOpcion.leerInt();
+        int anio = ComprobacionOpcion.leerIntMinimo("Anio: ", 1900);
 
-        System.out.print("Kilometros: ");
-        int kilometros = ComprobacionOpcion.leerInt();
+        int kilometros = ComprobacionOpcion.leerIntMinimo("Kilometros: ", 0);
 
         Combustible combustible = seleccionarCombustible();
 
         TipoCambio cambio = seleccionarTipoCambio();
 
         System.out.print("Color: ");
-        String color = scanner.nextLine();
+        String color = ComprobacionOpcion.leerTexto();
 
-        System.out.print("Precio: ");
-        double precio = ComprobacionOpcion.leerDouble();
+        double precio = ComprobacionOpcion.leerDoubleMinimo("Precio: ", 0);
 
         EstadoCoche estado = seleccionarEstadoCoche();
 
         cocheController.crearCoche(
                 marca,
                 modelo,
-                version,
-                matricula,
+                version.isBlank() ? null : version,
+                matricula.isBlank() ? null : matricula,
                 bastidor,
                 anio,
                 kilometros,
                 combustible,
                 cambio,
-                color,
+                color.isBlank() ? null : color,
                 precio,
                 estado
         );
@@ -294,9 +286,9 @@ public class CocheMenu {
         System.out.println("2. No");
 
         if (ComprobacionOpcion.leerOpcion(1, 2) == 1) {
-            cocheModificado.setVersion(
-                    ComprobacionOpcion.leerTextoObligatorio("Introduce la version del coche: ")
-            );
+            System.out.print("Introduce la version del coche: ");
+            String version = ComprobacionOpcion.leerTexto();
+            cocheModificado.setVersion(version.isBlank() ? null : version);
         }
 
         System.out.println("\nModificar matricula actual: " + cocheActual.getMatricula());
@@ -304,9 +296,9 @@ public class CocheMenu {
         System.out.println("2. No");
 
         if (ComprobacionOpcion.leerOpcion(1, 2) == 1) {
-            cocheModificado.setMatricula(
-                    ComprobacionOpcion.leerTextoObligatorio("Introduce la matricula: ")
-            );
+            System.out.print("Introduce la matricula: ");
+            String matricula = ComprobacionOpcion.leerTexto();
+            cocheModificado.setMatricula(matricula.isBlank() ? null : matricula);
         }
 
         System.out.println("\nModificar bastidor actual: " + cocheActual.getBastidor());
@@ -360,9 +352,9 @@ public class CocheMenu {
         System.out.println("2. No");
 
         if (ComprobacionOpcion.leerOpcion(1, 2) == 1) {
-            cocheModificado.setColor(
-                    ComprobacionOpcion.leerTextoObligatorio("Introduce el color del coche: ")
-            );
+            System.out.print("Introduce el color del coche: ");
+            String color = ComprobacionOpcion.leerTexto();
+            cocheModificado.setColor(color.isBlank() ? null : color);
         }
 
         System.out.println("\nModificar precio actual: " + cocheActual.getPrecio());
