@@ -31,7 +31,9 @@ public class UsuarioController {
         usuarioService.exportarUsuariosTxt();
     }
 
-    public void modificarUsuario(int id, Usuario usuario) {usuarioService.modificarUsuario(id, usuario);}
+    public void modificarUsuario(int id, Usuario usuario) {
+        usuarioService.modificarUsuario(id, usuario);
+    }
 
     public Usuario buscarUsuario(int id) {
         return usuarioService.buscarUsuario(id);

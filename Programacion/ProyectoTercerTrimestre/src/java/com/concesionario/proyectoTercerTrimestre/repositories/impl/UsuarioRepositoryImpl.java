@@ -16,12 +16,10 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
 
     @Override
     public void crearUsuario(Usuario usuario) {
-        String sql = "INSERT INTO usuarios (nombre, email, rol, password_hash) " +
-                "VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO usuarios (nombre, email, rol, password_hash) VALUES (?, ?, ?, ?)";
 
-        try {
-            Connection connection = DataBaseConnection.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        try (Connection connection = DataBaseConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setString(1, usuario.getNombre());
             preparedStatement.setString(2, usuario.getEmail());
@@ -60,14 +58,15 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
     public List<Usuario> listarUsuarios() {
         List<Usuario> usuarios = new ArrayList<>();
 
-        String sql = "SELECT id, nombre, email, rol, password_hash " +
-                "FROM usuarios " +
-                "ORDER BY id";
+        String sql = """
+            SELECT id, nombre, email, rol, password_hash
+            FROM usuarios
+            ORDER BY id
+            """;
 
-        try {
-            Connection connection = DataBaseConnection.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            ResultSet resultSet = preparedStatement.executeQuery();
+        try (Connection connection = DataBaseConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
 
             while (resultSet.next()) {
                 Usuario usuario = new Usuario();

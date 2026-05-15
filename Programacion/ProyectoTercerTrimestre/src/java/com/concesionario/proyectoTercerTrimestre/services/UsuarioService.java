@@ -33,6 +33,11 @@ public class UsuarioService {
             return;
         }
 
+        if (!usuario.getEmail().contains("@")) {
+            System.out.println("El email debe tener un formato valido.");
+            return;
+        }
+
         if (usuario.getRol() == null) {
             System.out.println("El rol del usuario es obligatorio.");
             return;
