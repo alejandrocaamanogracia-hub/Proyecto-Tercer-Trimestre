@@ -87,7 +87,10 @@ BEGIN
             WHERE CURRENT OF c_cliente;
             
         END LOOP;
+        
+        COMMIT;
 
+COMMIT;
 
 END;
 /
@@ -172,6 +175,8 @@ BEGIN
         WHERE CURRENT OF c_coches;
     
     END LOOP;
+    
+    COMMIT;
 
 END;
 /
@@ -254,6 +259,8 @@ BEGIN
         
     
     END LOOP;
+    
+    COMMIT;
 
 END;
 /
