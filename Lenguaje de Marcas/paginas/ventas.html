@@ -159,16 +159,19 @@
 
             <div class="form__group">
                 <label class="text">Coche</label>
-                <select id="coche" name="coche" class="input" required>
+                <select id="coche" name="coche" class="input">
                     <option value="">Selecciona un coche</option>
                 </select>
             </div>
 
             <div class="form__group">
                 <label class="text">Cantidad</label>
-                <input id="cantidad" placeholder="Cantidad" type="number" name="cantidad" class="input" value="1"
-                    required>
+                <input id="cantidad" placeholder="Cantidad" type="number" name="cantidad" class="input" value="1">
             </div>
+            
+            <button type="button" class="button" id="btn--addCar" style="margin-bottom: 15px;">Añadir al carrito</button>
+            
+            <div id="carsList" style="margin-bottom: 15px; max-height: 100px; overflow-y: auto; color: var(--color-light); font-size: 0.9rem;"></div>
 
             <button type="button" class="button button--primary" id="btn--submitSale">Registrar Venta</button>
 

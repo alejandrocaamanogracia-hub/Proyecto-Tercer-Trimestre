@@ -43,9 +43,13 @@ btnSubmit?.addEventListener('click', (e) => {
     newCar();
 });
 
+// Metodo para obtener el siguiente id.
+
 function getNextId() {
     return cars.length > 0 ? Math.max(...cars.map(c => c.id)) + 1 : 1;
 }
+
+// Metodo para obtener los valores del formulario.
 
 function getFormValues() {
     return {
@@ -58,12 +62,16 @@ function getFormValues() {
     };
 }
 
+// Metodo para validar el formulario.
+
 function validateForm({ marca, modelo, anio, cambio, combustible, precio }) {
     if (!marca || !modelo || !cambio || !combustible) return 'Rellena todos los campos de texto.';
     if (isNaN(anio) || anio < 1900 || anio > new Date().getFullYear() + 1) return 'Año no válido.';
     if (isNaN(precio) || precio <= 0) return 'Precio no válido.';
     return null;
 }
+
+// Metodo para crear un nuevo coche.
 
 function newCar() {
     const values = getFormValues();
@@ -89,6 +97,8 @@ function newCar() {
     closeCreate('c-section', 'c-creation');
     clearForm();
 }
+
+// Metodo para actualizar un coche.
 
 function updateCar(item) {
 
@@ -122,10 +132,14 @@ function updateCar(item) {
     });
 }
 
+// Metodo para guardar y renderizar los datos.
+
 function saveAndRender() {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(cars));
     loadData(cars, FIELDS, STORAGE_KEY, updateCar);
 }
+
+// Metodo para limpiar el formulario.
 
 function clearForm() {
     ['brand', 'model', 'year', 'precio'].forEach(id => {
@@ -143,6 +157,8 @@ function clearForm() {
     if (submit) submit.textContent = 'Crear coche';
 }
 
+// Metodo para mostrar un error en el formulario.
+
 function showFormError(msg) {
     let errorEl = document.getElementById('form-error');
     if (!errorEl) {
@@ -153,6 +169,8 @@ function showFormError(msg) {
     }
     errorEl.textContent = msg;
 }
+
+// Metodo para buscar en la tabla.
 
 function setupSearch() {
     const searchInput = document.querySelector('.table__interaction .input');

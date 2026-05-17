@@ -756,18 +756,18 @@
 
 /* #endregion */
 
-@media (max-width: 900px){
-    .c-section{
+@media (max-width: 900px) {
+    .c-section {
         flex-direction: column;
         align-items: center;
     }
 
-    .s-section{
+    .s-section {
         flex-direction: column;
         align-items: center;
     }
 
-    .sd-section{
+    .sd-section {
         flex-direction: column;
         align-items: center;
     }
@@ -776,7 +776,7 @@
         flex-direction: column;
     }
 
-    .sidebar__nav{
+    .sidebar__nav {
         flex-direction: row;
         flex-wrap: wrap;
         gap: 8px;
@@ -786,17 +786,25 @@
     }
 }
 
-@media (max-width: 1250px){
-    .dash-total__LastSales{
+@media (max-width: 1250px) {
+    .dash-total__LastSales {
         display: grid;
-        grid-template-columns: repeat(1, minmax(280px, 1fr));  
-        gap: 24px;  
-        width: 100%;    
+        grid-template-columns: repeat(1, minmax(280px, 1fr));
+        gap: 24px;
+        width: 100%;
     }
 
     .dash-total {
         width: 90%;
         margin: 30px auto;
+    }
+
+    .dash-total__LastSales {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .log-login {
+        grid-template-columns: 1fr 1fr;
     }
 }
 
@@ -808,8 +816,8 @@
     }
 }
 
-@media (max-width: 650px){
-    .button{
+@media (max-width: 650px) {
+    .button {
         font-size: 0.875rem;
         display: flex;
         align-items: center;
@@ -852,5 +860,161 @@
     .dash-total__innerDiv {
         padding: 20px;
         width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+
+    body,
+    .cli-body,
+    .usu-body,
+    .int-body,
+    .log-body {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100% !important;
+        height: auto !important;
+        min-height: 65px;
+        flex-direction: row;
+        padding: 8px 10px;
+        position: fixed;
+        bottom: auto;
+        top: 0;
+        z-index: 1000;
+        border-right: none;
+        border-top: 1px solid var(--color-border);
+        justify-content: space-around;
+        align-items: center;
+        background: rgba(3, 24, 43, 0.98);
+    }
+
+    .sidebar:hover,
+    .sidebar.expanded {
+        width: 100% !important;
+    }
+
+    .sidebar__brand,
+    .sidebar__footer,
+    .sidebar__label,
+    .sidebar__divider,
+    .sidebar__text {
+        display: none !important;
+    }
+
+    .sidebar__nav {
+        flex-direction: row;
+        justify-content: space-around;
+        width: 100%;
+        gap: 5px;
+    }
+
+    .sidebar__link {
+        padding: 10px;
+        justify-content: center;
+        flex: 1;
+    }
+
+    .sidebar__icon {
+        font-size: 1.5rem;
+    }
+
+    .sidebar__badge {
+        position: absolute;
+        top: 5px;
+        right: 50%;
+        transform: translateX(15px);
+    }
+
+    .s-section,
+    .c-section,
+    .sd-section,
+    .dash-section,
+    .cli-layout,
+    .usu-layout,
+    .int-layout {
+        padding-bottom: 85px !important;
+        width: 100%;
+    }
+
+    .table,
+    .dash-total {
+        margin: 15px auto;
+        width: calc(100% - 30px);
+        padding: 15px;
+    }
+
+    .table__top {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 15px 0;
+        gap: 15px;
+    }
+
+    .table__interaction {
+        flex-direction: column;
+        width: 100%;
+        height: auto;
+    }
+
+    .table__dataBox {
+        grid-template-columns: 1fr;
+        padding: 15px 0;
+    }
+
+    /* Dashboard */
+    .dash-total__top {
+        flex-direction: column;
+    }
+
+    .dash-total__innerDiv {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .dash-total__LastSales {
+        grid-template-columns: 1fr;
+    }
+
+    .cli-clientes,
+    .usu-usuarios,
+    .int-interacciones {
+        padding: 15px;
+    }
+
+    .cli-clientes__toolbar,
+    .usu-usuarios__toolbar,
+    .int-interacciones__toolbar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .cli-clientes__search-box,
+    .usu-usuarios__search-box {
+        width: 100%;
+    }
+
+    .log-login {
+        grid-template-columns: 1fr;
+    }
+
+    .log-login__hero {
+        display: none;
+    }
+
+    .title {
+        font-size: 3rem;
+    }
+
+    .subtitle,
+    .subtitle--dash {
+        font-size: 1.8rem;
+    }
+
+    .creation {
+        width: 90%;
+        padding: 20px;
     }
 }

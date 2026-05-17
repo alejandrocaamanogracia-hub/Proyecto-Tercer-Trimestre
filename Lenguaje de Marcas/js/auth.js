@@ -52,7 +52,8 @@ function protegerPagina() {
 }
 
 function validarLogin(email, password) {
-    return usuariosDemo.find(function (usuario) {
+    const usuarios = JSON.parse(localStorage.getItem('usuarios')) || usuariosDemo;
+    return usuarios.find(function (usuario) {
         return usuario.email === email && usuario.password === password;
     });
 }

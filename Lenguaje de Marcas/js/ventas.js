@@ -9,9 +9,12 @@ const FIELDS = ['id', 'cliente', 'usuario', 'fecha', 'estado', 'total'];
 const btnCreate = document.getElementById('btn__newSale');
 const btnClose = document.querySelector('.icon__close');
 const btnSubmit = document.getElementById('btn--submitSale');
+const btnAddCar = document.getElementById('btn--addCar');
+const carsListContainer = document.getElementById('carsList');
 
 let sales = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
 let details = JSON.parse(localStorage.getItem(DETAILS_KEY)) || [];
+let selectedCars = [];
 
 document.addEventListener('DOMContentLoaded', () => {
     loadData(sales, FIELDS, STORAGE_KEY, null);
@@ -20,12 +23,56 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 btnCreate?.addEventListener('click', () => openCreate('s-section', 's-creation'));
-btnClose?.addEventListener('click', () => closeCreate('s-section', 's-creation'));
+btnClose?.addEventListener('click', () => {
+    closeCreate('s-section', 's-creation');
+    selectedCars = [];
+    renderSelectedCars();
+});
 
 btnSubmit?.addEventListener('click', (e) => {
     e.preventDefault();
     createSale();
 });
+
+btnAddCar?.addEventListener('click', () => {
+    const cocheValue = document.getElementById('coche').value;
+    const cantidad = parseInt(document.getElementById('cantidad').value);
+
+    if (!cocheValue || isNaN(cantidad) || cantidad <= 0) {
+        alert('Por favor, selecciona un coche y una cantidad válida.');
+        return;
+    }
+
+    const cocheData = JSON.parse(cocheValue);
+    
+    selectedCars.push({
+        cocheData,
+        cantidad
+    });
+
+    renderSelectedCars();
+});
+
+function renderSelectedCars() {
+    if (!carsListContainer) return;
+    carsListContainer.innerHTML = '';
+    selectedCars.forEach((item, index) => {
+        const div = document.createElement('div');
+        div.style.cssText = "display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.1);";
+        div.innerHTML = `
+            <span>${item.cantidad}x ${item.cocheData.marca} ${item.cocheData.modelo}</span>
+            <span>${item.cocheData.precio * item.cantidad}€ <button type="button" onclick="window.removeCar(${index})" style="background: none; border: none; color: #ff6b6b; cursor: pointer; margin-left: 10px;">x</button></span>
+        `;
+        carsListContainer.appendChild(div);
+    });
+}
+
+window.removeCar = function(index) {
+    selectedCars.splice(index, 1);
+    renderSelectedCars();
+};
+
+// Metodo para obtener los datos de los para poder modificarlos.
 
 function setupSelectors() {
     const clienteSel = document.getElementById('cliente');
@@ -58,21 +105,49 @@ function setupSelectors() {
     });
 }
 
+// Metodo para crear una venta.
+
 function createSale() {
+
+    // Se obtienen los datos de los selectores y se valida que no esten vacios.
+
     const cliente = document.getElementById('cliente').value;
     const usuario = document.getElementById('usuario').value;
     const estado = document.getElementById('estado').value;
-    const cocheData = JSON.parse(document.getElementById('coche').value || '{}');
-    const cantidad = parseInt(document.getElementById('cantidad').value);
 
-    if (!cliente || !usuario || !cocheData.id || isNaN(cantidad)) {
-        alert('Por favor, rellena todos los campos.');
+    if (!cliente || !usuario) {
+        alert('Por favor, selecciona cliente y usuario.');
         return;
     }
 
-    const total = cocheData.precio * cantidad;
+    if (selectedCars.length === 0) {
+        alert('Por favor, añade al menos un coche a la venta.');
+        return;
+    }
+
+    // Se calcula el total de la venta.
+
+    let totalSale = 0;
     const fecha = new Date().toLocaleDateString();
     const saleId = sales.length > 0 ? Math.max(...sales.map(s => s.id)) + 1 : 1;
+
+    // Se iteran los coches seleccionados para crear los detalles de venta
+    selectedCars.forEach(item => {
+        const totalDetalle = item.cocheData.precio * item.cantidad;
+        totalSale += totalDetalle;
+
+        const newDetail = {
+            id: saleId,
+            saleId: saleId,
+            cliente,
+            coche: `${item.cocheData.marca} ${item.cocheData.modelo}`,
+            cantidad: item.cantidad,
+            total: `${totalDetalle}€`
+        };
+        details.push(newDetail);
+    });
+
+    // Se crea una nueva venta y un nuevo detalle.
 
     const newSale = {
         id: saleId,
@@ -80,20 +155,10 @@ function createSale() {
         usuario,
         fecha,
         estado,
-        total: `${total}€`
-    };
-
-    const newDetail = {
-        id: details.length > 0 ? Math.max(...details.map(d => d.id)) + 1 : 1,
-        saleId: saleId,
-        cliente,
-        coche: `${cocheData.marca} ${cocheData.modelo}`,
-        cantidad,
-        total: `${total}€`
+        total: `${totalSale}€`
     };
 
     sales.push(newSale);
-    details.push(newDetail);
 
     localStorage.setItem(STORAGE_KEY, JSON.stringify(sales));
     localStorage.setItem(DETAILS_KEY, JSON.stringify(details));
@@ -102,7 +167,12 @@ function createSale() {
     updateSidebarBadges();
     closeCreate('s-section', 's-creation');
     document.getElementById('saleForm').reset();
+    
+    selectedCars = [];
+    renderSelectedCars();
 }
+
+// Metodo para buscar en la tabla.
 
 function setupSearch() {
     const searchInput = document.querySelector('.table__interaction .input');

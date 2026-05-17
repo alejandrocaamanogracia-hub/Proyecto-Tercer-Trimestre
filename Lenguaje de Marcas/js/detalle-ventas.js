@@ -8,7 +8,7 @@ const FIELDS = ['id', 'cliente', 'coche', 'cantidad', 'total'];
 let details = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
 
 document.addEventListener('DOMContentLoaded', () => {
-    loadData(details, FIELDS, STORAGE_KEY, null);
+    loadData(details, FIELDS, STORAGE_KEY, null, false);
     setupSearch();
 });
 
@@ -19,6 +19,6 @@ function setupSearch() {
         const filtered = details.filter(d =>
             Object.values(d).some(v => String(v).toLowerCase().includes(query))
         );
-        loadData(filtered, FIELDS, STORAGE_KEY, null);
+        loadData(filtered, FIELDS, STORAGE_KEY, null, false);
     });
 }

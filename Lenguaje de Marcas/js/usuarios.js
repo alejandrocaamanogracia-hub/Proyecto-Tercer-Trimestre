@@ -1,5 +1,8 @@
 protegerPagina();
 
+const usuarioActual = obtenerUsuarioActivo();
+const esAdministrador = usuarioActual && usuarioActual.rol === 'Administrador';
+
 class UsuarioCRM {
     constructor(id, nombre, email, rol, password) {
         this.id = id;
@@ -103,13 +106,9 @@ function pintarUsuarios(listaUsuarios) {
         const fila = document.createElement("tr");
         fila.classList.add("usu-usuarios__row");
 
-        fila.innerHTML = `
-            <td data-label="ID">${usuario.id}</td>
-            <td data-label="Nombre">${usuario.nombre}</td>
-            <td data-label="Email">${usuario.email}</td>
-            <td data-label="Rol">${usuario.rol}</td>
-            <td data-label="Contraseña">••••••••</td>
-            <td data-label="Acciones">
+        let accionesHtml = '';
+        if (esAdministrador) {
+            accionesHtml = `
                 <div class="usu-usuarios__table-actions">
                     <button class="usu-usuarios__icon-button usu-usuarios__icon-button--edit" data-action="edit" data-id="${usuario.id}">
                         Editar
@@ -118,6 +117,17 @@ function pintarUsuarios(listaUsuarios) {
                         Eliminar
                     </button>
                 </div>
+            `;
+        }
+
+        fila.innerHTML = `
+            <td data-label="ID">${usuario.id}</td>
+            <td data-label="Nombre">${usuario.nombre}</td>
+            <td data-label="Email">${usuario.email}</td>
+            <td data-label="Rol">${usuario.rol}</td>
+            <td data-label="Contraseña">••••••••</td>
+            <td data-label="Acciones">
+                ${accionesHtml}
             </td>
         `;
 
@@ -215,6 +225,11 @@ function irAlFormularioUsuario() {
 usuarioForm.addEventListener("submit", (event) => {
     event.preventDefault();
 
+    if (!esAdministrador) {
+        mostrarMensajeUsuario("No tienes permisos para realizar esta acción.", "error");
+        return;
+    }
+
     const id = usuarioIdInput.value;
     const nombre = nombreUsuarioInput.value.trim();
     const email = emailUsuarioInput.value.trim();
@@ -235,6 +250,8 @@ usuarioForm.addEventListener("submit", (event) => {
 });
 
 usuariosTableBody.addEventListener("click", (event) => {
+    if (!esAdministrador) return;
+    
     const boton = event.target.closest("button");
 
     if (!boton) {
@@ -275,6 +292,8 @@ logoutButton.addEventListener("click", () => {
 });
 
 newUserButton.addEventListener("click", () => {
+    if (!esAdministrador) return;
+    
     limpiarFormularioUsuario();
     mostrarFormularioUsuario();
 
@@ -286,4 +305,7 @@ newUserButton.addEventListener("click", () => {
 window.addEventListener("load", () => {
     cargarUsuarios();
     pintarUsuarios(usuarios);
+    if (!esAdministrador) {
+        newUserButton.style.display = 'none';
+    }
 });
