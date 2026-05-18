@@ -8,7 +8,7 @@ public interface VentaRepository {
 
     void crearVenta(Venta venta);
 
-    void eliminarVenta(int id);
+    boolean eliminarVenta(int id);
 
     List<Venta> listarVentas();
 
@@ -16,5 +16,9 @@ public interface VentaRepository {
     void modificarVenta(int id, Venta venta);
 
     Venta buscarVenta(int id);
+
+    boolean existeCliente(int clienteId);
+
+    boolean existeUsuario(int usuarioId);
 
 }

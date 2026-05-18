@@ -5,15 +5,14 @@ import com.concesionario.proyectoTercerTrimestre.entities.Cliente;
 import com.concesionario.proyectoTercerTrimestre.utils.ComprobacionOpcion;
 
 import java.util.List;
-import java.util.Scanner;
+
 
 public class ClienteMenu {
 
-    private final Scanner scanner;
+
     private final ClienteController clienteController;
 
     public ClienteMenu() {
-        this.scanner = new Scanner(System.in);
         this.clienteController = new ClienteController();
     }
 
@@ -31,7 +30,7 @@ public class ClienteMenu {
             System.out.println("0. Volver");
             System.out.print("Elige una opcion: ");
 
-            opcion = ComprobacionOpcion.leerInt();;
+            opcion = ComprobacionOpcion.leerInt();
 
             switch (opcion) {
                 case 1:
@@ -66,17 +65,10 @@ public class ClienteMenu {
     private void crearCliente() {
         System.out.println("\n--- Crear cliente ---");
 
-        System.out.print("Nombre: ");
-        String nombre = scanner.nextLine();
-
-        System.out.print("Email: ");
-        String email = scanner.nextLine();
-
-        System.out.print("Telefono: ");
-        String telefono = scanner.nextLine();
-
-        System.out.print("Direccion: ");
-        String direccion = scanner.nextLine();
+        String nombre = ComprobacionOpcion.leerTextoObligatorio("Nombre: ");
+        String email = ComprobacionOpcion.leerEmailObligatorio("Email: ");
+        String telefono = ComprobacionOpcion.leerTextoObligatorio("Telefono: ");
+        String direccion = ComprobacionOpcion.leerTextoObligatorio("Direccion: ");
 
         clienteController.crearCliente(nombre, email, telefono, direccion);
     }
@@ -84,10 +76,38 @@ public class ClienteMenu {
     private void eliminarCliente() {
         System.out.println("\n--- Eliminar cliente ---");
 
-        System.out.print("Introduce el ID del cliente: ");
+        List<Cliente> clientes = clienteController.listarClientes();
+
+        if (clientes.isEmpty()) {
+            System.out.println("No hay clientes registrados.");
+            return;
+        }
+
+        System.out.println("Clientes disponibles:");
+
+        for (Cliente cliente : clientes) {
+            System.out.println(
+                    "ID: " + cliente.getId()
+                            + " | Nombre: " + cliente.getNombre()
+                            + " | Email: " + cliente.getEmail()
+                            + " | Teléfono: " + cliente.getTelefono()
+            );
+        }
+
+        System.out.print("Introduce el ID del cliente que quieres eliminar: ");
         int id = ComprobacionOpcion.leerInt();
 
-        clienteController.eliminarCliente(id);
+        System.out.println("¿Seguro que quieres eliminar el cliente con ID " + id + "?");
+        System.out.println("1. Sí");
+        System.out.println("2. No");
+
+        int confirmacion = ComprobacionOpcion.leerOpcion(1, 2);
+
+        if (confirmacion == 1) {
+            clienteController.eliminarCliente(id);
+        } else {
+            System.out.println("Eliminación cancelada.");
+        }
     }
 
     private void listarClientes() {
@@ -109,97 +129,94 @@ public class ClienteMenu {
         clienteController.exportarClientesTxt();
     }
 
-    private void modificarCliente(){
+    private void modificarCliente() {
+        System.out.println("\n--- Modificar cliente ---");
 
-        Cliente cliente = new Cliente();
+        List<Cliente> clientes = clienteController.listarClientes();
+
+        if (clientes.isEmpty()) {
+            System.out.println("No hay clientes registrados.");
+            return;
+        }
 
         System.out.println("Que cliente quieres modificar: ");
-        List<Cliente> clientes = clienteController.listarClientes();
+
         int iterador = 1;
-        for (Cliente cliente2 : clientes){
-            System.out.println(iterador + ". " + cliente2.getNombre());
+        for (Cliente clienteActual : clientes) {
+            System.out.println(
+                    iterador + ". ID: " + clienteActual.getId()
+                            + " | Nombre: " + clienteActual.getNombre()
+                            + " | Email: " + clienteActual.getEmail()
+                            + " | Telefono: " + clienteActual.getTelefono()
+                            + " | Direccion: " + clienteActual.getDireccion()
+            );
             iterador++;
         }
 
-        int opcion;
-        int opcion2;
+        int opcion = ComprobacionOpcion.leerOpcion(1, clientes.size());
 
-        opcion = ComprobacionOpcion.leerOpcion(1, clientes.size());
+        Cliente clienteActual = clientes.get(opcion - 1);
+        int idCliente = clienteActual.getId();
 
-        System.out.println("Modificar nombre");
+        Cliente clienteModificado = new Cliente();
+
+        clienteModificado.setNombre(clienteActual.getNombre());
+        clienteModificado.setEmail(clienteActual.getEmail());
+        clienteModificado.setTelefono(clienteActual.getTelefono());
+        clienteModificado.setDireccion(clienteActual.getDireccion());
+
+        System.out.println("\nModificar nombre actual: " + clienteActual.getNombre());
+        System.out.println("1. Si");
+        System.out.println("2. No");
+
+        int opcion2 = ComprobacionOpcion.leerOpcion(1, 2);
+
+        if (opcion2 == 1) {
+            clienteModificado.setNombre(
+                    ComprobacionOpcion.leerTextoObligatorio("Introduce el nombre: ")
+            );
+        }
+
+        System.out.println("\nModificar email actual: " + clienteActual.getEmail());
         System.out.println("1. Si");
         System.out.println("2. No");
 
         opcion2 = ComprobacionOpcion.leerOpcion(1, 2);
 
-        switch (opcion2) {
-
-            case 1 -> {
-                System.out.println("Introduce el nombre: ");
-                cliente.setNombre(scanner.nextLine());
-            }case 2  -> {
-                cliente.setNombre(null);
-            }
-
+        if (opcion2 == 1) {
+            clienteModificado.setEmail(
+                    ComprobacionOpcion.leerEmailObligatorio("Introduce el email: ")
+            );
         }
 
-        System.out.println("Modificar email");
+        System.out.println("\nModificar telefono actual: " + clienteActual.getTelefono());
         System.out.println("1. Si");
         System.out.println("2. No");
 
         opcion2 = ComprobacionOpcion.leerOpcion(1, 2);
 
-        switch (opcion2) {
-
-            case 1 -> {
-                System.out.println("Introduce el email: ");
-                cliente.setEmail(scanner.nextLine());
-            }case 2  -> {
-                cliente.setEmail(null);
-            }
-
+        if (opcion2 == 1) {
+            clienteModificado.setTelefono(
+                    ComprobacionOpcion.leerTextoObligatorio("Introduce el telefono: ")
+            );
         }
 
-        System.out.println("Modificar telefono");
+        System.out.println("\nModificar direccion actual: " + clienteActual.getDireccion());
         System.out.println("1. Si");
         System.out.println("2. No");
 
         opcion2 = ComprobacionOpcion.leerOpcion(1, 2);
 
-        switch (opcion2) {
-
-            case 1 -> {
-                System.out.println("Introduce el telefono: ");
-                cliente.setTelefono(scanner.nextLine());
-            }case 2  -> {
-                cliente.setTelefono(null);
-            }
-
+        if (opcion2 == 1) {
+            clienteModificado.setDireccion(
+                    ComprobacionOpcion.leerTextoObligatorio("Introduce la direccion: ")
+            );
         }
 
-        System.out.println("Modificar direccion");
-        System.out.println("1. Si");
-        System.out.println("2. No");
-
-        opcion2 = ComprobacionOpcion.leerOpcion(1, 2);
-
-        switch (opcion2) {
-
-            case 1 -> {
-                System.out.println("Introduce la direccion: ");
-                cliente.setDireccion(scanner.nextLine());
-            }case 2  -> {
-                cliente.setDireccion(null);
-            }
-
-        }
-
-        clienteController.modificarCliente(opcion, cliente);
-
+        clienteController.modificarCliente(idCliente, clienteModificado);
     }
 
     public void buscarCliente() {
-
         List<Cliente> clientes = clienteController.listarClientes();
 
         if (clientes.isEmpty()) {
@@ -210,17 +227,15 @@ public class ClienteMenu {
         System.out.println("Que cliente quieres ver: ");
 
         for (Cliente cliente : clientes) {
-            System.out.println(cliente.getId() +  ". " + cliente.getNombre());
+            System.out.println(cliente.getId() + ". " + cliente.getNombre());
         }
 
+        System.out.print("Introduce el ID del cliente: ");
         Cliente cliente = clienteController.buscarCliente(ComprobacionOpcion.leerInt());
 
         if (cliente != null) {
-            System.out.println(cliente.toString());
-        }else  {
-            System.out.println("No existe el cliente con ese nombre.");
+            System.out.println(cliente);
         }
-
     }
 
 }

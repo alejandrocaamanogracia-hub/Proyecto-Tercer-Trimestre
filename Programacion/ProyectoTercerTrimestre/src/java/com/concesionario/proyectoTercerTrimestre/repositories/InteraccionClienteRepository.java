@@ -8,13 +8,17 @@ public interface InteraccionClienteRepository {
 
     void crearInteraccionCliente(InteraccionCliente interaccionCliente);
 
-    void eliminarInteraccionCliente(int id);
+    boolean eliminarInteraccionCliente(int id);
 
     List<InteraccionCliente> listarInteraccionesCliente();
 
 
     void modificarInteraccionCliente(int id, InteraccionCliente interaccionCliente);
 
-    InteraccionCliente bucarInteraccionCliente(int id);
+    InteraccionCliente buscarInteraccionCliente(int id);
+
+    boolean existeCliente(int clienteId);
+
+    boolean existeUsuario(int usuarioId);
 
 }

@@ -8,7 +8,7 @@ public interface CocheRepository {
 
     void crearCoche(Coche coche);
 
-    void eliminarCoche(int id);
+    boolean eliminarCoche(int id);
 
     List<Coche> listarCoches();
 

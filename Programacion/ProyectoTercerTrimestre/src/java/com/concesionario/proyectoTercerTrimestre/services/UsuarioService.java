@@ -33,6 +33,11 @@ public class UsuarioService {
             return;
         }
 
+        if (!usuario.getEmail().contains("@")) {
+            System.out.println("El email debe tener un formato valido.");
+            return;
+        }
+
         if (usuario.getRol() == null) {
             System.out.println("El rol del usuario es obligatorio.");
             return;
@@ -53,8 +58,13 @@ public class UsuarioService {
             return;
         }
 
-        usuarioRepository.eliminarUsuario(id);
-        System.out.println("Usuario eliminado correctamente.");
+        boolean eliminado = usuarioRepository.eliminarUsuario(id);
+
+        if (eliminado) {
+            System.out.println("Usuario eliminado correctamente.");
+        } else {
+            System.out.println("No existe ningún usuario con ese ID.");
+        }
     }
 
     public List<Usuario> listarUsuarios() {
@@ -97,35 +107,49 @@ public class UsuarioService {
             e.printStackTrace();
         }
     }
-
-    public void modificarUsuario(int id, Usuario usuario){
-
-        if (id <= 0 || id > usuarioRepository.listarUsuarios().size()) {
+    public void modificarUsuario(int id, Usuario usuario) {
+        if (id <= 0) {
             System.out.println("El ID del usuario no es valido.");
             return;
         }
 
-        if (usuario.getNombre() != null && usuario.getNombre().isBlank()) {
-            System.out.println("El nombre no puede estar en blanco");
+        Usuario usuarioExistente = usuarioRepository.buscarUsuario(id);
+
+        if (usuarioExistente == null) {
+            System.out.println("No existe ningun usuario con ese ID.");
             return;
         }
 
-        if (usuario.getEmail() != null && usuario.getEmail().isBlank()) {
-            System.out.println("El email no puede estar en blanco");
+        if (usuario.getNombre() == null || usuario.getNombre().isBlank()) {
+            System.out.println("El nombre no puede estar vacio.");
             return;
         }
 
-        if (usuario.getPasswordHash() != null && usuario.getPasswordHash().isBlank()) {
-            System.out.println("La contraseña no puede estar en blanco");
+        if (usuario.getEmail() == null || usuario.getEmail().isBlank()) {
+            System.out.println("El email no puede estar vacio.");
+            return;
+        }
+
+        if (!usuario.getEmail().contains("@")) {
+            System.out.println("El email debe tener un formato valido.");
+            return;
+        }
+
+        if (usuario.getPasswordHash() == null || usuario.getPasswordHash().isBlank()) {
+            System.out.println("La contraseña no puede estar vacia.");
+            return;
+        }
+
+        if (usuario.getRol() == null) {
+            System.out.println("El rol no puede estar vacio.");
             return;
         }
 
         usuarioRepository.modificarUsuario(id, usuario);
-
+        System.out.println("Usuario modificado correctamente.");
     }
 
-    public Usuario buscarUsuario(int id){
-
+    public Usuario buscarUsuario(int id) {
         if (id <= 0) {
             System.out.println("El ID del usuario no es valido.");
             return null;
@@ -133,13 +157,11 @@ public class UsuarioService {
 
         Usuario usuario = usuarioRepository.buscarUsuario(id);
 
-        if (usuario == null){
-            System.out.println("Usuario no encontrado");
+        if (usuario == null) {
+            System.out.println("Usuario no encontrado.");
             return null;
         }
 
         return usuario;
-
     }
-
 }

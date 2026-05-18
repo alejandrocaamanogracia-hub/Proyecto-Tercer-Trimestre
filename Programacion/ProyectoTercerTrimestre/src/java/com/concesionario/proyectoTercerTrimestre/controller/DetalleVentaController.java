@@ -38,4 +38,20 @@ public class DetalleVentaController {
         return detalleVentaService.buscarDetalleVenta(id);
     }
 
+    public boolean existeVenta(int ventaId) {
+        return detalleVentaService.existeVenta(ventaId);
+    }
+
+    public boolean existeCoche(int cocheId) {
+        return detalleVentaService.existeCoche(cocheId);
+    }
+
+    public boolean existeDetalleVentaConCocheExcluyendoId(int cocheId, int idDetalleVenta) {
+        return detalleVentaService.existeDetalleVentaConCocheExcluyendoId(cocheId, idDetalleVenta);
+    }
+
+    public boolean existeDetalleVentaConCoche(int cocheId) {
+        return detalleVentaService.existeDetalleVentaConCoche(cocheId);
+    }
+
 }

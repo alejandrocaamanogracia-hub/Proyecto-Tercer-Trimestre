@@ -28,8 +28,18 @@ public class InteraccionClienteService {
             return;
         }
 
+        if (!interaccionClienteRepository.existeCliente(interaccionCliente.getClienteId())) {
+            System.out.println("No existe ningun cliente con ese ID.");
+            return;
+        }
+
         if (interaccionCliente.getUsuarioId() <= 0) {
             System.out.println("El ID del usuario no es valido.");
+            return;
+        }
+
+        if (!interaccionClienteRepository.existeUsuario(interaccionCliente.getUsuarioId())) {
+            System.out.println("No existe ningun usuario con ese ID.");
             return;
         }
 
@@ -54,12 +64,17 @@ public class InteraccionClienteService {
 
     public void eliminarInteraccionCliente(int id) {
         if (id <= 0) {
-            System.out.println("El ID de la interaccion no es valido.");
+            System.out.println("El ID de la interaccion con cliente no es valido.");
             return;
         }
 
-        interaccionClienteRepository.eliminarInteraccionCliente(id);
-        System.out.println("Interaccion eliminada correctamente.");
+        boolean eliminado = interaccionClienteRepository.eliminarInteraccionCliente(id);
+
+        if (eliminado) {
+            System.out.println("Interaccion con cliente eliminada correctamente.");
+        } else {
+            System.out.println("No existe ninguna interaccion con cliente con ese ID.");
+        }
     }
 
     public List<InteraccionCliente> listarInteraccionesCliente() {
@@ -114,9 +129,45 @@ public class InteraccionClienteService {
     }
 
     public void modificarInteraccionCliente(int id, InteraccionCliente interaccionCliente) {
+        if (id <= 0) {
+            System.out.println("El ID de la interaccion no es valido.");
+            return;
+        }
 
-        if (id <= 0 || id > interaccionClienteRepository.listarInteraccionesCliente().size()) {
+        InteraccionCliente interaccionExistente = interaccionClienteRepository.buscarInteraccionCliente(id);
+
+        if (interaccionExistente == null) {
+            System.out.println("No existe ninguna interaccion con ese ID.");
+            return;
+        }
+
+        if (interaccionCliente.getClienteId() <= 0) {
             System.out.println("El ID del cliente no es valido.");
+            return;
+        }
+
+        if (!interaccionClienteRepository.existeCliente(interaccionCliente.getClienteId())) {
+            System.out.println("No existe ningun cliente con ese ID.");
+            return;
+        }
+
+        if (interaccionCliente.getUsuarioId() <= 0) {
+            System.out.println("El ID del usuario no es valido.");
+            return;
+        }
+
+        if (!interaccionClienteRepository.existeUsuario(interaccionCliente.getUsuarioId())) {
+            System.out.println("No existe ningun usuario con ese ID.");
+            return;
+        }
+
+        if (interaccionCliente.getTipo() == null) {
+            System.out.println("El tipo de interaccion no puede estar vacio.");
+            return;
+        }
+
+        if (interaccionCliente.getFecha() == null) {
+            System.out.println("La fecha de la interaccion no puede estar vacia.");
             return;
         }
 
@@ -125,36 +176,55 @@ public class InteraccionClienteService {
             return;
         }
 
-        if (interaccionCliente.getProximaAccion() != null && interaccionCliente.getProximaAccion().isBlank()) {
-            System.out.println("La proxima accion no es valida.");
-            return;
-        }
-
         if (interaccionCliente.getDescripcion() != null && interaccionCliente.getDescripcion().isBlank()) {
             System.out.println("La descripcion de la interaccion no es valida.");
             return;
         }
 
-        interaccionClienteRepository.modificarInteraccionCliente(id, interaccionCliente);
+        if (interaccionCliente.getResultado() != null && interaccionCliente.getResultado().isBlank()) {
+            System.out.println("El resultado de la interaccion no es valido.");
+            return;
+        }
 
+        if (interaccionCliente.getProximaAccion() != null && interaccionCliente.getProximaAccion().isBlank()) {
+            System.out.println("La proxima accion no es valida.");
+            return;
+        }
+
+        interaccionClienteRepository.modificarInteraccionCliente(id, interaccionCliente);
+        System.out.println("Interaccion modificada correctamente.");
     }
 
     public InteraccionCliente buscarInteraccionCliente(int id) {
-
         if (id <= 0) {
             System.out.println("El ID de la interaccion no es valido.");
             return null;
         }
 
-        InteraccionCliente interaccionCliente = interaccionClienteRepository.bucarInteraccionCliente(id);
+        InteraccionCliente interaccionCliente = interaccionClienteRepository.buscarInteraccionCliente(id);
 
         if (interaccionCliente == null) {
-            System.out.println("No existe el interaccion cliente con el id " + id);
+            System.out.println("No existe ninguna interaccion con ese ID.");
             return null;
         }
 
         return interaccionCliente;
+    }
 
+    public boolean existeCliente(int clienteId) {
+        if (clienteId <= 0) {
+            return false;
+        }
+
+        return interaccionClienteRepository.existeCliente(clienteId);
+    }
+
+    public boolean existeUsuario(int usuarioId) {
+        if (usuarioId <= 0) {
+            return false;
+        }
+
+        return interaccionClienteRepository.existeUsuario(usuarioId);
     }
 
 }

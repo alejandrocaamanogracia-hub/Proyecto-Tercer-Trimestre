@@ -8,13 +8,23 @@ public interface DetalleVentaRepository {
 
     void crearDetalleVenta(DetalleVenta detalleVenta);
 
-    void eliminarDetalleVenta(int id);
+    boolean eliminarDetalleVenta(int id);
 
     List<DetalleVenta> listarDetallesVenta();
-
 
     void modificarDetalleVenta(int id, DetalleVenta detalleVenta);
 
     DetalleVenta buscarDetalleVenta(int id);
 
+    boolean existeVenta(int ventaId);
+
+    boolean existeCoche(int cocheId);
+
+    boolean existeDetalleVentaConVentaYCoche(int ventaId, int cocheId);
+
+    boolean existeDetalleVentaConCoche(int cocheId);
+
+    boolean existeDetalleVentaConVentaYCocheExcluyendoId(int ventaId, int cocheId, int idDetalleVenta);
+
+    boolean existeDetalleVentaConCocheExcluyendoId(int cocheId, int idDetalleVenta);
 }

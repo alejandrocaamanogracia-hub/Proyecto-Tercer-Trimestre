@@ -55,14 +55,14 @@ Resultado: Interesado
 Proxima accion: Enviar presupuesto por email
 Fecha proxima: 2026-04-11T09:30
 ----------------------------------
-ID: 6
-ID Cliente: 1
-ID Usuario: 1
-Tipo: Llamada
-Fecha: 2026-05-05T11:13:35
-Asunto: Seat leon
-Descripcion: Quiere comprar
-Resultado: cliente interesado
-Proxima accion: volver a llamar
+ID: 7
+ID Cliente: 4
+ID Usuario: 2
+Tipo: Email
+Fecha: 2026-05-05T11:15:37
+Asunto: ol
+Descripcion: sad
+Resultado: asd
+Proxima accion: asd
 Fecha proxima: null
 ----------------------------------

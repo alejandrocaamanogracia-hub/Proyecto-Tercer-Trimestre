@@ -1,11 +1,7 @@
 package com.concesionario.proyectoTercerTrimestre.services;
 
 import com.concesionario.proyectoTercerTrimestre.entities.Venta;
-import com.concesionario.proyectoTercerTrimestre.repositories.ClienteRepository;
-import com.concesionario.proyectoTercerTrimestre.repositories.UsuarioRepository;
 import com.concesionario.proyectoTercerTrimestre.repositories.VentaRepository;
-import com.concesionario.proyectoTercerTrimestre.repositories.impl.ClienteRepositoryImpl;
-import com.concesionario.proyectoTercerTrimestre.repositories.impl.UsuarioRepositoryImpl;
 import com.concesionario.proyectoTercerTrimestre.repositories.impl.VentaRepositoryImpl;
 
 import java.io.BufferedWriter;
@@ -32,8 +28,18 @@ public class VentaService {
             return;
         }
 
+        if (!ventaRepository.existeCliente(venta.getClienteId())) {
+            System.out.println("No existe ningun cliente con ese ID.");
+            return;
+        }
+
         if (venta.getUsuarioId() <= 0) {
             System.out.println("El ID del usuario no es valido.");
+            return;
+        }
+
+        if (!ventaRepository.existeUsuario(venta.getUsuarioId())) {
+            System.out.println("No existe ningun usuario con ese ID.");
             return;
         }
 
@@ -62,8 +68,13 @@ public class VentaService {
             return;
         }
 
-        ventaRepository.eliminarVenta(id);
-        System.out.println("Venta eliminada correctamente.");
+        boolean eliminado = ventaRepository.eliminarVenta(id);
+
+        if (eliminado) {
+            System.out.println("Venta eliminada correctamente.");
+        } else {
+            System.out.println("No existe ninguna venta con ese ID.");
+        }
     }
 
     public List<Venta> listarVentas() {
@@ -109,43 +120,87 @@ public class VentaService {
         }
     }
 
-    public void modificarVenta(int id, Venta venta){
-
-        if (id <= 0 || id > ventaRepository.listarVentas().size()) {
+    public void modificarVenta(int id, Venta venta) {
+        if (id <= 0) {
             System.out.println("El ID de la venta no es valido.");
             return;
         }
 
-        if (id < -1) {
+        Venta ventaExistente = ventaRepository.buscarVenta(id);
+
+        if (ventaExistente == null) {
+            System.out.println("No existe ninguna venta con ese ID.");
+            return;
+        }
+
+        if (venta.getClienteId() <= 0) {
             System.out.println("El ID del cliente no es valido.");
             return;
         }
 
-        if (venta.getUsuarioId() < -1) {
+        if (!ventaRepository.existeCliente(venta.getClienteId())) {
+            System.out.println("No existe ningun cliente con ese ID.");
+            return;
+        }
+
+        if (venta.getUsuarioId() <= 0) {
             System.out.println("El ID del usuario no es valido.");
             return;
         }
 
-        ventaRepository.modificarVenta(id, venta);
+        if (!ventaRepository.existeUsuario(venta.getUsuarioId())) {
+            System.out.println("No existe ningun usuario con ese ID.");
+            return;
+        }
 
+        if (venta.getFecha() == null) {
+            System.out.println("La fecha de la venta no puede estar vacia.");
+            return;
+        }
+
+        if (venta.getEstado() == null) {
+            System.out.println("El estado de la venta no puede estar vacio.");
+            return;
+        }
+
+        if (venta.getTotal() < 0) {
+            System.out.println("El total no puede ser negativo.");
+            return;
+        }
+
+        ventaRepository.modificarVenta(id, venta);
+        System.out.println("Venta modificada correctamente.");
     }
 
-    public Venta buscarVenta(int id){
-
+    public Venta buscarVenta(int id) {
         if (id <= 0) {
-            System.out.println("El ID del cliente no es valido.");
+            System.out.println("El ID de la venta no es valido.");
             return null;
         }
 
         Venta venta = ventaRepository.buscarVenta(id);
 
         if (venta == null) {
-            System.out.println("No existe el venta con el ID del cliente.");
+            System.out.println("No existe ninguna venta con ese ID.");
             return null;
         }
 
         return venta;
-
     }
 
+    public boolean existeCliente(int clienteId) {
+        if (clienteId <= 0) {
+            return false;
+        }
+
+        return ventaRepository.existeCliente(clienteId);
+    }
+
+    public boolean existeUsuario(int usuarioId) {
+        if (usuarioId <= 0) {
+            return false;
+        }
+
+        return ventaRepository.existeUsuario(usuarioId);
+    }
 }

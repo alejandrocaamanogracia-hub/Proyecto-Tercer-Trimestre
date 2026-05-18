@@ -79,7 +79,6 @@ public class Usuario {
                 ", nombre='" + nombre + '\'' +
                 ", email='" + email + '\'' +
                 ", rol=" + rol +
-                ", passwordHash='" + passwordHash + '\'' +
                 '}';
     }
 }

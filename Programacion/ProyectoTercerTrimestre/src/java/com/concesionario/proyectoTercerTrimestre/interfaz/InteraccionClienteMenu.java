@@ -1,27 +1,24 @@
 package com.concesionario.proyectoTercerTrimestre.interfaz;
 
-import com.concesionario.proyectoTercerTrimestre.controller.ClienteController;
+
 import com.concesionario.proyectoTercerTrimestre.controller.InteraccionClienteController;
-import com.concesionario.proyectoTercerTrimestre.controller.UsuarioController;
 import com.concesionario.proyectoTercerTrimestre.entities.*;
-import com.concesionario.proyectoTercerTrimestre.repositories.InteraccionClienteRepository;
+
 import com.concesionario.proyectoTercerTrimestre.utils.ComprobacionOpcion;
 
-import java.time.LocalDate;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.List;
-import java.util.Scanner;
+
 
 public class InteraccionClienteMenu {
 
-    private final Scanner scanner;
     private final InteraccionClienteController interaccionClienteController;
     private final DateTimeFormatter formatter;
 
     public InteraccionClienteMenu() {
-        this.scanner = new Scanner(System.in);
         this.interaccionClienteController = new InteraccionClienteController();
         this.formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
     }
@@ -75,36 +72,34 @@ public class InteraccionClienteMenu {
     private void crearInteraccionCliente() {
         System.out.println("\n--- Crear interaccion con cliente ---");
 
-        System.out.print("ID Cliente: ");
-        int clienteId = ComprobacionOpcion.leerInt();
+        int clienteId = ComprobacionOpcion.leerIdExistente(
+                "Introduce el ID del cliente: ",
+                interaccionClienteController::existeCliente,
+                "No existe ningun cliente con ese ID."
+        );
 
-        System.out.print("ID Usuario: ");
-        int usuarioId = ComprobacionOpcion.leerInt();
+        int usuarioId = ComprobacionOpcion.leerIdExistente(
+                "Introduce el ID del usuario: ",
+                interaccionClienteController::existeUsuario,
+                "No existe ningun usuario con ese ID."
+        );
 
         TipoInteraccion tipo = seleccionarTipoInteraccion();
 
         LocalDateTime fecha = LocalDateTime.now();
 
-        System.out.print("Asunto: ");
-        String asunto = scanner.nextLine();
+        String asunto = ComprobacionOpcion.leerTextoObligatorio("Asunto: ");
 
         System.out.print("Descripcion: ");
-        String descripcion = scanner.nextLine();
+        String descripcion = ComprobacionOpcion.leerTexto();
 
         System.out.print("Resultado: ");
-        String resultado = scanner.nextLine();
+        String resultado = ComprobacionOpcion.leerTexto();
 
         System.out.print("Proxima accion: ");
-        String proximaAccion = scanner.nextLine();
+        String proximaAccion = ComprobacionOpcion.leerTexto();
 
-        System.out.print("Fecha proxima (yyyy-MM-dd HH:mm) o vacio si no hay: ");
-        String fechaProximaTexto = scanner.nextLine();
-
-        LocalDateTime fechaProxima = null;
-
-        if (!fechaProximaTexto.isBlank()) {
-            fechaProxima = LocalDateTime.parse(fechaProximaTexto, formatter);
-        }
+        LocalDateTime fechaProxima = leerFechaHoraOpcional();
 
         interaccionClienteController.crearInteraccionCliente(
                 clienteId,
@@ -112,9 +107,9 @@ public class InteraccionClienteMenu {
                 tipo,
                 fecha,
                 asunto,
-                descripcion,
-                resultado,
-                proximaAccion,
+                descripcion.isBlank() ? null : descripcion,
+                resultado.isBlank() ? null : resultado,
+                proximaAccion.isBlank() ? null : proximaAccion,
                 fechaProxima
         );
     }
@@ -151,12 +146,41 @@ public class InteraccionClienteMenu {
     }
 
     private void eliminarInteraccionCliente() {
-        System.out.println("\n--- Eliminar interaccion ---");
+        System.out.println("\n--- Eliminar interacción cliente ---");
 
-        System.out.print("Introduce el ID de la interaccion: ");
+        List<InteraccionCliente> interaccionesCliente = interaccionClienteController.listarInteraccionesCliente();
+
+        if (interaccionesCliente.isEmpty()) {
+            System.out.println("No hay interacciones con clientes registradas.");
+            return;
+        }
+
+        System.out.println("Interacciones disponibles:");
+
+        for (InteraccionCliente interaccionCliente : interaccionesCliente) {
+            System.out.println(
+                    "ID: " + interaccionCliente.getId()
+                            + " | ID Cliente: " + interaccionCliente.getClienteId()
+                            + " | ID Usuario: " + interaccionCliente.getUsuarioId()
+                            + " | Tipo: " + interaccionCliente.getTipo()
+                            + " | Asunto: " + interaccionCliente.getAsunto()
+            );
+        }
+
+        System.out.print("Introduce el ID de la interacción que quieres eliminar: ");
         int id = ComprobacionOpcion.leerInt();
 
-        interaccionClienteController.eliminarInteraccionCliente(id);
+        System.out.println("¿Seguro que quieres eliminar la interacción con ID " + id + "?");
+        System.out.println("1. Sí");
+        System.out.println("2. No");
+
+        int confirmacion = ComprobacionOpcion.leerOpcion(1, 2);
+
+        if (confirmacion == 1) {
+            interaccionClienteController.eliminarInteraccionCliente(id);
+        } else {
+            System.out.println("Eliminación cancelada.");
+        }
     }
 
     private void listarInteraccionesCliente() {
@@ -179,174 +203,7 @@ public class InteraccionClienteMenu {
     }
 
     private void modificarInteraccion() {
-
-        InteraccionCliente interaccionCliente  = new InteraccionCliente();
-
-        System.out.println("Que detalle venta quieres modificar: ");
-        List<InteraccionCliente> interaccionClientes =  interaccionClienteController.listarInteraccionesCliente();
-        int iterador = 1;
-        for (InteraccionCliente interaccion : interaccionClientes) {
-            System.out.println(iterador++ + " - " + interaccion.getId());
-        }
-
-        int opcion;
-        int opcion2;
-
-        opcion = ComprobacionOpcion.leerOpcion(1, interaccionClientes.size());
-
-        System.out.println("Modificar id del cliente");
-        System.out.println("1. Si");
-        System.out.println("2. No");
-
-        opcion2 = ComprobacionOpcion.leerOpcion(1, 2);
-
-        switch (opcion2) {
-
-            case 1 ->{
-                System.out.println("Introduce el id del cliente: ");
-                while (scanner.hasNextInt()) {
-                    opcion2 = scanner.nextInt();
-                }
-                interaccionCliente.setClienteId(opcion2);
-
-            }case 2 ->{
-                interaccionCliente.setClienteId(-1);
-            }
-
-        }
-
-        System.out.println("Modificar id del usuario");
-        System.out.println("1. Si");
-        System.out.println("2. No");
-
-        opcion2 = ComprobacionOpcion.leerOpcion(1, 2);
-
-        switch (opcion2) {
-
-            case 1 ->{
-                System.out.println("Introduce el id del usuario: ");
-                while (scanner.hasNextInt()) {
-                    opcion2 = scanner.nextInt();
-                }
-                interaccionCliente.setUsuarioId(opcion2);
-
-            }case 2 ->{
-                interaccionCliente.setUsuarioId(-1);
-            }
-
-        }
-
-        System.out.println("Modificar tipo de interaccion");
-        System.out.println("1. Si");
-        System.out.println("2. No");
-
-        opcion2 = ComprobacionOpcion.leerOpcion(1, 2);
-
-        switch (opcion2) {
-            case 1 ->{
-                interaccionCliente.setTipo(seleccionarTipoInteraccion());
-            }case 2 ->{
-                interaccionCliente.setTipo(null);
-            }
-        }
-
-        System.out.println("Modificar el asunto de la interacción");
-        System.out.println("1. Si");
-        System.out.println("2. No");
-
-        opcion2 = ComprobacionOpcion.leerOpcion(1, 2);
-
-        switch (opcion2){
-
-            case 1->{
-                System.out.println("Introduce el asunto: ");
-                interaccionCliente.setAsunto(scanner.nextLine());
-            }case 2 ->{
-                interaccionCliente.setAsunto(null);
-            }
-
-        }
-
-        System.out.println("Modificar la descripcion de la interacción");
-        System.out.println("1. Si");
-        System.out.println("2. No");
-
-        opcion2 = ComprobacionOpcion.leerOpcion(1, 2);
-
-        switch (opcion2){
-
-            case 1->{
-                System.out.println("Introduce la descripcion: ");
-                interaccionCliente.setDescripcion(scanner.nextLine());
-                scanner.nextLine();
-            }case 2 ->{
-                interaccionCliente.setDescripcion(null);
-            }
-
-        }
-
-        System.out.println("Modificar el resultado de interaccion");
-        System.out.println("1. Si");
-        System.out.println("2. No");
-
-        opcion2 = ComprobacionOpcion.leerOpcion(1, 2);
-
-        switch (opcion2) {
-            case 1 ->{
-                System.out.println("Introduce el resultado:: ");
-                interaccionCliente.setResultado(scanner.nextLine());
-            }case 2 ->{
-                interaccionCliente.setResultado(null);
-            }
-        }
-
-        System.out.println("Modificar la proxima accion de la interaccion");
-        System.out.println("1. Si");
-        System.out.println("2. No");
-
-        do {
-            opcion2 = Integer.parseInt(scanner.nextLine());
-        }while (opcion2 <= 0 || opcion2 > 2);
-
-        switch (opcion2) {
-            case 1 ->{
-                System.out.println("Introduce la proxima accion: ");
-                interaccionCliente.setProximaAccion(scanner.nextLine());
-            }case 2 ->{
-                interaccionCliente.setProximaAccion(null);
-            }
-        }
-
-        System.out.println("Modificar fecha de la proxima accion de la interaccion");
-        System.out.println("1. Si");
-        System.out.println("2. No");
-
-        opcion2 = ComprobacionOpcion.leerOpcion(1, 2);
-
-        switch (opcion2) {
-
-            case 1 -> {
-
-                System.out.print("Fecha proxima (yyyy-MM-dd HH:mm) o vacio si no hay: ");
-                String fechaProximaTexto = scanner.nextLine();
-
-                LocalDateTime fechaProxima = null;
-
-                fechaProxima = LocalDateTime.parse(fechaProximaTexto, formatter);
-
-                interaccionCliente.setFechaProxima(fechaProxima);
-
-            }case 2 ->{
-                interaccionCliente.setFechaProxima(null);
-            }
-
-        }
-
-        interaccionClienteController.modificarInteraccionCliente(opcion,  interaccionCliente);
-
-    }
-
-    public void buscarInteraccionCliente() {
+        System.out.println("\n--- Modificar interacción cliente ---");
 
         List<InteraccionCliente> interaccionClientes = interaccionClienteController.listarInteraccionesCliente();
 
@@ -355,20 +212,168 @@ public class InteraccionClienteMenu {
             return;
         }
 
-        System.out.println("Que interaccion quieres ver: ");
+        System.out.println("Que interacción quieres modificar: ");
 
-        for (InteraccionCliente interaccionCliente : interaccionClientes) {
-            System.out.println(interaccionCliente.getId());
+        int iterador = 1;
+        for (InteraccionCliente interaccionActual : interaccionClientes) {
+            System.out.println(
+                    iterador + ". ID: " + interaccionActual.getId()
+                            + " | ID Cliente: " + interaccionActual.getClienteId()
+                            + " | ID Usuario: " + interaccionActual.getUsuarioId()
+                            + " | Tipo: " + interaccionActual.getTipo()
+                            + " | Asunto: " + interaccionActual.getAsunto()
+            );
+            iterador++;
         }
 
-        InteraccionCliente interaccionCliente = interaccionClienteController.buscarInteraccionCliente(ComprobacionOpcion.leerInt());
+        int opcion = ComprobacionOpcion.leerOpcion(1, interaccionClientes.size());
 
-        if (interaccionCliente == null){
-            System.out.println("No existe el interaccion con ese id");
-        }else{
-            System.out.println(interaccionCliente.toString());
+        InteraccionCliente interaccionActual = interaccionClientes.get(opcion - 1);
+        int idInteraccion = interaccionActual.getId();
+
+        InteraccionCliente interaccionModificada = new InteraccionCliente();
+
+        interaccionModificada.setClienteId(interaccionActual.getClienteId());
+        interaccionModificada.setUsuarioId(interaccionActual.getUsuarioId());
+        interaccionModificada.setTipo(interaccionActual.getTipo());
+        interaccionModificada.setFecha(interaccionActual.getFecha());
+        interaccionModificada.setAsunto(interaccionActual.getAsunto());
+        interaccionModificada.setDescripcion(interaccionActual.getDescripcion());
+        interaccionModificada.setResultado(interaccionActual.getResultado());
+        interaccionModificada.setProximaAccion(interaccionActual.getProximaAccion());
+        interaccionModificada.setFechaProxima(interaccionActual.getFechaProxima());
+
+        System.out.println("\nModificar ID del cliente actual: " + interaccionActual.getClienteId());
+        System.out.println("1. Si");
+        System.out.println("2. No");
+
+        if (ComprobacionOpcion.leerOpcion(1, 2) == 1) {
+            interaccionModificada.setClienteId(
+                    ComprobacionOpcion.leerIdExistente(
+                            "Introduce el ID del cliente: ",
+                            interaccionClienteController::existeCliente,
+                            "No existe ningun cliente con ese ID."
+                    )
+            );
         }
 
+        System.out.println("\nModificar ID del usuario actual: " + interaccionActual.getUsuarioId());
+        System.out.println("1. Si");
+        System.out.println("2. No");
+
+        if (ComprobacionOpcion.leerOpcion(1, 2) == 1) {
+            interaccionModificada.setUsuarioId(
+                    ComprobacionOpcion.leerIdExistente(
+                            "Introduce el ID del usuario: ",
+                            interaccionClienteController::existeUsuario,
+                            "No existe ningun usuario con ese ID."
+                    )
+            );
+        }
+
+        System.out.println("\nModificar tipo actual: " + interaccionActual.getTipo());
+        System.out.println("1. Si");
+        System.out.println("2. No");
+
+        if (ComprobacionOpcion.leerOpcion(1, 2) == 1) {
+            interaccionModificada.setTipo(seleccionarTipoInteraccion());
+        }
+
+        System.out.println("\nModificar asunto actual: " + interaccionActual.getAsunto());
+        System.out.println("1. Si");
+        System.out.println("2. No");
+
+        if (ComprobacionOpcion.leerOpcion(1, 2) == 1) {
+            interaccionModificada.setAsunto(
+                    ComprobacionOpcion.leerTextoObligatorio("Introduce el asunto: ")
+            );
+        }
+
+        System.out.println("\nModificar descripcion actual: " + interaccionActual.getDescripcion());
+        System.out.println("1. Si");
+        System.out.println("2. No");
+
+        if (ComprobacionOpcion.leerOpcion(1, 2) == 1) {
+            interaccionModificada.setDescripcion(
+                    ComprobacionOpcion.leerTextoObligatorio("Introduce la descripcion: ")
+            );
+        }
+
+        System.out.println("\nModificar resultado actual: " + interaccionActual.getResultado());
+        System.out.println("1. Si");
+        System.out.println("2. No");
+
+        if (ComprobacionOpcion.leerOpcion(1, 2) == 1) {
+            interaccionModificada.setResultado(
+                    ComprobacionOpcion.leerTextoObligatorio("Introduce el resultado: ")
+            );
+        }
+
+        System.out.println("\nModificar proxima accion actual: " + interaccionActual.getProximaAccion());
+        System.out.println("1. Si");
+        System.out.println("2. No");
+
+        if (ComprobacionOpcion.leerOpcion(1, 2) == 1) {
+            interaccionModificada.setProximaAccion(
+                    ComprobacionOpcion.leerTextoObligatorio("Introduce la proxima accion: ")
+            );
+        }
+
+        System.out.println("\nModificar fecha proxima actual: " + interaccionActual.getFechaProxima());
+        System.out.println("1. Si");
+        System.out.println("2. No");
+
+        if (ComprobacionOpcion.leerOpcion(1, 2) == 1) {
+            interaccionModificada.setFechaProxima(leerFechaHoraOpcional());
+        }
+
+        interaccionClienteController.modificarInteraccionCliente(idInteraccion, interaccionModificada);
     }
 
+    private LocalDateTime leerFechaHoraOpcional() {
+        while (true) {
+            System.out.print("Fecha proxima (yyyy-MM-dd HH:mm) o vacio si no hay: ");
+            String fechaTexto = ComprobacionOpcion.leerTexto();
+
+            if (fechaTexto.isBlank()) {
+                return null;
+            }
+
+            try {
+                return LocalDateTime.parse(fechaTexto, formatter);
+            } catch (DateTimeParseException e) {
+                System.out.println("Formato incorrecto. Introduce yyyy-MM-dd HH:mm.");
+            }
+        }
+    }
+
+    public void buscarInteraccionCliente() {
+        System.out.println("\n--- Buscar interacción cliente ---");
+
+        List<InteraccionCliente> interaccionClientes = interaccionClienteController.listarInteraccionesCliente();
+
+        if (interaccionClientes.isEmpty()) {
+            System.out.println("No hay interacciones registradas.");
+            return;
+        }
+
+        System.out.println("Que interacción quieres ver: ");
+
+        for (InteraccionCliente interaccionCliente : interaccionClientes) {
+            System.out.println(
+                    interaccionCliente.getId()
+                            + ". ID Cliente: " + interaccionCliente.getClienteId()
+                            + " | ID Usuario: " + interaccionCliente.getUsuarioId()
+                            + " | Tipo: " + interaccionCliente.getTipo()
+                            + " | Asunto: " + interaccionCliente.getAsunto()
+            );
+        }
+
+        System.out.print("Introduce el ID de la interacción: ");
+        InteraccionCliente interaccionCliente = interaccionClienteController.buscarInteraccionCliente(ComprobacionOpcion.leerInt());
+
+        if (interaccionCliente != null) {
+            System.out.println(interaccionCliente);
+        }
+    }
 }

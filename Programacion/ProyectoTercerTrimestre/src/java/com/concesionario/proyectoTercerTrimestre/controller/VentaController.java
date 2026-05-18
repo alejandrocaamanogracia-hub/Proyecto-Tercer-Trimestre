@@ -1,6 +1,6 @@
 package com.concesionario.proyectoTercerTrimestre.controller;
 
-import com.concesionario.proyectoTercerTrimestre.entities.DetalleVenta;
+
 import com.concesionario.proyectoTercerTrimestre.entities.EstadoVenta;
 import com.concesionario.proyectoTercerTrimestre.entities.Venta;
 import com.concesionario.proyectoTercerTrimestre.services.VentaService;
@@ -39,6 +39,14 @@ public class VentaController {
 
     public Venta buscarVenta(int id) {
         return ventaService.buscarVenta(id);
+    }
+
+    public boolean existeCliente(int clienteId) {
+        return ventaService.existeCliente(clienteId);
+    }
+
+    public boolean existeUsuario(int usuarioId) {
+        return ventaService.existeUsuario(usuarioId);
     }
 
 }
