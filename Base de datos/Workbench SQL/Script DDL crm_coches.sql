@@ -76,7 +76,8 @@ CREATE TABLE detalle_venta (
     id INT AUTO_INCREMENT PRIMARY KEY,
     venta_id INT NOT NULL,
     coche_id INT NOT NULL,
-    cantidad INT NOT NULL DEFAULT 1,
+    precio_final DECIMAL(10,2) NOT NULL,
+    descuento DECIMAL(10,2) NOT NULL DEFAULT 0.00,
 
     CONSTRAINT fk_detalle_venta_ventas
         FOREIGN KEY (venta_id)
@@ -139,8 +140,12 @@ ADD CONSTRAINT chk_coches_anio
 CHECK (anio >= 1900);
 
 ALTER TABLE detalle_venta
-ADD CONSTRAINT chk_detalle_cantidad
-CHECK (cantidad > 0);
+ADD CONSTRAINT chk_detalle_precio_final
+CHECK (precio_final >= 0);
+
+ALTER TABLE detalle_venta
+ADD CONSTRAINT chk_detalle_descuento
+CHECK (descuento >= 0);
 
 ALTER TABLE ventas
 ADD CONSTRAINT chk_ventas_total
