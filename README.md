@@ -314,7 +314,7 @@ Relaciones principales:
 - Un usuario puede gestionar varias ventas.
 - Una venta pertenece a un único usuario.
 - Una venta puede incluir varios coches mediante la tabla detalle_venta.
-- Un coche puede estar asociado a un detalle de venta.
+- Un coche solo puede estar asociado a un detalle de venta.
 - Un cliente puede tener varias interacciones comerciales.
 - Un usuario puede registrar varias interacciones con clientes.
 
