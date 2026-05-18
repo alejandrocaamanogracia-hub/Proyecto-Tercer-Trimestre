@@ -3,35 +3,30 @@
 ID: 1
 ID Venta: 1
 ID Coche: 4
-Cantidad: 1
+Precio final: 28900.0
+Descuento: 0.0
 ----------------------------------
 ID: 2
 ID Venta: 2
 ID Coche: 5
-Cantidad: 1
+Precio final: 35900.0
+Descuento: 0.0
 ----------------------------------
 ID: 3
 ID Venta: 3
 ID Coche: 2
-Cantidad: 1
+Precio final: 24000.0
+Descuento: 500.0
 ----------------------------------
 ID: 4
-ID Venta: 4
+ID Venta: 1
 ID Coche: 1
-Cantidad: 1
+Precio final: 18500.0
+Descuento: 400.0
 ----------------------------------
-ID: 5
-ID Venta: 5
+ID: 16
+ID Venta: 2
 ID Coche: 3
-Cantidad: 1
-----------------------------------
-ID: 7
-ID Venta: 1
-ID Coche: 1
-Cantidad: 2
-----------------------------------
-ID: 8
-ID Venta: 1
-ID Coche: 1
-Cantidad: 1
+Precio final: 15000.0
+Descuento: 600.0
 ----------------------------------

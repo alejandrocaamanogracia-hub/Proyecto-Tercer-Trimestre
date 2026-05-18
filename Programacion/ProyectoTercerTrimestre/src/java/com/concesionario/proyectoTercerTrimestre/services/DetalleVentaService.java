@@ -33,8 +33,18 @@ public class DetalleVentaService {
             return;
         }
 
-        if (detalleVenta.getCantidad() <= 0) {
-            System.out.println("La cantidad debe ser mayor que 0.");
+        if (detalleVenta.getPrecioFinal() < 0) {
+            System.out.println("El precio final no puede ser negativo.");
+            return;
+        }
+
+        if (detalleVenta.getDescuento() < 0) {
+            System.out.println("El descuento no puede ser negativo.");
+            return;
+        }
+
+        if (detalleVenta.getDescuento() > detalleVenta.getPrecioFinal()) {
+            System.out.println("El descuento no puede ser mayor que el precio final.");
             return;
         }
 
@@ -104,7 +114,9 @@ public class DetalleVentaService {
                 writer.newLine();
                 writer.write("ID Coche: " + detalleVenta.getCocheId());
                 writer.newLine();
-                writer.write("Cantidad: " + detalleVenta.getCantidad());
+                writer.write("Precio final: " + detalleVenta.getPrecioFinal());
+                writer.newLine();
+                writer.write("Descuento: " + detalleVenta.getDescuento());
                 writer.newLine();
                 writer.write("----------------------------------");
                 writer.newLine();
@@ -156,8 +168,18 @@ public class DetalleVentaService {
             return;
         }
 
-        if (detalleVenta.getCantidad() <= 0) {
-            System.out.println("La cantidad debe ser mayor que 0.");
+        if (detalleVenta.getPrecioFinal() < 0) {
+            System.out.println("El precio final no puede ser negativo.");
+            return;
+        }
+
+        if (detalleVenta.getDescuento() < 0) {
+            System.out.println("El descuento no puede ser negativo.");
+            return;
+        }
+
+        if (detalleVenta.getDescuento() > detalleVenta.getPrecioFinal()) {
+            System.out.println("El descuento no puede ser mayor que el precio final.");
             return;
         }
 

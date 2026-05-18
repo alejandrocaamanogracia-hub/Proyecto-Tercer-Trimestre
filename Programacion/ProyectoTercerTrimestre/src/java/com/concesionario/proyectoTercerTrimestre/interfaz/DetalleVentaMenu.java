@@ -6,7 +6,7 @@ import com.concesionario.proyectoTercerTrimestre.entities.*;
 import com.concesionario.proyectoTercerTrimestre.utils.ComprobacionOpcion;
 
 import java.util.List;
-import java.util.Scanner;
+
 
 public class DetalleVentaMenu {
 
@@ -70,15 +70,17 @@ public class DetalleVentaMenu {
 
         int cocheId = pedirCocheDisponibleParaCrear();
 
-        int cantidad = ComprobacionOpcion.leerIntMinimo("Cantidad: ", 1);
+        double precioFinal = ComprobacionOpcion.leerDoubleMinimo("Introduce el precio final: ", 0);
 
-        detalleVentaController.crearDetalleVenta(ventaId, cocheId, cantidad);
+        double descuento = ComprobacionOpcion.leerDoubleMinimo("Introduce el descuento: ", 0);
+
+        detalleVentaController.crearDetalleVenta(ventaId, cocheId, precioFinal, descuento);
     }
 
     private int pedirCocheDisponibleParaCrear() {
         int cocheId;
         boolean cocheExiste;
-        boolean cocheYaUsado;
+        boolean cocheYaUsado = false;
 
         do {
             cocheId = ComprobacionOpcion.leerIntMinimo("Introduce el ID del coche: ", 1);
@@ -119,7 +121,8 @@ public class DetalleVentaMenu {
                     "ID: " + detalleVenta.getId()
                             + " | ID Venta: " + detalleVenta.getVentaId()
                             + " | ID Coche: " + detalleVenta.getCocheId()
-                            + " | Cantidad: " + detalleVenta.getCantidad()
+                            + " | Precio final: " + detalleVenta.getPrecioFinal()
+                            + " | Descuento: " + detalleVenta.getDescuento()
             );
         }
 
@@ -168,19 +171,23 @@ public class DetalleVentaMenu {
             return;
         }
 
-        System.out.println("Que detalle de venta quieres modificar: ");
+        System.out.println("Introduce el numero del detalle de venta que quieres modificar: ");
+
+        System.out.println("Detalles de venta disponibles:");
 
         int iterador = 1;
         for (DetalleVenta detalleVentaActual : detalleVentas) {
             System.out.println(
-                    iterador + ". ID: " + detalleVentaActual.getId()
+                    iterador + ". ID real: " + detalleVentaActual.getId()
                             + " | ID Venta: " + detalleVentaActual.getVentaId()
                             + " | ID Coche: " + detalleVentaActual.getCocheId()
-                            + " | Cantidad: " + detalleVentaActual.getCantidad()
+                            + " | Precio final: " + detalleVentaActual.getPrecioFinal()
+                            + " | Descuento: " + detalleVentaActual.getDescuento()
             );
             iterador++;
         }
 
+        System.out.print("Introduce el numero del detalle de venta: ");
         int opcion = ComprobacionOpcion.leerOpcion(1, detalleVentas.size());
 
         DetalleVenta detalleVentaActual = detalleVentas.get(opcion - 1);
@@ -190,7 +197,8 @@ public class DetalleVentaMenu {
 
         detalleVentaModificado.setVentaId(detalleVentaActual.getVentaId());
         detalleVentaModificado.setCocheId(detalleVentaActual.getCocheId());
-        detalleVentaModificado.setCantidad(detalleVentaActual.getCantidad());
+        detalleVentaModificado.setPrecioFinal(detalleVentaActual.getPrecioFinal());
+        detalleVentaModificado.setDescuento(detalleVentaActual.getDescuento());
 
         System.out.println("\nModificar ID de la venta actual: " + detalleVentaActual.getVentaId());
         System.out.println("1. Si");
@@ -208,13 +216,33 @@ public class DetalleVentaMenu {
             detalleVentaModificado.setCocheId(pedirCocheDisponibleParaModificar(idDetalleVenta));
         }
 
-        System.out.println("\nModificar cantidad actual: " + detalleVentaActual.getCantidad());
+        System.out.println("\nModificar precio final actual: " + detalleVentaActual.getPrecioFinal());
         System.out.println("1. Si");
         System.out.println("2. No");
 
         if (ComprobacionOpcion.leerOpcion(1, 2) == 1) {
-            detalleVentaModificado.setCantidad(
-                    ComprobacionOpcion.leerIntMinimo("Introduce la cantidad: ", 1)
+            detalleVentaModificado.setPrecioFinal(
+                    ComprobacionOpcion.leerDoubleMinimo("Introduce el precio final: ", 0)
+            );
+        }
+
+        System.out.println("\nModificar precio final actual: " + detalleVentaActual.getPrecioFinal());
+        System.out.println("1. Si");
+        System.out.println("2. No");
+
+        if (ComprobacionOpcion.leerOpcion(1, 2) == 1) {
+            detalleVentaModificado.setPrecioFinal(
+                    ComprobacionOpcion.leerDoubleMinimo("Introduce el precio final: ", 0)
+            );
+        }
+
+        System.out.println("\nModificar descuento actual: " + detalleVentaActual.getDescuento());
+        System.out.println("1. Si");
+        System.out.println("2. No");
+
+        if (ComprobacionOpcion.leerOpcion(1, 2) == 1) {
+            detalleVentaModificado.setDescuento(
+                    ComprobacionOpcion.leerDoubleMinimo("Introduce el descuento: ", 0)
             );
         }
 
@@ -282,7 +310,8 @@ public class DetalleVentaMenu {
                     detalleVenta.getId()
                             + ". ID Venta: " + detalleVenta.getVentaId()
                             + " | ID Coche: " + detalleVenta.getCocheId()
-                            + " | Cantidad: " + detalleVenta.getCantidad()
+                            + " | Precio final: " + detalleVenta.getPrecioFinal()
+                            + " | Descuento: " + detalleVenta.getDescuento()
             );
         }
 
@@ -293,5 +322,9 @@ public class DetalleVentaMenu {
             System.out.println(detalleVenta);
         }
     }
+
+
+
+
 
 }

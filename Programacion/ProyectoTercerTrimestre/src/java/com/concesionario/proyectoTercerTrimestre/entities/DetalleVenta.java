@@ -5,23 +5,25 @@ public class DetalleVenta {
     private int id;
     private int ventaId;
     private int cocheId;
-    private int cantidad;
-
+    private double precioFinal;
+    private double descuento;
 
     public DetalleVenta() {
     }
 
-    public DetalleVenta(int ventaId, int cocheId, int cantidad) {
+    public DetalleVenta(int ventaId, int cocheId, double precioFinal, double descuento) {
         this.ventaId = ventaId;
         this.cocheId = cocheId;
-        this.cantidad = cantidad;
+        this.precioFinal = precioFinal;
+        this.descuento = descuento;
     }
 
-    public DetalleVenta(int id, int ventaId, int cocheId, int cantidad) {
+    public DetalleVenta(int id, int ventaId, int cocheId, double precioFinal, double descuento) {
         this.id = id;
         this.ventaId = ventaId;
         this.cocheId = cocheId;
-        this.cantidad = cantidad;
+        this.precioFinal = precioFinal;
+        this.descuento = descuento;
     }
 
     public int getId() {
@@ -51,12 +53,21 @@ public class DetalleVenta {
     }
 
 
-    public int getCantidad() {
-        return cantidad;
+    public double getPrecioFinal() {
+        return precioFinal;
     }
 
-    public void setCantidad(int cantidad) {
-        this.cantidad = cantidad;
+    public void setPrecioFinal(double precioFinal) {
+        this.precioFinal = precioFinal;
+    }
+
+
+    public double getDescuento() {
+        return descuento;
+    }
+
+    public void setDescuento(double descuento) {
+        this.descuento = descuento;
     }
 
 
@@ -66,7 +77,8 @@ public class DetalleVenta {
                 "id=" + id +
                 ", ventaId=" + ventaId +
                 ", cocheId=" + cocheId +
-                ", cantidad=" + cantidad +
+                ", precioFinal=" + precioFinal +
+                ", descuento=" + descuento +
                 '}';
     }
 }

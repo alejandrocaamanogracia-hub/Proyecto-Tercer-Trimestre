@@ -15,14 +15,17 @@ public class DetalleVentaRepositoryImpl implements DetalleVentaRepository {
 
     @Override
     public void crearDetalleVenta(DetalleVenta detalleVenta) {
-        String sql = "INSERT INTO detalle_venta (venta_id, coche_id, cantidad) VALUES (?, ?, ?)";
+
+        String sql = "INSERT INTO detalle_venta (venta_id, coche_id, precio_final, descuento) " +
+                "VALUES (?, ?, ?, ?)";
 
         try (Connection connection = DataBaseConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setInt(1, detalleVenta.getVentaId());
             preparedStatement.setInt(2, detalleVenta.getCocheId());
-            preparedStatement.setInt(3, detalleVenta.getCantidad());
+            preparedStatement.setDouble(3, detalleVenta.getPrecioFinal());
+            preparedStatement.setDouble(4, detalleVenta.getDescuento());
 
             preparedStatement.executeUpdate();
 
@@ -56,11 +59,9 @@ public class DetalleVentaRepositoryImpl implements DetalleVentaRepository {
     public List<DetalleVenta> listarDetallesVenta() {
         List<DetalleVenta> detallesVenta = new ArrayList<>();
 
-        String sql = """
-            SELECT id, venta_id, coche_id, cantidad
-            FROM detalle_venta
-            ORDER BY id
-            """;
+        String sql = "SELECT id, venta_id, coche_id, precio_final, descuento " +
+                "FROM detalle_venta " +
+                "ORDER BY id";
 
         try (Connection connection = DataBaseConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -72,7 +73,8 @@ public class DetalleVentaRepositoryImpl implements DetalleVentaRepository {
                 detalleVenta.setId(resultSet.getInt("id"));
                 detalleVenta.setVentaId(resultSet.getInt("venta_id"));
                 detalleVenta.setCocheId(resultSet.getInt("coche_id"));
-                detalleVenta.setCantidad(resultSet.getInt("cantidad"));
+                detalleVenta.setPrecioFinal(resultSet.getDouble("precio_final"));
+                detalleVenta.setDescuento(resultSet.getDouble("descuento"));
 
                 detallesVenta.add(detalleVenta);
             }
@@ -89,18 +91,19 @@ public class DetalleVentaRepositoryImpl implements DetalleVentaRepository {
     @Override
     public void modificarDetalleVenta(int id, DetalleVenta detalleVenta) {
         String sql = """
-            UPDATE detalle_venta
-            SET venta_id = ?, coche_id = ?, cantidad = ?
-            WHERE id = ?
-            """;
+        UPDATE detalle_venta
+        SET venta_id = ?, coche_id = ?, precio_final = ?, descuento = ?
+        WHERE id = ?
+        """;
 
         try (Connection connection = DataBaseConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setInt(1, detalleVenta.getVentaId());
             preparedStatement.setInt(2, detalleVenta.getCocheId());
-            preparedStatement.setInt(3, detalleVenta.getCantidad());
-            preparedStatement.setInt(4, id);
+            preparedStatement.setDouble(3, detalleVenta.getPrecioFinal());
+            preparedStatement.setDouble(4, detalleVenta.getDescuento());
+            preparedStatement.setInt(5, id);
 
             preparedStatement.executeUpdate();
 
@@ -112,33 +115,35 @@ public class DetalleVentaRepositoryImpl implements DetalleVentaRepository {
 
     @Override
     public DetalleVenta buscarDetalleVenta(int id) {
-        String sql = "SELECT * FROM detalle_venta WHERE id = ?";
+        String sql = "SELECT id, venta_id, coche_id, precio_final, descuento FROM detalle_venta WHERE id = ?";
 
         try (Connection connection = DataBaseConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setInt(1, id);
 
-            ResultSet resultSet = preparedStatement.executeQuery();
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    DetalleVenta detalleVenta = new DetalleVenta();
 
-            if (resultSet.next()) {
-                DetalleVenta detalleVenta = new DetalleVenta();
+                    detalleVenta.setId(resultSet.getInt("id"));
+                    detalleVenta.setVentaId(resultSet.getInt("venta_id"));
+                    detalleVenta.setCocheId(resultSet.getInt("coche_id"));
+                    detalleVenta.setPrecioFinal(resultSet.getDouble("precio_final"));
+                    detalleVenta.setDescuento(resultSet.getDouble("descuento"));
 
-                detalleVenta.setId(resultSet.getInt("id"));
-                detalleVenta.setVentaId(resultSet.getInt("venta_id"));
-                detalleVenta.setCocheId(resultSet.getInt("coche_id"));
-                detalleVenta.setCantidad(resultSet.getInt("cantidad"));
-
-                return detalleVenta;
+                    return detalleVenta;
+                }
             }
 
         } catch (SQLException e) {
-            System.out.println("Error al verificar el detalle de venta.");
+            System.out.println("Error al buscar el detalle de venta.");
             e.printStackTrace();
         }
 
         return null;
     }
+
 
     @Override
     public boolean existeVenta(int ventaId) {
