@@ -7,6 +7,7 @@ public class DetalleVenta {
     private int cocheId;
     private int cantidad;
 
+
     public DetalleVenta() {
     }
 
