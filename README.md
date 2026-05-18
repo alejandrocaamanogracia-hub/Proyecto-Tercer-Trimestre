@@ -183,6 +183,7 @@ SELECT * FROM detalle_venta;
 SELECT * FROM interacciones_cliente;
 
 
+
 7. INSTALACIÓN DE ORACLE DATABASE
 
 Para trabajar con Oracle se ha utilizado Oracle Database XE junto con Oracle SQL Developer.
@@ -297,7 +298,7 @@ La base de datos contiene las siguientes tablas:
 - usuarios: almacena los usuarios internos que gestionan ventas e interacciones.
 - coches: almacena los vehículos registrados en el concesionario.
 - ventas: almacena las ventas realizadas o registradas en el sistema.
-- detalle_venta: relaciona las ventas con los coches incluidos en cada operación.
+- detalle_venta: funciona como tabla de líneas de venta, relacionando cada venta con los coches incluidos en la operación y almacenando datos propios como el precio final y el descuento aplicado.
 - interacciones_cliente: almacena las interacciones comerciales entre clientes y usuarios.
 
 Cada tabla cumple una función concreta dentro del CRM y permite organizar la información de forma estructurada.
@@ -313,14 +314,16 @@ Relaciones principales:
 - Una venta pertenece a un único cliente.
 - Un usuario puede gestionar varias ventas.
 - Una venta pertenece a un único usuario.
-- Una venta puede incluir varios coches mediante la tabla detalle_venta.
-- Un coche solo puede estar asociado a un detalle de venta.
+- Una venta puede incluir varios coches distintos mediante la tabla detalle_venta.
+- Cada registro de detalle_venta representa una línea de venta asociada a un coche concreto.
+- Un coche solo puede aparecer en un único detalle de venta, evitando que se venda más de una vez.
+- La tabla detalle_venta almacena datos específicos de cada línea de venta, como el precio final y el descuento aplicado.
 - Un cliente puede tener varias interacciones comerciales.
 - Un usuario puede registrar varias interacciones con clientes.
 
 Estas relaciones permiten representar correctamente el funcionamiento básico de un concesionario, donde se gestionan clientes, empleados, vehículos, ventas y seguimiento comercial.
 
-23. CONEXIÓN CON JAVA
+15. CONEXIÓN CON JAVA
 
 La aplicación Java trabaja principalmente con la base de datos MySQL.
 
@@ -601,6 +604,7 @@ Ejemplos de validaciones:
 - Validar que los importes no sean negativos.
 - Evitar que un coche se venda más de una vez.
 - Comprobar que los datos son coherentes con la base de datos.
+- Validar que el descuento de un detalle de venta no sea mayor que el precio final.
 
 
 15. PAQUETE REPOSITORIES
@@ -740,7 +744,7 @@ Opciones comunes:
 Esta estructura permite navegar por la aplicación de forma sencilla.
 
 
-24. EXPORTACIÓN A TXT
+22. EXPORTACIÓN A TXT
 
 La aplicación permite exportar información de algunas entidades a archivos TXT.
 
@@ -758,7 +762,7 @@ Ejemplos de archivos generados:
 Cada archivo contiene un listado formateado con la información correspondiente.
 
 
-25. EJECUCIÓN DE LA APLICACIÓN
+23. EJECUCIÓN DE LA APLICACIÓN
 
 Para ejecutar la aplicación Java:
 
@@ -773,7 +777,7 @@ Para ejecutar la aplicación Java:
 9. Utilizar los menús de consola para gestionar el CRM.
 
 
-26. POSIBLES ERRORES Y SOLUCIONES
+24. POSIBLES ERRORES Y SOLUCIONES
 
 Error de conexión con MySQL:
 
@@ -947,7 +951,7 @@ Secciones principales:
 Cada sección mantiene una estructura visual similar para que la aplicación sea coherente.
 
 
-10. POSIBLES ERRORES Y SOLUCIONES
+11. POSIBLES ERRORES Y SOLUCIONES
 
 Si la página no carga correctamente:
 
