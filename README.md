@@ -21,6 +21,7 @@ y la ejecución de las partes principales.
 - JDK 21
 - Maven
 - JDBC
+- MySQL Connector/J
 - IntelliJ IDEA
 
 ### Base de Datos
@@ -48,7 +49,9 @@ y la ejecución de las partes principales.
 
 El repositorio contiene todo el proyecto del tercer trimestre. La organización principal se divide por carpetas de asignatura y por ramas de trabajo en GitHub.
 
-Estructura principal de carpetas:
+### Organización de ramas
+
+```text
 main
 │
 ├── base-de-datos
@@ -62,10 +65,20 @@ main
 └── programacion
     ├── feature/programacion-sergio
     └── feature/programacion-alejandro
+```
 
+Cada integrante ha trabajado en su rama personal. Después, los cambios se integran en la rama general de su asignatura y finalmente todo se une en `main`.
+
+### Carpetas principales del proyecto
+
+```text
+Proyecto-Tercer-Trimestre/
+│
+├── Base de datos/
+├── Lenguaje de Marcas/
+├── Programacion/
 └── README.md
-
-Cada uno ha trabajado en su rama personal. Después, los cambios se integran en la rama general de su asignatura y finalmente todo se une en main.
+```
 
 ### BASE DE DATOS
 
@@ -81,23 +94,7 @@ El proyecto utiliza dos sistemas de base de datos:
 La base de datos principal se llama crm_coches y contiene las tablas necesarias para gestionar clientes, usuarios, coches, ventas, detalles de venta e interacciones con clientes.
 
 
-2. TECNOLOGÍAS UTILIZADAS
-
-MySQL:
-- MySQL 8.4
-- MySQL Workbench 8.0
-
-Oracle:
-- Oracle Database XE
-- Oracle SQL Developer 24.3.1.347.1826
-
-Otros:
-- SQL
-- DDL
-- DML
-
-
-3. INSTALACIÓN DE MYSQL
+2. INSTALACIÓN DE MYSQL
 
 Para trabajar con la base de datos principal del proyecto es necesario instalar MySQL Server y MySQL Workbench.
 
@@ -115,7 +112,7 @@ Pasos de instalación:
 10. Comprobar que la conexión funciona correctamente.
 
 
-4. PREPARACIÓN DE MYSQL WORKBENCH
+3. PREPARACIÓN DE MYSQL WORKBENCH
 
 Una vez instalado MySQL Workbench:
 
@@ -130,7 +127,7 @@ Una vez instalado MySQL Workbench:
 9. Revisar que las tablas contienen registros.
 
 
-5. EJECUCIÓN DEL SCRIPT DDL EN MYSQL
+4. EJECUCIÓN DEL SCRIPT DDL EN MYSQL
 
 El script DDL se encarga de crear la base de datos y todas sus tablas.
 
@@ -160,7 +157,7 @@ El script DDL incluye:
 - Restricciones CHECK.
 
 
-6. EJECUCIÓN DEL SCRIPT DML EN MYSQL
+5. EJECUCIÓN DEL SCRIPT DML EN MYSQL
 
 El script DML se utiliza para insertar datos de prueba en la base de datos.
 
@@ -184,7 +181,7 @@ SELECT * FROM interacciones_cliente;
 
 
 
-7. INSTALACIÓN DE ORACLE DATABASE
+6. INSTALACIÓN DE ORACLE DATABASE
 
 Para trabajar con Oracle se ha utilizado Oracle Database XE junto con Oracle SQL Developer.
 
@@ -202,7 +199,7 @@ Pasos de instalación:
 10. Crear una conexión con Oracle Database XE.
 
 
-8. SERVICIOS DE ORACLE
+7. SERVICIOS DE ORACLE
 
 Para que Oracle funcione correctamente, deben estar activos los servicios principales.
 
@@ -228,7 +225,7 @@ Para comprobarlos:
 5. Si alguno está detenido, iniciarlo manualmente.
 
 
-9. PREPARACIÓN DE ORACLE SQL DEVELOPER
+8. PREPARACIÓN DE ORACLE SQL DEVELOPER
 
 Una vez instalado Oracle SQL Developer:
 
@@ -244,7 +241,7 @@ Una vez instalado Oracle SQL Developer:
 10. Conectarse a la base de datos.
 
 
-10. EJECUCIÓN DEL SCRIPT DDL EN ORACLE
+9. EJECUCIÓN DEL SCRIPT DDL EN ORACLE
 
 El script DDL de Oracle contiene la estructura de tablas adaptada a Oracle Database.
 
@@ -258,7 +255,7 @@ Pasos:
 6. Revisar las claves primarias y relaciones.
 
 
-11. EJECUCIÓN DEL SCRIPT DML EN ORACLE
+10. EJECUCIÓN DEL SCRIPT DML EN ORACLE
 
 El script DML de Oracle contiene datos de prueba adaptados a Oracle.
 
@@ -272,58 +269,24 @@ Pasos:
 6. Comprobar los registros insertados mediante consultas SELECT.
 
 
-12. ESTRUCTURA DE LA BASE DE DATOS MYSQL
+11. ESTRUCTURA DE LA BASE DE DATOS MYSQL
 
-La base de datos principal se llama:
 
-crm_coches
+La base de datos principal se llama `crm_coches` y está formada por:
 
-Está formada por las siguientes tablas principales:
-
-1. clientes
-2. usuarios
-3. coches
-4. ventas
-5. detalle_venta
-6. interacciones_cliente
+| Tabla | Función |
+|---|---|
+| clientes | Información de clientes. |
+| usuarios | Usuarios internos del sistema. |
+| coches | Vehículos registrados. |
+| ventas | Operaciones de venta. |
+| detalle_venta | Líneas de venta con coche, precio final y descuento. |
+| interacciones_cliente | Interacciones comerciales entre clientes y usuarios. |
 
 Estas tablas permiten almacenar la información necesaria para gestionar el CRM del concesionario, relacionando clientes, usuarios, vehículos, ventas e interacciones comerciales.
 
 
-13. TABLAS DE LA BASE DE DATOS
-
-La base de datos contiene las siguientes tablas:
-
-- clientes: almacena la información de los clientes del concesionario.
-- usuarios: almacena los usuarios internos que gestionan ventas e interacciones.
-- coches: almacena los vehículos registrados en el concesionario.
-- ventas: almacena las ventas realizadas o registradas en el sistema.
-- detalle_venta: funciona como tabla de líneas de venta, relacionando cada venta con los coches incluidos en la operación y almacenando datos propios como el precio final y el descuento aplicado.
-- interacciones_cliente: almacena las interacciones comerciales entre clientes y usuarios.
-
-Cada tabla cumple una función concreta dentro del CRM y permite organizar la información de forma estructurada.
-
-
-14. RELACIONES ENTRE TABLAS
-
-La base de datos utiliza claves primarias y claves foráneas para relacionar las entidades y mantener la integridad de los datos.
-
-Relaciones principales:
-
-- Un cliente puede tener varias ventas.
-- Una venta pertenece a un único cliente.
-- Un usuario puede gestionar varias ventas.
-- Una venta pertenece a un único usuario.
-- Una venta puede incluir varios coches distintos mediante la tabla detalle_venta.
-- Cada registro de detalle_venta representa una línea de venta asociada a un coche concreto.
-- Un coche solo puede aparecer en un único detalle de venta, evitando que se venda más de una vez.
-- La tabla detalle_venta almacena datos específicos de cada línea de venta, como el precio final y el descuento aplicado.
-- Un cliente puede tener varias interacciones comerciales.
-- Un usuario puede registrar varias interacciones con clientes.
-
-Estas relaciones permiten representar correctamente el funcionamiento básico de un concesionario, donde se gestionan clientes, empleados, vehículos, ventas y seguimiento comercial.
-
-15. CONEXIÓN CON JAVA
+12. CONEXIÓN CON JAVA
 
 La aplicación Java trabaja principalmente con la base de datos MySQL.
 
@@ -356,22 +319,7 @@ Para cada una de estas entidades se ha implementado un CRUD completo, permitiend
 
 La aplicación trabaja conectada a la base de datos MySQL crm_coches mediante JDBC.
 
-
-2. TECNOLOGÍAS UTILIZADAS
-
-Para la parte de Programación se han utilizado las siguientes tecnologías y herramientas:
-
-- Java
-- JDK 21
-- Maven
-- JDBC
-- MySQL Connector/J
-- IntelliJ IDEA
-- Git
-- GitHub
-
-
-3. INSTALACIÓN DE JAVA
+2. INSTALACIÓN DE JAVA
 
 Para ejecutar el proyecto es necesario tener instalado Java mediante JDK 21.
 
@@ -394,7 +342,7 @@ javac -version
 El resultado debería mostrar una versión correspondiente a Java 21.
 
 
-4. INSTALACIÓN DE INTELLIJ IDEA
+3. INSTALACIÓN DE INTELLIJ IDEA
 
 Para desarrollar y ejecutar el proyecto se ha utilizado IntelliJ IDEA.
 
@@ -409,7 +357,7 @@ Pasos de instalación:
 7. Seleccionar Open para abrir el proyecto Java.
 
 
-5. INSTALACIÓN Y USO DE MAVEN
+4. INSTALACIÓN Y USO DE MAVEN
 
 El proyecto utiliza Maven para gestionar la estructura y dependencias.
 
@@ -433,7 +381,7 @@ Pasos:
 6. Si IntelliJ lo solicita, pulsar en Load Maven Project o Reload Maven.
 
 
-6. DEPENDENCIA JDBC DE MYSQL
+5. DEPENDENCIA JDBC DE MYSQL
 
 Para conectar Java con MySQL se utiliza MySQL Connector/J.
 
@@ -444,7 +392,7 @@ Gracias a esta dependencia, Java puede conectarse a la base de datos crm_coches 
 La conexión permite realizar operaciones SQL desde Java, como INSERT, SELECT, UPDATE y DELETE.
 
 
-7. APERTURA DEL PROYECTO EN INTELLIJ IDEA
+6. APERTURA DEL PROYECTO EN INTELLIJ IDEA
 
 Para abrir el proyecto:
 
@@ -457,7 +405,7 @@ Para abrir el proyecto:
 7. Revisar que no haya errores en las dependencias.
 
 
-8. PREPARACIÓN DE LA BASE DE DATOS
+7. PREPARACIÓN DE LA BASE DE DATOS
 
 Antes de ejecutar la aplicación Java, debe estar preparada la base de datos MySQL.
 
@@ -472,7 +420,7 @@ Pasos necesarios:
 La aplicación Java necesita esta base de datos para poder guardar y consultar la información.
 
 
-9. CONFIGURACIÓN DE LA CONEXIÓN CON MYSQL
+8. CONFIGURACIÓN DE LA CONEXIÓN CON MYSQL
 
 La conexión con la base de datos se realiza desde la clase de conexión del proyecto, ubicada en el paquete database.
 
@@ -495,198 +443,25 @@ Para que la conexión funcione correctamente:
 4. El conector JDBC debe estar disponible mediante Maven.
 
 
-10. ESTRUCTURA DEL PROYECTO JAVA
+9. ESTRUCTURA DEL PROYECTO JAVA
 
 El proyecto está organizado por paquetes para separar responsabilidades y mantener el código ordenado.
 
 Estructura principal:
 
-- entities
-- interfaz
-- controller
-- services
-- repositories
-- repositories.impl
-- database
-- utils
-
-
-11. PAQUETE ENTITIES
-
-El paquete entities contiene las clases que representan las entidades principales del CRM.
-
-Clases principales:
-
-- Cliente
-- Usuario
-- Coche
-- Venta
-- DetalleVenta
-- InteraccionCliente
-
-También contiene enumeraciones utilizadas por algunas entidades, como:
-
-- RolUsuario
-- EstadoCoche
-- EstadoVenta
-- Combustible
-- TipoCambio
-- TipoInteraccion
-
-Estas clases representan los datos que se manejan en la aplicación.
-
-
-12. PAQUETE INTERFAZ
-
-El paquete interfaz contiene los menús de consola de la aplicación.
-
-Cada entidad tiene su propio menú para interactuar con el usuario.
-
-Menús principales:
-
-- ClienteMenu
-- UsuarioMenu
-- CocheMenu
-- VentaMenu
-- DetalleVentaMenu
-- InteraccionClienteMenu
-
-Desde estos menús el usuario puede:
-
-- Crear registros.
-- Listar registros.
-- Buscar registros.
-- Modificar registros.
-- Eliminar registros.
-- Exportar información a archivos TXT.
-
-La interfaz se encarga de pedir datos al usuario y enviarlos al controlador correspondiente.
-
-
-13. PAQUETE CONTROLLER
-
-El paquete controller actúa como intermediario entre la interfaz y la capa de servicios.
-
-Controladores principales:
-
-- ClienteController
-- UsuarioController
-- CocheController
-- VentaController
-- DetalleVentaController
-- InteraccionClienteController
-
-Su función es recibir los datos desde los menús, crear objetos si es necesario y llamar al servicio correspondiente.
-
-Los controladores ayudan a mantener separada la interacción con el usuario de la lógica de negocio.
-
-
-14. PAQUETE SERVICES
-
-El paquete services contiene la lógica de negocio de la aplicación.
-
-Servicios principales:
-
-- ClienteService
-- UsuarioService
-- CocheService
-- VentaService
-- DetalleVentaService
-- InteraccionClienteService
-
-En esta capa se realizan las validaciones principales antes de acceder a la base de datos.
-
-Ejemplos de validaciones:
-
-- Comprobar que los campos obligatorios no estén vacíos.
-- Validar que los IDs sean correctos.
-- Comprobar que existan clientes, usuarios, coches o ventas relacionadas.
-- Validar que los importes no sean negativos.
-- Evitar que un coche se venda más de una vez.
-- Comprobar que los datos son coherentes con la base de datos.
-- Validar que el descuento de un detalle de venta no sea mayor que el precio final.
-
-
-15. PAQUETE REPOSITORIES
-
-El paquete repositories contiene las interfaces de acceso a datos.
-
-Interfaces principales:
-
-- ClienteRepository
-- UsuarioRepository
-- CocheRepository
-- VentaRepository
-- DetalleVentaRepository
-- InteraccionClienteRepository
-
-Estas interfaces definen los métodos que debe tener cada repositorio, como crear, listar, modificar, eliminar y buscar.
-
-Este paquete permite aplicar el patrón Repository.
-
-
-16. PAQUETE REPOSITORIES.IMPL
-
-El paquete repositories.impl contiene la implementación real de los repositorios.
-
-Clases principales:
-
-- ClienteRepositoryImpl
-- UsuarioRepositoryImpl
-- CocheRepositoryImpl
-- VentaRepositoryImpl
-- DetalleVentaRepositoryImpl
-- InteraccionClienteRepositoryImpl
-
-Estas clases contienen las consultas SQL necesarias para trabajar con la base de datos.
-
-Operaciones principales:
-
-- INSERT
-- SELECT
-- UPDATE
-- DELETE
-
-También incluyen consultas para comprobar si existen registros relacionados, por ejemplo:
-
-- Comprobar si existe un cliente.
-- Comprobar si existe un usuario.
-- Comprobar si existe un coche.
-- Comprobar si un coche ya está asociado a un detalle de venta.
-
-
-17. PAQUETE DATABASE
-
-El paquete database contiene la clase encargada de gestionar la conexión con MySQL.
-
-Esta clase permite obtener una conexión con la base de datos crm_coches.
-
-Desde los repositorios se utiliza esta conexión para ejecutar las consultas SQL.
-
-
-18. PAQUETE UTILS
-
-El paquete utils contiene métodos reutilizables para leer y validar datos introducidos por el usuario.
-
-Clase principal:
-
-- ComprobacionOpcion
-
-Esta clase incluye métodos para:
-
-- Leer opciones dentro de un rango.
-- Leer números enteros.
-- Leer números decimales.
-- Leer textos obligatorios.
-- Leer emails válidos.
-- Leer fechas.
-- Leer números mínimos.
-- Validar IDs existentes.
-
-Esto evita repetir código en los menús y mejora la organización de la aplicación.
-
-
-19. PATRÓN REPOSITORY
+| Paquete | Función |
+|---|---|
+| entities | Clases que representan las entidades del CRM. |
+| interfaz | Menús de consola para interactuar con el usuario. |
+| controller | Comunicación entre la interfaz y los servicios. |
+| services | Lógica de negocio y validaciones. |
+| repositories | Interfaces de acceso a datos. |
+| repositories.impl | Implementación de consultas SQL. |
+| database | Conexión JDBC con MySQL. |
+| utils | Métodos auxiliares de lectura y validación. |
+
+
+10. PATRÓN REPOSITORY
 
 En el proyecto se ha aplicado el patrón Repository.
 
@@ -703,7 +478,7 @@ Ventajas:
 - Mejor estructura general del proyecto.
 
 
-20. CRUD IMPLEMENTADO
+11. CRUD IMPLEMENTADO
 
 La aplicación incluye operaciones CRUD completas para las entidades principales.
 
@@ -725,7 +500,7 @@ Entidades con CRUD:
 
 Además, algunas entidades incluyen exportación a archivos TXT.
 
-21. MENÚS DE CONSOLA
+12. MENÚS DE CONSOLA
 
 La aplicación funciona mediante menús de consola.
 
@@ -744,7 +519,7 @@ Opciones comunes:
 Esta estructura permite navegar por la aplicación de forma sencilla.
 
 
-22. EXPORTACIÓN A TXT
+13. EXPORTACIÓN A TXT
 
 La aplicación permite exportar información de algunas entidades a archivos TXT.
 
@@ -762,7 +537,7 @@ Ejemplos de archivos generados:
 Cada archivo contiene un listado formateado con la información correspondiente.
 
 
-23. EJECUCIÓN DE LA APLICACIÓN
+14. EJECUCIÓN DE LA APLICACIÓN
 
 Para ejecutar la aplicación Java:
 
@@ -777,7 +552,7 @@ Para ejecutar la aplicación Java:
 9. Utilizar los menús de consola para gestionar el CRM.
 
 
-24. POSIBLES ERRORES Y SOLUCIONES
+15. POSIBLES ERRORES Y SOLUCIONES
 
 Error de conexión con MySQL:
 
@@ -810,26 +585,14 @@ Error al cambiar de menú o introducir opciones:
 En la asignatura de Lenguaje de Marcas se ha desarrollado la parte visual del proyecto CRM del concesionario.
 
 Esta parte está formada por una interfaz web creada con HTML, CSS y JavaScript. Su objetivo es representar de forma visual las secciones principales del sistema, como el dashboard, clientes, usuarios, coches, ventas e interacciones.
+Durante esta parte se han trabajado aspectos como HTML semántico, CSS, JavaScript, manipulación del DOM, eventos, SessionStorage y uso del objeto Window.
 
 La interfaz permite mostrar información de forma clara, organizar las secciones del CRM y aplicar funcionalidades dinámicas mediante JavaScript.
 
 Aunque la parte visual no está conectada directamente con la aplicación Java, mantiene la misma temática y estructura general del proyecto.
 
 
-2. TECNOLOGÍAS UTILIZADAS
-
-Para la parte de Lenguaje de Marcas se han utilizado las siguientes tecnologías y herramientas:
-
-- HTML
-- CSS
-- JavaScript
-- Visual Studio Code
-- Live Server
-- Git
-- GitHub
-
-
-3. INSTALACIÓN DE VISUAL STUDIO CODE
+2. INSTALACIÓN DE VISUAL STUDIO CODE
 
 Para desarrollar la parte front-end se ha utilizado Visual Studio Code.
 
@@ -846,7 +609,7 @@ Pasos de instalación:
 7. Seleccionar la carpeta del proyecto desde Archivo > Abrir carpeta.
 
 
-4. EXTENSIONES RECOMENDADAS
+3. EXTENSIONES RECOMENDADAS
 
 Para trabajar mejor con el proyecto web se recomienda instalar algunas extensiones en Visual Studio Code.
 
@@ -866,7 +629,7 @@ HTML CSS Support facilita el trabajo con clases y estilos.
 JavaScript ES6 snippets ayuda a escribir código JavaScript de forma más rápida.
 
 
-5. INSTALACIÓN DE LIVE SERVER
+4. INSTALACIÓN DE LIVE SERVER
 
 Para instalar Live Server:
 
@@ -880,7 +643,7 @@ Para instalar Live Server:
 Una vez instalada, se puede abrir un archivo HTML y ejecutarlo con la opción Open with Live Server.
 
 
-6. APERTURA DEL PROYECTO WEB
+5. APERTURA DEL PROYECTO WEB
 
 Para abrir la parte de Lenguaje de Marcas:
 
@@ -892,7 +655,7 @@ Para abrir la parte de Lenguaje de Marcas:
 6. Comprobar que aparecen los archivos HTML, CSS y JavaScript.
 
 
-7. EJECUCIÓN DEL FRONT-END
+6. EJECUCIÓN DEL FRONT-END
 
 Para ejecutar la parte visual del proyecto:
 
@@ -907,7 +670,7 @@ Para ejecutar la parte visual del proyecto:
 También se puede abrir el archivo HTML directamente en el navegador, aunque se recomienda usar Live Server.
 
 
-8. ESTRUCTURA GENERAL DEL FRONT-END
+7. ESTRUCTURA GENERAL DEL FRONT-END
 
 La parte visual del proyecto está organizada en archivos HTML, CSS y JavaScript.
 
@@ -920,7 +683,7 @@ La estructura general incluye:
 
 La organización permite separar el contenido, el diseño y el comportamiento de la web.
 
-9. TABLAS Y LISTADOS
+8. TABLAS Y LISTADOS
 
 La interfaz utiliza tablas y listados para mostrar información del CRM de forma organizada.
 
@@ -935,7 +698,7 @@ Se han utilizado para representar datos como:
 El objetivo es que la información sea clara y fácil de consultar.
 
 
-10. ORGANIZACIÓN VISUAL
+9. ORGANIZACIÓN VISUAL
 
 La interfaz se ha organizado en diferentes secciones para facilitar la navegación.
 
@@ -951,7 +714,7 @@ Secciones principales:
 Cada sección mantiene una estructura visual similar para que la aplicación sea coherente.
 
 
-11. POSIBLES ERRORES Y SOLUCIONES
+10. POSIBLES ERRORES Y SOLUCIONES
 
 Si la página no carga correctamente:
 
