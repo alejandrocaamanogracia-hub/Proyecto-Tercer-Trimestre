@@ -34,8 +34,8 @@
     --gradient-primary:
         linear-gradient(135deg, var(--color-accent), var(--color-danger));
 
-    --sidebar-collapsed: 80px;
-    --sidebar-expanded: 260px;
+    --sidebar-collapsed: 100px;
+    --sidebar-expanded: 300px;
     --transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -206,11 +206,11 @@ body {
 /* #region ELEMENTOS COMUNES */
 
 .logo {
-    width: 44px;
-    height: 44px;
-    min-width: 44px;
+    width: 80px;
+    height: 80px;
+    min-width: 80px;
     border-radius: 14px;
-    background: var(--color-white);
+    background: transparent;
     display: grid;
     place-items: center;
     font-weight: 900;
@@ -900,16 +900,18 @@ option {
 }
 
 .log-login__logo {
-    width: 54px;
-    height: 54px;
+    width: 180px;
+    height: auto;
+    min-height: 80px;
     display: grid;
     place-items: center;
     border-radius: 18px;
-    background: var(--color-white);
+    background: transparent;
     color: var(--color-white);
     font-weight: 800;
     font-size: 1.1rem;
     overflow: hidden;
+    padding: 10px;
 }
 
 .log-login__logo img {
