@@ -528,7 +528,7 @@ v_precio_min NUMBER := 20000;
     CURSOR c_detalle IS
         SELECT d.id, d.venta_id, d.coche_id, d.cantidad, d.precio_unitario
         FROM detalle_venta d
-        WHERE d.precio_unitario > 20000
+       WHERE d.precio_unitario > v_precio_min
         ORDER BY d.precio_unitario DESC;
 
 BEGIN
