@@ -45,12 +45,12 @@ INSERT INTO ventas (cliente_id, usuario_id, fecha, estado, total) VALUES
 -- =========================
 -- DETALLE_VENTA
 -- =========================
-INSERT INTO detalle_venta (venta_id, coche_id, cantidad) VALUES
-(1, 4, 1),
-(2, 5, 1),
-(3, 2, 1),
-(4, 1, 1),
-(5, 3, 1);
+INSERT INTO detalle_venta (venta_id, coche_id, precio_final, descuento) VALUES
+(1, 4, 28900.00, 0.00),
+(2, 5, 35900.00, 0.00),
+(3, 2, 24000.00, 500.00),
+(4, 1, 18500.00, 400.00),
+(5, 3, 19500.00, 400.00);
 
 -- =========================
 -- INTERACCIONES_CLIENTE

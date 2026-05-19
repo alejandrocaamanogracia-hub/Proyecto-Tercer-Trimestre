@@ -11,7 +11,7 @@ CREATE TABLE clientes (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
     email VARCHAR(150) UNIQUE,
-    telefono VARCHAR(20),
+    telefono VARCHAR(20) NOT NULL,
     direccion VARCHAR(255)
 );
 
@@ -35,7 +35,7 @@ CREATE TABLE coches (
     modelo VARCHAR(100) NOT NULL,
     version VARCHAR(100),
     matricula VARCHAR(20) UNIQUE,
-    bastidor VARCHAR(50) UNIQUE,
+    bastidor VARCHAR(50) NOT NULL UNIQUE,
     anio INT,
     kilometros INT DEFAULT 0,
     combustible VARCHAR(50),
@@ -76,7 +76,8 @@ CREATE TABLE detalle_venta (
     id INT AUTO_INCREMENT PRIMARY KEY,
     venta_id INT NOT NULL,
     coche_id INT NOT NULL,
-    cantidad INT NOT NULL DEFAULT 1,
+    precio_final DECIMAL(10,2) NOT NULL,
+    descuento DECIMAL(10,2) NOT NULL DEFAULT 0.00,
 
     CONSTRAINT fk_detalle_venta_ventas
         FOREIGN KEY (venta_id)
@@ -97,16 +98,13 @@ CREATE TABLE detalle_venta (
         UNIQUE (coche_id)
 );
 
--- =========================
--- TABLA INTERACCIONES_CLIENTE
--- =========================
 CREATE TABLE interacciones_cliente (
     id INT AUTO_INCREMENT PRIMARY KEY,
     cliente_id INT NOT NULL,
     usuario_id INT NOT NULL,
     tipo VARCHAR(50) NOT NULL,
     fecha DATETIME NOT NULL,
-    asunto VARCHAR(150),
+    asunto VARCHAR(150) NOT NULL,
     descripcion TEXT,
     resultado VARCHAR(100),
     proxima_accion VARCHAR(150),
@@ -142,8 +140,12 @@ ADD CONSTRAINT chk_coches_anio
 CHECK (anio >= 1900);
 
 ALTER TABLE detalle_venta
-ADD CONSTRAINT chk_detalle_cantidad
-CHECK (cantidad > 0);
+ADD CONSTRAINT chk_detalle_precio_final
+CHECK (precio_final >= 0);
+
+ALTER TABLE detalle_venta
+ADD CONSTRAINT chk_detalle_descuento
+CHECK (descuento >= 0);
 
 ALTER TABLE ventas
 ADD CONSTRAINT chk_ventas_total
