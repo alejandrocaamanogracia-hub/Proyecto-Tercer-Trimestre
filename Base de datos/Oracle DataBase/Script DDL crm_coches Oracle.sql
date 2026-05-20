@@ -1,3 +1,20 @@
+-- =========================
+-- CREAR USUARIO / ESQUEMA
+-- =========================
+-- Ejecuta esto conectado como SYSTEM o SYS
+
+CREATE USER concesionario
+    IDENTIFIED BY "1234"
+    DEFAULT TABLESPACE USERS
+    TEMPORARY TABLESPACE TEMP
+    QUOTA UNLIMITED ON USERS;
+
+GRANT CONNECT, RESOURCE TO concesionario;
+GRANT CREATE SESSION TO concesionario;
+
+-- Después de ejecutar esto, crea una nueva conexión en SQL Developer
+-- con el usuario "concesionario" y ejecuta el resto del script con esa conexión.
+
 
 -- =========================
 -- TABLA CLIENTES
