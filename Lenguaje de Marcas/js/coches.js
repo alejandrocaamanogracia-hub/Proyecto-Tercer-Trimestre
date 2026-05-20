@@ -111,6 +111,16 @@ function updateCar(item) {
 
     openCreate('c-section', 'c-creation');
 
+    const h2Title = document.getElementById('create__title');
+    h2Title.innerHTML = `
+        Editar coche ${item.id}
+        <span class="material-symbols-rounded sidebar__icon icon__close">close</span>
+    `;
+    h2Title.querySelector('.icon__close')?.addEventListener('click', () => {
+        closeCreate('c-section', 'c-creation');
+        clearForm();
+    });
+
     const newSubmit = btnSubmit.cloneNode(true);
     btnSubmit.parentNode.replaceChild(newSubmit, btnSubmit);
 

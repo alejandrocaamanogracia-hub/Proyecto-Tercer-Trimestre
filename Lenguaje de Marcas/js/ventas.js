@@ -119,7 +119,7 @@ function updateSale(item) {
     const heading = document.querySelector('.creation .heading');
     if (heading) {
         heading.innerHTML = `
-            Editar venta #${item.id}
+            Editar venta ${item.id}
             <span class="material-symbols-rounded sidebar__icon icon__close">close</span>
         `;
         const btnCloseNew = heading.querySelector('.icon__close');

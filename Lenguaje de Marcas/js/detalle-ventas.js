@@ -31,7 +31,7 @@ function openEditPanel(item) {
     const heading = document.querySelector('.creation .heading');
     if (heading) {
         heading.innerHTML = `
-            Editar detalle #${item.id}
+            Editar detalle ${item.id}
             <span class="material-symbols-rounded sidebar__icon icon__close">close</span>
         `;
         heading.querySelector('.icon__close')?.addEventListener('click', () => {
