@@ -11,7 +11,7 @@
 
 <body class="sales">
 
-    <div class="sd-section">
+    <div class="sd-section" id="sd-section">
 
         <aside class="sidebar" id="sidebar">
 
@@ -118,6 +118,23 @@
             </div>
 
         </div>
+
+    </div>
+
+    <div class="creation" id="sd-creation">
+
+        <h2 class="heading headign--align">
+            Editar detalle
+            <span class="material-symbols-rounded sidebar__icon icon__close">close</span>
+        </h2>
+
+        <form class="form">
+            <div class="form__group">
+                <label class="text">Cantidad</label>
+                <input type="number" id="edit-cantidad" class="input" placeholder="Nueva cantidad" min="1">
+            </div>
+            <button type="button" class="button button--primary" id="btn--saveEdit">Guardar cambios</button>
+        </form>
 
     </div>
 

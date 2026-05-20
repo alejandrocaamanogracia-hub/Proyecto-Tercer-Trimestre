@@ -202,7 +202,7 @@ btnAddCar?.addEventListener('click', () => {
     }
 
     const cocheData = JSON.parse(cocheValue);
-    
+
     selectedCars.push({
         cocheData,
         cantidad
@@ -225,7 +225,7 @@ function renderSelectedCars() {
     });
 }
 
-window.removeCar = function(index) {
+window.removeCar = function (index) {
     selectedCars.splice(index, 1);
     renderSelectedCars();
 };
@@ -325,7 +325,7 @@ function createSale() {
     updateSidebarBadges();
     closeCreate('s-section', 's-creation');
     document.getElementById('saleForm').reset();
-    
+
     selectedCars = [];
     renderSelectedCars();
 }

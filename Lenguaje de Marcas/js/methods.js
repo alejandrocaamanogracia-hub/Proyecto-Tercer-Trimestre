@@ -83,45 +83,47 @@ function create(item, values, container, list, fields, storageKey, onEdit, showA
         const editButton = document.createElement('button');
         editButton.textContent = 'Editar';
         editButton.classList.add('input');
-
-        const deleteButton = document.createElement('button');
-        deleteButton.textContent = 'Eliminar';
-        deleteButton.classList.add('button');
-
         actions.appendChild(editButton);
-        actions.appendChild(deleteButton);
+
+        // MODIFICACIÓN: Solo creamos el botón de eliminar si NO es un detalle de venta
+        if (storageKey !== 'misDetallesVentas') {
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = 'Eliminar';
+            deleteButton.classList.add('button');
+            actions.appendChild(deleteButton);
+
+            // Evento para eliminar un elemento.
+            deleteButton.addEventListener('click', () => {
+                if (!confirm('¿Seguro que quieres eliminar este elemento?')) return;
+
+                const fullList = JSON.parse(localStorage.getItem(storageKey)) || list;
+                const indexInFull = fullList.findIndex(c => c.id === item.id);
+
+                if (indexInFull !== -1) {
+                    fullList.splice(indexInFull, 1);
+                    localStorage.setItem(storageKey, JSON.stringify(fullList));
+
+                    // Si estamos eliminando una venta, eliminamos también sus detalles.
+                    if (storageKey === 'misVentas') {
+                        let detailsList = JSON.parse(localStorage.getItem('misDetallesVentas')) || [];
+                        detailsList = detailsList.filter(d => d.saleId !== item.id);
+                        localStorage.setItem('misDetallesVentas', JSON.stringify(detailsList));
+                    }
+
+                    const indexInCurrent = list.findIndex(c => c.id === item.id);
+                    if (indexInCurrent !== -1) list.splice(indexInCurrent, 1);
+
+                    element.remove();
+
+                    if (fullList.length === 0) {
+                        container.innerHTML = '<p class="text">No hay elementos para mostrar</p>';
+                    }
+                    updateSidebarBadges();
+                }
+            });
+        }
+
         element.appendChild(actions);
-
-        // Evento para eliminar un elemento.
-
-        deleteButton.addEventListener('click', () => {
-            if (!confirm('¿Seguro que quieres eliminar este elemento?')) return;
-
-            const fullList = JSON.parse(localStorage.getItem(storageKey)) || list;
-            const indexInFull = fullList.findIndex(c => c.id === item.id);
-
-            if (indexInFull !== -1) {
-                fullList.splice(indexInFull, 1);
-                localStorage.setItem(storageKey, JSON.stringify(fullList));
-
-                // Si estamos eliminando una venta, eliminamos también sus detalles.
-                if (storageKey === 'misVentas') {
-                    let detailsList = JSON.parse(localStorage.getItem('misDetallesVentas')) || [];
-                    detailsList = detailsList.filter(d => d.saleId !== item.id);
-                    localStorage.setItem('misDetallesVentas', JSON.stringify(detailsList));
-                }
-
-                const indexInCurrent = list.findIndex(c => c.id === item.id);
-                if (indexInCurrent !== -1) list.splice(indexInCurrent, 1);
-
-                element.remove();
-
-                if (fullList.length === 0) {
-                    container.innerHTML = '<p class="text">No hay elementos para mostrar</p>';
-                }
-                updateSidebarBadges();
-            }
-        });
 
         // Evento para editar un elemento.
 
@@ -129,7 +131,7 @@ function create(item, values, container, list, fields, storageKey, onEdit, showA
     }
 
     container.appendChild(element);
-    
+
     if (viewportObserver) {
         viewportObserver.observe(element);
     }
@@ -264,8 +266,8 @@ export function initFadeAnimations() {
             // Añadimos un pequeño retraso en cascada (stagger effect)
             entry.target.style.transitionDelay = `${index * 80}ms`;
             entry.target.classList.add('is-visible');
-            viewportObserver.unobserve(entry.target); 
-            
+            viewportObserver.unobserve(entry.target);
+
             // Limpiamos el retraso después para no afectar a otras animaciones como el :hover
             setTimeout(() => {
                 entry.target.style.transitionDelay = '0ms';

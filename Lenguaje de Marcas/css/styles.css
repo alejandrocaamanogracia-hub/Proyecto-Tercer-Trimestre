@@ -205,6 +205,23 @@ body {
 
 /* #region ELEMENTOS COMUNES */
 
+::-webkit-scrollbar {
+    width: 4px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(244, 215, 220, 0.2);
+    border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, #ff5a6f, #d8263e);
+}
+
 .logo {
     width: 80px;
     height: 80px;
