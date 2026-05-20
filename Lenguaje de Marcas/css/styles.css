@@ -340,11 +340,13 @@ option {
     background-color: color-mix(var(--color-primary), transparent 10%);
     padding: 30px;
     border-radius: var(--radius-lg);
-    height: fit-content;
+    max-height: 90vh;
+    overflow-y: auto;
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    z-index: 1050;
     display: none;
 }
 

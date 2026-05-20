@@ -15,6 +15,7 @@ const carsListContainer = document.getElementById('carsList');
 let sales = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
 let details = JSON.parse(localStorage.getItem(DETAILS_KEY)) || [];
 let selectedCars = [];
+let editingSaleId = null;
 
 document.addEventListener('DOMContentLoaded', () => {
     if (sales.length === 0) {
@@ -23,22 +24,173 @@ document.addEventListener('DOMContentLoaded', () => {
     if (details.length === 0) {
         details = JSON.parse(localStorage.getItem(DETAILS_KEY)) || [];
     }
-    loadData(sales, FIELDS, STORAGE_KEY, null);
+    loadData(sales, FIELDS, STORAGE_KEY, updateSale);
     setupSelectors();
     setupSearch();
 });
 
-btnCreate?.addEventListener('click', () => openCreate('s-section', 's-creation'));
+btnCreate?.addEventListener('click', () => {
+    clearSaleForm();
+    openCreate('s-section', 's-creation');
+});
 btnClose?.addEventListener('click', () => {
     closeCreate('s-section', 's-creation');
-    selectedCars = [];
-    renderSelectedCars();
+    clearSaleForm();
 });
 
 btnSubmit?.addEventListener('click', (e) => {
     e.preventDefault();
-    createSale();
+    if (editingSaleId === null) {
+        createSale();
+    } else {
+        saveEditSale();
+    }
 });
+
+function clearSaleForm() {
+    document.getElementById('saleForm').reset();
+    selectedCars = [];
+    renderSelectedCars();
+    editingSaleId = null;
+
+    if (btnSubmit) {
+        btnSubmit.textContent = 'Registrar Venta';
+    }
+
+    const heading = document.querySelector('.creation .heading');
+    if (heading) {
+        heading.innerHTML = `
+            Crear una venta
+            <span class="material-symbols-rounded sidebar__icon icon__close">close</span>
+        `;
+        const btnCloseNew = heading.querySelector('.icon__close');
+        btnCloseNew?.addEventListener('click', () => {
+            closeCreate('s-section', 's-creation');
+            clearSaleForm();
+        });
+    }
+}
+
+function updateSale(item) {
+    editingSaleId = item.id;
+
+    const currentDetails = JSON.parse(localStorage.getItem(DETAILS_KEY)) || [];
+    const saleDetails = currentDetails.filter(d => d.saleId === item.id);
+    const coches = JSON.parse(localStorage.getItem('coches')) || [];
+
+    selectedCars = saleDetails.map(d => {
+        const matchedCar = coches.find(c => `${c.marca} ${c.modelo}` === d.coche);
+        let cocheData;
+        if (matchedCar) {
+            cocheData = {
+                id: matchedCar.id,
+                marca: matchedCar.marca,
+                modelo: matchedCar.modelo,
+                precio: matchedCar.precio
+            };
+        } else {
+            const parts = d.coche.split(' ');
+            const marca = parts[0] || 'Desconocido';
+            const modelo = parts.slice(1).join(' ') || 'Coche';
+            const precio = parseFloat(d.total) / d.cantidad || 0;
+            cocheData = {
+                id: null,
+                marca,
+                modelo,
+                precio
+            };
+        }
+        return {
+            cocheData,
+            cantidad: d.cantidad
+        };
+    });
+
+    renderSelectedCars();
+
+    const clienteSel = document.getElementById('cliente');
+    const usuarioSel = document.getElementById('usuario');
+    const estadoSel = document.getElementById('estado');
+
+    if (clienteSel) clienteSel.value = item.cliente;
+    if (usuarioSel) usuarioSel.value = item.usuario;
+    if (estadoSel) estadoSel.value = item.estado;
+
+    const heading = document.querySelector('.creation .heading');
+    if (heading) {
+        heading.innerHTML = `
+            Editar venta #${item.id}
+            <span class="material-symbols-rounded sidebar__icon icon__close">close</span>
+        `;
+        const btnCloseNew = heading.querySelector('.icon__close');
+        btnCloseNew?.addEventListener('click', () => {
+            closeCreate('s-section', 's-creation');
+            clearSaleForm();
+        });
+    }
+
+    if (btnSubmit) {
+        btnSubmit.textContent = 'Guardar cambios';
+    }
+
+    openCreate('s-section', 's-creation');
+}
+
+function saveEditSale() {
+    const cliente = document.getElementById('cliente').value;
+    const usuario = document.getElementById('usuario').value;
+    const estado = document.getElementById('estado').value;
+
+    if (!cliente || !usuario) {
+        alert('Por favor, selecciona cliente y usuario.');
+        return;
+    }
+
+    if (selectedCars.length === 0) {
+        alert('Por favor, añade al menos un coche a la venta.');
+        return;
+    }
+
+    let totalSale = 0;
+    let allDetails = JSON.parse(localStorage.getItem(DETAILS_KEY)) || [];
+    allDetails = allDetails.filter(d => d.saleId !== editingSaleId);
+
+    selectedCars.forEach(item => {
+        const totalDetalle = item.cocheData.precio * item.cantidad;
+        totalSale += totalDetalle;
+
+        const newDetail = {
+            id: editingSaleId,
+            saleId: editingSaleId,
+            cliente,
+            coche: `${item.cocheData.marca} ${item.cocheData.modelo}`,
+            cantidad: item.cantidad,
+            total: `${totalDetalle}€`
+        };
+        allDetails.push(newDetail);
+    });
+
+    const index = sales.findIndex(s => s.id === editingSaleId);
+    if (index !== -1) {
+        sales[index] = {
+            ...sales[index],
+            cliente,
+            usuario,
+            estado,
+            total: `${totalSale}€`
+        };
+
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(sales));
+        localStorage.setItem(DETAILS_KEY, JSON.stringify(allDetails));
+
+        details = allDetails;
+
+        loadData(sales, FIELDS, STORAGE_KEY, updateSale);
+        updateSidebarBadges();
+        closeCreate('s-section', 's-creation');
+        clearSaleForm();
+    }
+}
 
 btnAddCar?.addEventListener('click', () => {
     const cocheValue = document.getElementById('coche').value;
@@ -169,7 +321,7 @@ function createSale() {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(sales));
     localStorage.setItem(DETAILS_KEY, JSON.stringify(details));
 
-    loadData(sales, FIELDS, STORAGE_KEY, null);
+    loadData(sales, FIELDS, STORAGE_KEY, updateSale);
     updateSidebarBadges();
     closeCreate('s-section', 's-creation');
     document.getElementById('saleForm').reset();
@@ -187,6 +339,6 @@ function setupSearch() {
         const filtered = sales.filter(s =>
             Object.values(s).some(v => String(v).toLowerCase().includes(query))
         );
-        loadData(filtered, FIELDS, STORAGE_KEY, null);
+        loadData(filtered, FIELDS, STORAGE_KEY, updateSale);
     });
 }
