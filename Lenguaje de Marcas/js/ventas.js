@@ -17,6 +17,12 @@ let details = JSON.parse(localStorage.getItem(DETAILS_KEY)) || [];
 let selectedCars = [];
 
 document.addEventListener('DOMContentLoaded', () => {
+    if (sales.length === 0) {
+        sales = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+    }
+    if (details.length === 0) {
+        details = JSON.parse(localStorage.getItem(DETAILS_KEY)) || [];
+    }
     loadData(sales, FIELDS, STORAGE_KEY, null);
     setupSelectors();
     setupSearch();

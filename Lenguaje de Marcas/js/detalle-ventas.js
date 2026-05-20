@@ -8,6 +8,9 @@ const FIELDS = ['id', 'cliente', 'coche', 'cantidad', 'total'];
 let details = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
 
 document.addEventListener('DOMContentLoaded', () => {
+    if (details.length === 0) {
+        details = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+    }
     loadData(details, FIELDS, STORAGE_KEY, null, false);
     setupSearch();
 });

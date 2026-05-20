@@ -30,6 +30,22 @@ export function initializeData() {
         ];
         localStorage.setItem(USERS_KEY, JSON.stringify(defaultUsers));
     }
+
+    if (!localStorage.getItem('misVentas')) {
+        const defaultSales = [
+            { id: 1, cliente: "Carlos Martínez", usuario: "Pedro López", fecha: "15/5/2026", estado: "Completada", total: "20000€" },
+            { id: 2, cliente: "Laura Sánchez", usuario: "Marta Fernández", fecha: "18/5/2026", estado: "Pendiente", total: "18000€" }
+        ];
+        localStorage.setItem('misVentas', JSON.stringify(defaultSales));
+    }
+
+    if (!localStorage.getItem('misDetallesVentas')) {
+        const defaultDetails = [
+            { id: 1, saleId: 1, cliente: "Carlos Martínez", coche: "Toyota Corolla", cantidad: 1, total: "20000€" },
+            { id: 2, saleId: 2, cliente: "Laura Sánchez", coche: "Honda Civic", cantidad: 1, total: "18000€" }
+        ];
+        localStorage.setItem('misDetallesVentas', JSON.stringify(defaultDetails));
+    }
     updateSidebarBadges();
 }
 
