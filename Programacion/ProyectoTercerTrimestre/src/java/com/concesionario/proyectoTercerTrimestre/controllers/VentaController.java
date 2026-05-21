@@ -1,4 +1,4 @@
-package com.concesionario.proyectoTercerTrimestre.controller;
+package com.concesionario.proyectoTercerTrimestre.controllers;
 
 
 import com.concesionario.proyectoTercerTrimestre.entities.EstadoVenta;

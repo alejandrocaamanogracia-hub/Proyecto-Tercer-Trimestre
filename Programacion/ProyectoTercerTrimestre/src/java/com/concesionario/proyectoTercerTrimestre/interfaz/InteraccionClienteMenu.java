@@ -1,7 +1,9 @@
 package com.concesionario.proyectoTercerTrimestre.interfaz;
 
 
-import com.concesionario.proyectoTercerTrimestre.controller.InteraccionClienteController;
+import com.concesionario.proyectoTercerTrimestre.controllers.ClienteController;
+import com.concesionario.proyectoTercerTrimestre.controllers.InteraccionClienteController;
+import com.concesionario.proyectoTercerTrimestre.controllers.UsuarioController;
 import com.concesionario.proyectoTercerTrimestre.entities.*;
 
 import com.concesionario.proyectoTercerTrimestre.utils.ComprobacionOpcion;
@@ -17,10 +19,15 @@ public class InteraccionClienteMenu {
 
     private final InteraccionClienteController interaccionClienteController;
     private final DateTimeFormatter formatter;
+    private final ClienteController clienteController;
+    private final UsuarioController usuarioController;
 
     public InteraccionClienteMenu() {
         this.interaccionClienteController = new InteraccionClienteController();
+        this.clienteController = new ClienteController();
+        this.usuarioController = new UsuarioController();
         this.formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
     }
 
     public void mostrarMenuInteraccionesCliente() {
@@ -72,11 +79,47 @@ public class InteraccionClienteMenu {
     private void crearInteraccionCliente() {
         System.out.println("\n--- Crear interaccion con cliente ---");
 
+        List<Cliente> clientes = clienteController.listarClientes();
+
+        if (clientes.isEmpty()) {
+            System.out.println("No hay clientes registrados.");
+            return;
+        }
+
+        System.out.println("\nClientes disponibles:");
+
+        for (Cliente clienteActual : clientes) {
+            System.out.println(
+                    "ID: " + clienteActual.getId()
+                            + " | Nombre: " + clienteActual.getNombre()
+                            + " | Email: " + clienteActual.getEmail()
+                            + " | Telefono: " + clienteActual.getTelefono()
+            );
+        }
+
         int clienteId = ComprobacionOpcion.leerIdExistente(
                 "Introduce el ID del cliente: ",
                 interaccionClienteController::existeCliente,
                 "No existe ningun cliente con ese ID."
         );
+
+        List<Usuario> usuarios = usuarioController.listarUsuarios();
+
+        if (usuarios.isEmpty()) {
+            System.out.println("No hay usuarios registrados.");
+            return;
+        }
+
+        System.out.println("\nUsuarios disponibles:");
+
+        for (Usuario usuarioActual : usuarios) {
+            System.out.println(
+                    "ID: " + usuarioActual.getId()
+                            + " | Nombre: " + usuarioActual.getNombre()
+                            + " | Email: " + usuarioActual.getEmail()
+                            + " | Rol: " + usuarioActual.getRol()
+            );
+        }
 
         int usuarioId = ComprobacionOpcion.leerIdExistente(
                 "Introduce el ID del usuario: ",
@@ -212,16 +255,18 @@ public class InteraccionClienteMenu {
             return;
         }
 
-        System.out.println("Que interacción quieres modificar: ");
+        System.out.println("Introduce el numero de la interaccion que quieres modificar: ");
+
+        System.out.println("Interacciones disponibles:");
 
         int iterador = 1;
         for (InteraccionCliente interaccionActual : interaccionClientes) {
             System.out.println(
-                    iterador + ". ID: " + interaccionActual.getId()
-                            + " | ID Cliente: " + interaccionActual.getClienteId()
+                    iterador + ". ID Cliente: " + interaccionActual.getClienteId()
                             + " | ID Usuario: " + interaccionActual.getUsuarioId()
                             + " | Tipo: " + interaccionActual.getTipo()
                             + " | Asunto: " + interaccionActual.getAsunto()
+                            + " | ID real: " + interaccionActual.getId()
             );
             iterador++;
         }

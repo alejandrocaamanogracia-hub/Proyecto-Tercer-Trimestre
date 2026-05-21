@@ -62,19 +62,13 @@ public class CocheService {
         System.out.println("Coche creado correctamente.");
     }
 
-    public void eliminarCoche(int id) {
+    public boolean eliminarCoche(int id) {
         if (id <= 0) {
             System.out.println("El ID del coche no es valido.");
-            return;
+            return false;
         }
 
-        boolean eliminado = cocheRepository.eliminarCoche(id);
-
-        if (eliminado) {
-            System.out.println("Coche eliminado correctamente.");
-        } else {
-            System.out.println("No existe ningún coche con ese ID.");
-        }
+        return cocheRepository.eliminarCoche(id);
     }
 
     public List<Coche> listarCoches() {
@@ -200,6 +194,10 @@ public class CocheService {
         }
 
         return coche;
+    }
+
+    public boolean existeCoche(int id) {
+        return cocheRepository.existeCoche(id);
     }
 
 }

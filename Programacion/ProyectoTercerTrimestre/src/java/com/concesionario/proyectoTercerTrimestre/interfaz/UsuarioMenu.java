@@ -1,6 +1,6 @@
 package com.concesionario.proyectoTercerTrimestre.interfaz;
 
-import com.concesionario.proyectoTercerTrimestre.controller.UsuarioController;
+import com.concesionario.proyectoTercerTrimestre.controllers.UsuarioController;
 import com.concesionario.proyectoTercerTrimestre.entities.Usuario;
 import com.concesionario.proyectoTercerTrimestre.entities.RolUsuario;
 import com.concesionario.proyectoTercerTrimestre.utils.ComprobacionOpcion;
@@ -142,15 +142,17 @@ public class UsuarioMenu {
             return;
         }
 
-        System.out.println("Que usuario quieres modificar: ");
+        System.out.println("Introduce el numero del usuario que quieres modificar: ");
+
+        System.out.println("Usuarios disponibles:");
 
         int iterador = 1;
         for (Usuario usuarioActual : usuarios) {
             System.out.println(
-                    iterador + ". ID: " + usuarioActual.getId()
-                            + " | Nombre: " + usuarioActual.getNombre()
+                    iterador + ". Nombre: " + usuarioActual.getNombre()
                             + " | Email: " + usuarioActual.getEmail()
                             + " | Rol: " + usuarioActual.getRol()
+                            + " | ID real: " + usuarioActual.getId()
             );
             iterador++;
         }

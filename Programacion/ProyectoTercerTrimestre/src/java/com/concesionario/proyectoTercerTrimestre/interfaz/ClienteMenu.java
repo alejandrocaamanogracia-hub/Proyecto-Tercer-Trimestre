@@ -1,6 +1,6 @@
 package com.concesionario.proyectoTercerTrimestre.interfaz;
 
-import com.concesionario.proyectoTercerTrimestre.controller.ClienteController;
+import com.concesionario.proyectoTercerTrimestre.controllers.ClienteController;
 import com.concesionario.proyectoTercerTrimestre.entities.Cliente;
 import com.concesionario.proyectoTercerTrimestre.utils.ComprobacionOpcion;
 
@@ -139,16 +139,16 @@ public class ClienteMenu {
             return;
         }
 
-        System.out.println("Que cliente quieres modificar: ");
+        System.out.println("Selecciona el numero del cliente que quieres modificar: ");
 
         int iterador = 1;
         for (Cliente clienteActual : clientes) {
             System.out.println(
-                    iterador + ". ID: " + clienteActual.getId()
-                            + " | Nombre: " + clienteActual.getNombre()
+                    iterador + ". Nombre: " + clienteActual.getNombre()
                             + " | Email: " + clienteActual.getEmail()
                             + " | Telefono: " + clienteActual.getTelefono()
                             + " | Direccion: " + clienteActual.getDireccion()
+                            + " | ID interno: " + clienteActual.getId()
             );
             iterador++;
         }

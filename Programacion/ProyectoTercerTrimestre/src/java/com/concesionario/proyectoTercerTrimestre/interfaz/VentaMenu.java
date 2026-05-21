@@ -1,7 +1,9 @@
 package com.concesionario.proyectoTercerTrimestre.interfaz;
 
 
-import com.concesionario.proyectoTercerTrimestre.controller.VentaController;
+import com.concesionario.proyectoTercerTrimestre.controllers.ClienteController;
+import com.concesionario.proyectoTercerTrimestre.controllers.UsuarioController;
+import com.concesionario.proyectoTercerTrimestre.controllers.VentaController;
 import com.concesionario.proyectoTercerTrimestre.entities.*;
 import com.concesionario.proyectoTercerTrimestre.utils.ComprobacionOpcion;
 
@@ -16,9 +18,13 @@ public class VentaMenu {
 
     private final VentaController ventaController;
     private final DateTimeFormatter formatter;
+    private final ClienteController clienteController;
+    private final UsuarioController usuarioController;
 
     public VentaMenu() {
         this.ventaController = new VentaController();
+        this.clienteController = new ClienteController();
+        this.usuarioController = new UsuarioController();
         this.formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     }
 
@@ -71,11 +77,47 @@ public class VentaMenu {
     private void crearVenta() {
         System.out.println("\n--- Crear venta ---");
 
+        List<Cliente> clientes = clienteController.listarClientes();
+
+        if (clientes.isEmpty()) {
+            System.out.println("No hay clientes registrados.");
+            return;
+        }
+
+        System.out.println("\nClientes disponibles:");
+
+        for (Cliente clienteActual : clientes) {
+            System.out.println(
+                    "ID: " + clienteActual.getId()
+                            + " | Nombre: " + clienteActual.getNombre()
+                            + " | Email: " + clienteActual.getEmail()
+                            + " | Telefono: " + clienteActual.getTelefono()
+            );
+        }
+
         int clienteId = ComprobacionOpcion.leerIdExistente(
                 "Introduce el ID del cliente: ",
                 ventaController::existeCliente,
                 "No existe ningun cliente con ese ID."
         );
+
+        List<Usuario> usuarios = usuarioController.listarUsuarios();
+
+        if (usuarios.isEmpty()) {
+            System.out.println("No hay usuarios registrados.");
+            return;
+        }
+
+        System.out.println("\nUsuarios disponibles:");
+
+        for (Usuario usuarioActual : usuarios) {
+            System.out.println(
+                    "ID: " + usuarioActual.getId()
+                            + " | Nombre: " + usuarioActual.getNombre()
+                            + " | Email: " + usuarioActual.getEmail()
+                            + " | Rol: " + usuarioActual.getRol()
+            );
+        }
 
         int usuarioId = ComprobacionOpcion.leerIdExistente(
                 "Introduce el ID del usuario: ",
@@ -188,17 +230,19 @@ public class VentaMenu {
             return;
         }
 
-        System.out.println("Que venta quieres modificar: ");
+        System.out.println("Introduce el numero de la venta que quieres modificar: ");
+
+        System.out.println("Ventas disponibles:");
 
         int iterador = 1;
         for (Venta ventaActual : ventas) {
             System.out.println(
-                    iterador + ". ID: " + ventaActual.getId()
-                            + " | ID Cliente: " + ventaActual.getClienteId()
+                    iterador + ". ID Cliente: " + ventaActual.getClienteId()
                             + " | ID Usuario: " + ventaActual.getUsuarioId()
                             + " | Fecha: " + ventaActual.getFecha()
                             + " | Estado: " + ventaActual.getEstado()
                             + " | Total: " + ventaActual.getTotal()
+                            + " | ID real: " + ventaActual.getId()
             );
             iterador++;
         }

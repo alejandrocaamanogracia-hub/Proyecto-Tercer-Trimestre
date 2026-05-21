@@ -1,4 +1,4 @@
-package com.concesionario.proyectoTercerTrimestre.controller;
+package com.concesionario.proyectoTercerTrimestre.controllers;
 
 import com.concesionario.proyectoTercerTrimestre.entities.Coche;
 import com.concesionario.proyectoTercerTrimestre.entities.Combustible;
@@ -39,8 +39,8 @@ public class CocheController {
         cocheService.crearCoche(coche);
     }
 
-    public void eliminarCoche(int id) {
-        cocheService.eliminarCoche(id);
+    public boolean eliminarCoche(int id) {
+        return cocheService.eliminarCoche(id);
     }
 
     public List<Coche> listarCoches() {
@@ -59,5 +59,9 @@ public class CocheController {
 
     public Coche buscarCoche(int id){
         return cocheService.buscarCoche(id);
+    }
+
+    public boolean existeCoche(int id) {
+        return cocheService.existeCoche(id);
     }
 }

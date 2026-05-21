@@ -17,5 +17,7 @@ public interface CocheRepository {
 
     Coche buscarCoche(int id);
 
+    boolean existeCoche(int id);
+
 
 }

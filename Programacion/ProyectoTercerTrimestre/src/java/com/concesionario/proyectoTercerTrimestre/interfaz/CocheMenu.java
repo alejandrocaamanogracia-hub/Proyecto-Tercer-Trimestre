@@ -1,6 +1,6 @@
 package com.concesionario.proyectoTercerTrimestre.interfaz;
 
-import com.concesionario.proyectoTercerTrimestre.controller.CocheController;
+import com.concesionario.proyectoTercerTrimestre.controllers.CocheController;
 import com.concesionario.proyectoTercerTrimestre.entities.*;
 import com.concesionario.proyectoTercerTrimestre.utils.ComprobacionOpcion;
 
@@ -182,8 +182,11 @@ public class CocheMenu {
             );
         }
 
-        System.out.print("Introduce el ID del coche que quieres eliminar: ");
-        int id = ComprobacionOpcion.leerInt();
+        int id = ComprobacionOpcion.leerIdExistente(
+                "Introduce el ID del coche que quieres eliminar: ",
+                cocheController::existeCoche,
+                "No existe ningún coche con ese ID."
+        );
 
         System.out.println("¿Seguro que quieres eliminar el coche con ID " + id + "?");
         System.out.println("1. Sí");
@@ -192,7 +195,11 @@ public class CocheMenu {
         int confirmacion = ComprobacionOpcion.leerOpcion(1, 2);
 
         if (confirmacion == 1) {
-            cocheController.eliminarCoche(id);
+            boolean eliminado = cocheController.eliminarCoche(id);
+
+            if (eliminado) {
+                System.out.println("Coche eliminado correctamente.");
+            }
         } else {
             System.out.println("Eliminación cancelada.");
         }
@@ -227,16 +234,16 @@ public class CocheMenu {
             return;
         }
 
-        System.out.println("Que coche quieres modificar: ");
+        System.out.println("Selecciona el numero del coche que quieres modificar: ");
 
         int iterador = 1;
         for (Coche cocheActual : coches) {
             System.out.println(
-                    iterador + ". ID: " + cocheActual.getId()
-                            + " | Matricula: " + cocheActual.getMatricula()
+                     iterador + ". Matricula: " + cocheActual.getMatricula()
                             + " | Marca: " + cocheActual.getMarca()
                             + " | Modelo: " + cocheActual.getModelo()
                             + " | Precio: " + cocheActual.getPrecio()
+                            + " | ID interno: " + cocheActual.getId()
             );
             iterador++;
         }

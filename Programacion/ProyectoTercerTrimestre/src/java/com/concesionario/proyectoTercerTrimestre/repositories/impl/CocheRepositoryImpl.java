@@ -7,10 +7,7 @@ import com.concesionario.proyectoTercerTrimestre.entities.Combustible;
 import com.concesionario.proyectoTercerTrimestre.entities.EstadoCoche;
 import com.concesionario.proyectoTercerTrimestre.entities.TipoCambio;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,6 +68,10 @@ public class CocheRepositoryImpl implements CocheRepository {
             int filasAfectadas = preparedStatement.executeUpdate();
 
             return filasAfectadas > 0;
+
+        } catch (SQLIntegrityConstraintViolationException e) {
+            System.out.println("No se puede eliminar el coche porque ya se ha vendido.");
+            return false;
 
         } catch (SQLException e) {
             System.out.println("Error al eliminar el coche.");
@@ -206,6 +207,29 @@ public class CocheRepositoryImpl implements CocheRepository {
         }
 
         return null;
+    }
+
+    @Override
+    public boolean existeCoche(int id) {
+        String sql = "SELECT COUNT(*) FROM coches WHERE id = ?";
+
+        try (Connection connection = DataBaseConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setInt(1, id);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                return resultSet.getInt(1) > 0;
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error al comprobar si existe el coche.");
+            e.printStackTrace();
+        }
+
+        return false;
     }
 
 }

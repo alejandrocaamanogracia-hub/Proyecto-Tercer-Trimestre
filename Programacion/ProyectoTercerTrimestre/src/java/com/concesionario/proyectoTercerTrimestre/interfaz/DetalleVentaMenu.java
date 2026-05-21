@@ -1,10 +1,11 @@
 package com.concesionario.proyectoTercerTrimestre.interfaz;
 
 
-import com.concesionario.proyectoTercerTrimestre.controller.DetalleVentaController;
+import com.concesionario.proyectoTercerTrimestre.controllers.*;
 import com.concesionario.proyectoTercerTrimestre.entities.*;
 import com.concesionario.proyectoTercerTrimestre.utils.ComprobacionOpcion;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -12,9 +13,17 @@ public class DetalleVentaMenu {
 
 
     private final DetalleVentaController detalleVentaController;
+    private final VentaController ventaController;
+    private final CocheController cocheController;
+    private final ClienteController clienteController;
+    private final UsuarioController usuarioController;
 
     public DetalleVentaMenu() {
         this.detalleVentaController = new DetalleVentaController();
+        this.ventaController = new VentaController();
+        this.cocheController = new CocheController();
+        this.clienteController = new ClienteController();
+        this.usuarioController = new UsuarioController();
     }
 
     public void mostrarMenuDetalleVenta() {
@@ -66,7 +75,75 @@ public class DetalleVentaMenu {
     private void crearDetalleVenta() {
         System.out.println("\n--- Crear detalle de venta ---");
 
+        List<Venta> ventas = ventaController.listarVentas();
+
+        if (ventas.isEmpty()) {
+            System.out.println("No hay ventas registradas.");
+            return;
+        }
+
+        List<Cliente> clientes = clienteController.listarClientes();
+        List<Usuario> usuarios = usuarioController.listarUsuarios();
+
+        System.out.println("\nVentas disponibles:");
+
+        for (Venta ventaActual : ventas) {
+
+            String nombreCliente = "Cliente no encontrado";
+            for (Cliente clienteActual : clientes) {
+                if (clienteActual.getId() == ventaActual.getClienteId()) {
+                    nombreCliente = clienteActual.getNombre();
+                    break;
+                }
+            }
+
+            String nombreUsuario = "Usuario no encontrado";
+            for (Usuario usuarioActual : usuarios) {
+                if (usuarioActual.getId() == ventaActual.getUsuarioId()) {
+                    nombreUsuario = usuarioActual.getNombre();
+                    break;
+                }
+            }
+
+            System.out.println(
+                    "ID Venta: " + ventaActual.getId()
+                            + " | Cliente: " + nombreCliente
+                            + " | Usuario: " + nombreUsuario
+                            + " | Fecha: " + ventaActual.getFecha()
+                            + " | Estado: " + ventaActual.getEstado()
+                            + " | Total: " + ventaActual.getTotal()
+            );
+        }
+
         int ventaId = pedirVentaExistente();
+
+        List<Coche> coches = cocheController.listarCoches();
+        List<Coche> cochesDisponibles = new ArrayList<>();
+
+        for (Coche cocheActual : coches) {
+            boolean cocheYaUsado = detalleVentaController.existeDetalleVentaConCoche(cocheActual.getId());
+
+            if (!cocheYaUsado) {
+                cochesDisponibles.add(cocheActual);
+            }
+        }
+
+        if (cochesDisponibles.isEmpty()) {
+            System.out.println("No hay coches disponibles para asignar.");
+            return;
+        }
+
+        System.out.println("\nCoches disponibles para asignar:");
+
+        for (Coche cocheActual : cochesDisponibles) {
+            System.out.println(
+                    "ID: " + cocheActual.getId()
+                            + " | Matricula: " + cocheActual.getMatricula()
+                            + " | Marca: " + cocheActual.getMarca()
+                            + " | Modelo: " + cocheActual.getModelo()
+                            + " | Precio: " + cocheActual.getPrecio()
+            );
+        }
 
         int cocheId = pedirCocheDisponibleParaCrear();
 
@@ -178,16 +255,15 @@ public class DetalleVentaMenu {
         int iterador = 1;
         for (DetalleVenta detalleVentaActual : detalleVentas) {
             System.out.println(
-                    iterador + ". ID real: " + detalleVentaActual.getId()
-                            + " | ID Venta: " + detalleVentaActual.getVentaId()
+                    iterador + ". ID Venta: " + detalleVentaActual.getVentaId()
                             + " | ID Coche: " + detalleVentaActual.getCocheId()
                             + " | Precio final: " + detalleVentaActual.getPrecioFinal()
                             + " | Descuento: " + detalleVentaActual.getDescuento()
+                            + " | ID real: " + detalleVentaActual.getId()
             );
             iterador++;
         }
 
-        System.out.print("Introduce el numero del detalle de venta: ");
         int opcion = ComprobacionOpcion.leerOpcion(1, detalleVentas.size());
 
         DetalleVenta detalleVentaActual = detalleVentas.get(opcion - 1);
