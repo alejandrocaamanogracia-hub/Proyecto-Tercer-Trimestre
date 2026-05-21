@@ -11,6 +11,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.sql.SQLIntegrityConstraintViolationException;
+import java.sql.ResultSet;
 
 public class UsuarioRepositoryImpl implements UsuarioRepository {
 
@@ -47,11 +49,38 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
 
             return filasAfectadas > 0;
 
+        } catch (SQLIntegrityConstraintViolationException e) {
+            System.out.println("No se puede eliminar el usuario porque tiene ventas o interacciones asociadas.");
+            return false;
+
         } catch (SQLException e) {
             System.out.println("Error al eliminar el usuario.");
             e.printStackTrace();
             return false;
         }
+    }
+
+    @Override
+    public boolean existeUsuario(int id) {
+        String sql = "SELECT COUNT(*) FROM usuarios WHERE id = ?";
+
+        try (Connection connection = DataBaseConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setInt(1, id);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                return resultSet.getInt(1) > 0;
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error al comprobar si existe el usuario.");
+            e.printStackTrace();
+        }
+
+        return false;
     }
 
     @Override

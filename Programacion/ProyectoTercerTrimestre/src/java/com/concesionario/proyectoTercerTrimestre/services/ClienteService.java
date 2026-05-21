@@ -48,19 +48,17 @@ public class ClienteService {
         System.out.println("Cliente creado correctamente.");
     }
 
-    public void eliminarCliente(int id) {
+    public boolean eliminarCliente(int id) {
         if (id <= 0) {
             System.out.println("El ID del cliente no es valido.");
-            return;
+            return false;
         }
 
-        boolean eliminado = clienteRepository.eliminarCliente(id);
+        return clienteRepository.eliminarCliente(id);
+    }
 
-        if (eliminado) {
-            System.out.println("Cliente eliminado correctamente.");
-        } else {
-            System.out.println("No existe ningún cliente con ese ID.");
-        }
+    public boolean existeCliente(int id) {
+        return clienteRepository.existeCliente(id);
     }
 
     public List<Cliente> listarClientes() {

@@ -97,8 +97,11 @@ public class UsuarioMenu {
             );
         }
 
-        System.out.print("Introduce el ID del usuario que quieres eliminar: ");
-        int id = ComprobacionOpcion.leerInt();
+        int id = ComprobacionOpcion.leerIdExistente(
+                "Introduce el ID del usuario que quieres eliminar: ",
+                usuarioController::existeUsuario,
+                "No existe ningun usuario con ese ID."
+        );
 
         System.out.println("¿Seguro que quieres eliminar el usuario con ID " + id + "?");
         System.out.println("1. Sí");
@@ -107,12 +110,15 @@ public class UsuarioMenu {
         int confirmacion = ComprobacionOpcion.leerOpcion(1, 2);
 
         if (confirmacion == 1) {
-            usuarioController.eliminarUsuario(id);
+            boolean eliminado = usuarioController.eliminarUsuario(id);
+
+            if (eliminado) {
+                System.out.println("Usuario eliminado correctamente.");
+            }
         } else {
-            System.out.println("Eliminación cancelada.");
+            System.out.println("Eliminacion cancelada.");
         }
     }
-
     private void listarUsuarios() {
         System.out.println("\n--- Lista de usuarios ---");
 

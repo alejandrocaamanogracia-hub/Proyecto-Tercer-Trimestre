@@ -15,4 +15,6 @@ public interface ClienteRepository {
     void modificarCliente(int id, Cliente cliente);
 
     Cliente buscarCliente(int id);
+
+    boolean existeCliente(int id);
 }

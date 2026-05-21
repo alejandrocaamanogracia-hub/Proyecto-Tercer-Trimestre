@@ -10,6 +10,8 @@ public interface UsuarioRepository {
 
     boolean eliminarUsuario(int id);
 
+    boolean existeUsuario(int id);
+
     List<Usuario> listarUsuarios();
 
     void modificarUsuario(int id, Usuario usuario);

@@ -52,19 +52,17 @@ public class UsuarioService {
         System.out.println("Usuario creado correctamente.");
     }
 
-    public void eliminarUsuario(int id) {
+    public boolean eliminarUsuario(int id) {
         if (id <= 0) {
             System.out.println("El ID del usuario no es valido.");
-            return;
+            return false;
         }
 
-        boolean eliminado = usuarioRepository.eliminarUsuario(id);
+        return usuarioRepository.eliminarUsuario(id);
+    }
 
-        if (eliminado) {
-            System.out.println("Usuario eliminado correctamente.");
-        } else {
-            System.out.println("No existe ningún usuario con ese ID.");
-        }
+    public boolean existeUsuario(int id) {
+        return usuarioRepository.existeUsuario(id);
     }
 
     public List<Usuario> listarUsuarios() {

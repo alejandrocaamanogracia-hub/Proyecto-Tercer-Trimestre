@@ -10,6 +10,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.sql.SQLIntegrityConstraintViolationException;
+import java.sql.ResultSet;
 
 public class ClienteRepositoryImpl implements ClienteRepository {
 
@@ -45,6 +47,10 @@ public class ClienteRepositoryImpl implements ClienteRepository {
             int filasAfectadas = preparedStatement.executeUpdate();
 
             return filasAfectadas > 0;
+
+        } catch (SQLIntegrityConstraintViolationException e) {
+            System.out.println("No se puede eliminar el cliente porque tiene ventas asociadas.");
+            return false;
 
         } catch (SQLException e) {
             System.out.println("Error al eliminar el cliente.");
@@ -139,6 +145,29 @@ public class ClienteRepositoryImpl implements ClienteRepository {
         }
 
         return null;
+    }
+
+    @Override
+    public boolean existeCliente(int id) {
+        String sql = "SELECT COUNT(*) FROM clientes WHERE id = ?";
+
+        try (Connection connection = DataBaseConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setInt(1, id);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                return resultSet.getInt(1) > 0;
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error al comprobar si existe el cliente.");
+            e.printStackTrace();
+        }
+
+        return false;
     }
 
 }

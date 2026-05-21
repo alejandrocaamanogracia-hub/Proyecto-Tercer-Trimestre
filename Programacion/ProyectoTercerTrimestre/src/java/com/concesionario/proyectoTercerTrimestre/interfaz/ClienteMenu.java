@@ -90,12 +90,15 @@ public class ClienteMenu {
                     "ID: " + cliente.getId()
                             + " | Nombre: " + cliente.getNombre()
                             + " | Email: " + cliente.getEmail()
-                            + " | Teléfono: " + cliente.getTelefono()
+                            + " | Telefono: " + cliente.getTelefono()
             );
         }
 
-        System.out.print("Introduce el ID del cliente que quieres eliminar: ");
-        int id = ComprobacionOpcion.leerInt();
+        int id = ComprobacionOpcion.leerIdExistente(
+                "Introduce el ID del cliente que quieres eliminar: ",
+                clienteController::existeCliente,
+                "No existe ningun cliente con ese ID."
+        );
 
         System.out.println("¿Seguro que quieres eliminar el cliente con ID " + id + "?");
         System.out.println("1. Sí");
@@ -104,9 +107,13 @@ public class ClienteMenu {
         int confirmacion = ComprobacionOpcion.leerOpcion(1, 2);
 
         if (confirmacion == 1) {
-            clienteController.eliminarCliente(id);
+            boolean eliminado = clienteController.eliminarCliente(id);
+
+            if (eliminado) {
+                System.out.println("Cliente eliminado correctamente.");
+            }
         } else {
-            System.out.println("Eliminación cancelada.");
+            System.out.println("Eliminacion cancelada.");
         }
     }
 

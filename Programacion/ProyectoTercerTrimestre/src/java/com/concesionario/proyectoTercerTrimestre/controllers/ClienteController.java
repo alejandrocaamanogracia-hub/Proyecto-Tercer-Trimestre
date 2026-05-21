@@ -18,8 +18,12 @@ public class ClienteController {
         clienteService.crearCliente(cliente);
     }
 
-    public void eliminarCliente(int id) {
-        clienteService.eliminarCliente(id);
+    public boolean eliminarCliente(int id) {
+        return clienteService.eliminarCliente(id);
+    }
+
+    public boolean existeCliente(int id) {
+        return clienteService.existeCliente(id);
     }
 
     public List<Cliente> listarClientes() {

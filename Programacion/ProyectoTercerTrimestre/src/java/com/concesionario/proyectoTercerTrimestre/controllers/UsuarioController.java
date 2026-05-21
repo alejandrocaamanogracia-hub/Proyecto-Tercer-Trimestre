@@ -19,8 +19,12 @@ public class UsuarioController {
         usuarioService.crearUsuario(usuario);
     }
 
-    public void eliminarUsuario(int id) {
-        usuarioService.eliminarUsuario(id);
+    public boolean eliminarUsuario(int id) {
+        return usuarioService.eliminarUsuario(id);
+    }
+
+    public boolean existeUsuario(int id) {
+        return usuarioService.existeUsuario(id);
     }
 
     public List<Usuario> listarUsuarios() {
