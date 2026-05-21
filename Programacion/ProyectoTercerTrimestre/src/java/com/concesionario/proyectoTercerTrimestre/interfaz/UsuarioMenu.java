@@ -4,6 +4,7 @@ import com.concesionario.proyectoTercerTrimestre.controllers.UsuarioController;
 import com.concesionario.proyectoTercerTrimestre.entities.Usuario;
 import com.concesionario.proyectoTercerTrimestre.entities.RolUsuario;
 import com.concesionario.proyectoTercerTrimestre.utils.ComprobacionOpcion;
+import com.concesionario.proyectoTercerTrimestre.utils.PersonaUtils;
 
 import java.util.List;
 
@@ -119,6 +120,7 @@ public class UsuarioMenu {
             System.out.println("Eliminacion cancelada.");
         }
     }
+
     private void listarUsuarios() {
         System.out.println("\n--- Lista de usuarios ---");
 
@@ -130,7 +132,7 @@ public class UsuarioMenu {
         }
 
         for (Usuario usuario : usuarios) {
-            System.out.println(usuario);
+            PersonaUtils.mostrarDatosPersona(usuario);
         }
     }
 

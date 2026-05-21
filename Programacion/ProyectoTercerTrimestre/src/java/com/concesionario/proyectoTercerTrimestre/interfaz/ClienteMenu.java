@@ -3,6 +3,7 @@ package com.concesionario.proyectoTercerTrimestre.interfaz;
 import com.concesionario.proyectoTercerTrimestre.controllers.ClienteController;
 import com.concesionario.proyectoTercerTrimestre.entities.Cliente;
 import com.concesionario.proyectoTercerTrimestre.utils.ComprobacionOpcion;
+import com.concesionario.proyectoTercerTrimestre.utils.PersonaUtils;
 
 import java.util.List;
 
@@ -128,7 +129,7 @@ public class ClienteMenu {
         }
 
         for (Cliente cliente : clientes) {
-            System.out.println(cliente);
+            PersonaUtils.mostrarDatosPersona(cliente);
         }
     }
 

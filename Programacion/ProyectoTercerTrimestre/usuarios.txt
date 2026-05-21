@@ -1,0 +1,32 @@
+===== LISTADO DE USUARIOS =====
+
+ID: 1
+Nombre: Admin Principal
+Email: admin@crmcoches.com
+Rol: Administrador
+Password Hash: hash_admin_123
+----------------------------------
+ID: 2
+Nombre: Pedro López
+Email: pedro.lopez@crmcoches.com
+Rol: Comercial
+Password Hash: hash_pedro_123
+----------------------------------
+ID: 3
+Nombre: Marta Fernández
+Email: marta.fernandez@crmcoches.com
+Rol: Comercial
+Password Hash: hash_marta_123
+----------------------------------
+ID: 4
+Nombre: Sergio Navarro
+Email: sergio.navarro@crmcoches.com
+Rol: Gestor
+Password Hash: hash_sergio_123
+----------------------------------
+ID: 5
+Nombre: Lucía Romero
+Email: lucia.romero@crmcoches.com
+Rol: Comercial
+Password Hash: hash_lucia_123
+----------------------------------

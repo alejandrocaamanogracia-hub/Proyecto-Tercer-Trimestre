@@ -1,0 +1,14 @@
+===== LISTADO DE DETALLES DE VENTA =====
+
+ID: 3
+ID Venta: 3
+ID Coche: 2
+Precio final: 24000.0
+Descuento: 500.0
+----------------------------------
+ID: 16
+ID Venta: 2
+ID Coche: 3
+Precio final: 15000.0
+Descuento: 600.0
+----------------------------------

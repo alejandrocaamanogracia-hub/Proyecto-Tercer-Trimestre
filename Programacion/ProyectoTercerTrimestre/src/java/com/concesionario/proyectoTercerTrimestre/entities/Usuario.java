@@ -1,58 +1,40 @@
 package com.concesionario.proyectoTercerTrimestre.entities;
 
-public class Usuario {
+public class Usuario extends Persona {
 
-    private int id;
-    private String nombre;
-    private String email;
     private RolUsuario rol;
     private String passwordHash;
 
     public Usuario() {
     }
 
-
     public Usuario(String nombre, String email, RolUsuario rol, String passwordHash) {
-        this.nombre = nombre;
-        this.email = email;
+        super(0, nombre, email);
         this.rol = rol;
         this.passwordHash = passwordHash;
     }
 
     public Usuario(int id, String nombre, String email, RolUsuario rol, String passwordHash) {
-        this.id = id;
-        this.nombre = nombre;
-        this.email = email;
+        super(id, nombre, email);
         this.rol = rol;
         this.passwordHash = passwordHash;
     }
 
-    public int getId() {
-        return id;
+    @Override
+    public String mostrarInformacion() {
+        return "Usuario: " + getNombre()
+                + " | Email: " + getEmail()
+                + " | Rol: " + rol;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    @Override
+    public String toString() {
+        return "ID: " + getId()
+                + "\nNombre: " + getNombre()
+                + "\nEmail: " + getEmail()
+                + "\nRol: " + rol
+                + "\nPassword hash: " + passwordHash;
     }
-
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
 
     public RolUsuario getRol() {
         return rol;
@@ -62,23 +44,11 @@ public class Usuario {
         this.rol = rol;
     }
 
-
     public String getPasswordHash() {
         return passwordHash;
     }
 
     public void setPasswordHash(String passwordHash) {
         this.passwordHash = passwordHash;
-    }
-
-
-    @Override
-    public String toString() {
-        return "Usuario{" +
-                "id=" + id +
-                ", nombre='" + nombre + '\'' +
-                ", email='" + email + '\'' +
-                ", rol=" + rol +
-                '}';
     }
 }
