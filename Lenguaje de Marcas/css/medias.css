@@ -934,6 +934,7 @@
     .cli-layout,
     .usu-layout,
     .int-layout {
+        padding-top: 85px !important;
         padding-bottom: 85px !important;
         width: 100%;
     }
@@ -963,7 +964,6 @@
         padding: 15px 0;
     }
 
-    /* Dashboard */
     .dash-total__top {
         flex-direction: column;
     }
