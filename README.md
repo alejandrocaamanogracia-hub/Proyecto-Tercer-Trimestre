@@ -147,6 +147,28 @@ SELECT * FROM clientes;
 
 La aplicación Java implementa la lógica de negocio del CRM utilizando una arquitectura limpia basada en menús de consola y persistencia mediante JDBC.
 
+### 🔧 Herramientas necesarias
+
+Para ejecutar la parte de Programación se recomienda utilizar las siguientes herramientas:
+
+- **JDK 21**: necesario para compilar y ejecutar la aplicación Java.
+- **IntelliJ IDEA**: IDE recomendado para abrir el proyecto, gestionar Maven y ejecutar la clase principal `Main.java`.
+- **Maven**: utilizado para gestionar las dependencias del proyecto, especialmente el conector JDBC de MySQL.
+- **MySQL Connector/J**: dependencia incluida en el archivo `pom.xml`, necesaria para conectar Java con la base de datos MySQL.
+
+### Instalación de JDK 21 e IntelliJ IDEA
+
+1. Descarga e instala **JDK 21**.
+- https://www.oracle.com/java/technologies/downloads/#java21
+
+2. Descarga e instala **IntelliJ IDEA Community Edition**.
+- https://www.jetbrains.com/idea/download/
+
+3. Comprueba que Java está instalado correctamente ejecutando en la terminal:
+
+```bash
+java -version
+
 ### 🏛️ Arquitectura y Patrón Repository
 
 Para separar las responsabilidades y aislar la lógica de negocio de las consultas SQL, se ha implementado el **Patrón Repository**:
