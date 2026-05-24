@@ -137,10 +137,65 @@ SELECT * FROM clientes;
 2. Asegúrate de que los servicios locales de Windows estén activos. Para ello abre Servicios de Windows y comprueba que los siguientes servicios están iniciados.
    - `OracleServiceXE`
    - `OracleOraDB21Home1TNSListener`
-3. Abre el script DDL y ejecuta la primera parte desde el usuario SYSTEM para crear un nuevo usuario.
-4. Crea una nueva conexión en SQL Developer (`localhost`, Puerto `1521`, SID `XE`) con el usuario que acabamos de crear y la contraseña que se le asigne en el script y prueba la conexión antes de guardarla.
-5. Ejecuta el resto del script DDL y el script DML adaptados a la sintaxis de Oracle asegurandote de que estos los estas ejecutando con la conexión correcta, en este caso la que hayas establecido para esta base de datos.
 
+## Configuración de Oracle XE
+
+Este proyecto usa **Oracle Database 21c XE**.
+
+> MUY IMPORTANTE:
+> En SQL Developer hay que usar como **Nombre del Servicio**:
+>
+> ```text
+> XEPDB1
+> ```
+>
+> No usar `XE`, porque `XE` conecta al contenedor principal y puede provocar errores como `ORA-65096`.
+
+---
+
+## 1. Conexión inicial como SYSTEM
+
+Primero hay que crear una conexión en SQL Developer con el usuario administrador `SYSTEM`.
+
+Datos de conexión:
+
+```text
+Nombre de conexión: system_xepdb1
+Usuario: system
+Contraseña: la contraseña indicada al instalar Oracle
+Host: localhost
+Puerto: 1521
+Nombre del Servicio: XEPDB1
+
+Una vez conectados como SYSTEM ejecutar la primera parte del Script DDL ORACLE:
+
+CREATE USER concesionario
+    IDENTIFIED BY "1234"
+    DEFAULT TABLESPACE USERS
+    TEMPORARY TABLESPACE TEMP
+    QUOTA UNLIMITED ON USERS;
+
+GRANT CONNECT, RESOURCE TO concesionario;
+GRANT CREATE SESSION TO concesionario;
+
+## 2. Crear conexión con el usuario del proyecto 
+
+Después de crear el usuario concesionario, hay que crear una segunda conexión en SQL Developer.
+
+Datos de conexión: Nombre de conexión: concesionario_xepdb1
+Usuario: concesionario
+Contraseña: 1234
+Host: localhost
+Puerto: 1521
+Nombre del Servicio: XEPDB1
+
+> Para comprobar que estamos conectados con el usuario correcto:
+
+SELECT USER FROM dual;
+Debe devolver:CONCESIONARIO
+
+Una vez conectados como concesionario ejecutar el resto del SCRIPT DDL ORACLE.
+Posteriormente Ejecutar el Script DML ORACLE
 ---
 
 ## 💻 Programación (Back-end Java)
