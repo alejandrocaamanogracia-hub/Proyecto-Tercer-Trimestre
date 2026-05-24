@@ -1,0 +1,165 @@
+package com.concesionario.proyectoTercerTrimestre.services;
+
+import com.concesionario.proyectoTercerTrimestre.entities.Cliente;
+import com.concesionario.proyectoTercerTrimestre.repositories.ClienteRepository;
+import com.concesionario.proyectoTercerTrimestre.repositories.impl.ClienteRepositoryImpl;
+
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.List;
+
+public class ClienteService {
+
+    private final ClienteRepository clienteRepository;
+
+    public ClienteService() {
+        this.clienteRepository = new ClienteRepositoryImpl();
+    }
+
+    public void crearCliente(Cliente cliente) {
+
+        if (cliente == null) {
+            System.out.println("El cliente no puede ser nulo.");
+            return;
+        }
+
+        if (cliente.getNombre() == null || cliente.getNombre().isBlank()) {
+            System.out.println("El nombre del cliente es obligatorio.");
+            return;
+        }
+
+        if (cliente.getEmail() == null || cliente.getEmail().isBlank()) {
+            System.out.println("El email del cliente es obligatorio.");
+            return;
+        }
+
+        if (!cliente.getEmail().contains("@")) {
+            System.out.println("El email debe tener un formato valido.");
+            return;
+        }
+
+        if (cliente.getTelefono() == null || cliente.getTelefono().isBlank()) {
+            System.out.println("El telefono del cliente es obligatorio.");
+            return;
+        }
+
+        clienteRepository.crearCliente(cliente);
+        System.out.println("Cliente creado correctamente.");
+    }
+
+    public boolean eliminarCliente(int id) {
+        if (id <= 0) {
+            System.out.println("El ID del cliente no es valido.");
+            return false;
+        }
+
+        return clienteRepository.eliminarCliente(id);
+    }
+
+    public boolean existeCliente(int id) {
+        return clienteRepository.existeCliente(id);
+    }
+
+    public List<Cliente> listarClientes() {
+        return clienteRepository.listarClientes();
+    }
+
+    public void exportarClientesTxt() {
+
+        List<Cliente> clientes = clienteRepository.listarClientes();
+
+        if (clientes.isEmpty()) {
+            System.out.println("No hay clientes para exportar.");
+            return;
+        }
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("clientes.txt"))) {
+
+            writer.write("===== LISTADO DE CLIENTES =====");
+            writer.newLine();
+            writer.newLine();
+
+            for (Cliente cliente : clientes) {
+                writer.write("ID: " + cliente.getId());
+                writer.newLine();
+                writer.write("Nombre: " + cliente.getNombre());
+                writer.newLine();
+                writer.write("Email: " + cliente.getEmail());
+                writer.newLine();
+                writer.write("Telefono: " + cliente.getTelefono());
+                writer.newLine();
+                writer.write("Direccion: " + cliente.getDireccion());
+                writer.newLine();
+                writer.write("------------------------------");
+                writer.newLine();
+            }
+
+            System.out.println("Clientes exportados correctamente a clientes.txt");
+
+        } catch (IOException e) {
+            System.out.println("Error al exportar los clientes.");
+            e.printStackTrace();
+        }
+    }
+
+    public void modificarCliente(int id, Cliente cliente) {
+
+        if (id <= 0) {
+            System.out.println("El id no es valido.");
+            return;
+        }
+
+        Cliente clienteExistente = clienteRepository.buscarCliente(id);
+
+        if (clienteExistente == null) {
+            System.out.println("No existe ningun cliente con ese ID.");
+            return;
+        }
+
+        if (cliente.getNombre() == null || cliente.getNombre().isBlank()) {
+            System.out.println("El nombre no puede estar vacio.");
+            return;
+        }
+
+        if (cliente.getEmail() == null || cliente.getEmail().isBlank()) {
+            System.out.println("El email no puede estar vacio.");
+            return;
+        }
+
+        if (!cliente.getEmail().contains("@")) {
+            System.out.println("El email debe tener un formato valido.");
+            return;
+        }
+
+        if (cliente.getTelefono() == null || cliente.getTelefono().isBlank()) {
+            System.out.println("El telefono no puede estar vacio.");
+            return;
+        }
+
+        if (cliente.getDireccion() == null || cliente.getDireccion().isBlank()) {
+            System.out.println("La direccion no puede estar vacia.");
+            return;
+        }
+
+        clienteRepository.modificarCliente(id, cliente);
+        System.out.println("Cliente modificado correctamente.");
+    }
+
+    public Cliente buscarCliente(int id) {
+        if (id <= 0) {
+            System.out.println("El ID del cliente no es valido.");
+            return null;
+        }
+
+        Cliente cliente = clienteRepository.buscarCliente(id);
+
+        if (cliente == null) {
+            System.out.println("No existe un cliente con ese ID.");
+            return null;
+        }
+
+        return cliente;
+    }
+
+}
