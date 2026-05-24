@@ -213,7 +213,6 @@ Una vez conectados como `concesionario`, ejecutar el resto del **script DDL Orac
 Posteriormente, ejecutar el **script DML Oracle**.
 
 
-
 ## 💻 Programación (Back-end Java)
 
 La aplicación Java implementa la lógica de negocio del CRM utilizando una arquitectura limpia basada en menús de consola y persistencia mediante JDBC.
@@ -229,16 +228,21 @@ Para ejecutar la parte de Programación se recomienda utilizar las siguientes he
 
 ### Instalación de JDK 21 e IntelliJ IDEA
 
-1. Descarga e instala **JDK 21**.
-- https://www.oracle.com/java/technologies/downloads/#java21
+1. Descarga e instala **JDK 21**.  
+   https://www.oracle.com/java/technologies/downloads/#java21
 
-2. Descarga e instala **IntelliJ IDEA Community Edition**.
-- https://www.jetbrains.com/idea/download/
+2. Descarga e instala **IntelliJ IDEA Community Edition**.  
+   https://www.jetbrains.com/idea/download/
 
 3. Comprueba que Java está instalado correctamente ejecutando en la terminal:
 
 ```bash
 java -version
+```
+
+Debe aparecer una versión de Java 21 o superior.
+
+4. Al abrir el proyecto en IntelliJ IDEA, asegúrate de que el SDK configurado sea **JDK 21**.
 
 ### 🏛️ Arquitectura y Patrón Repository
 
@@ -255,12 +259,14 @@ src/java/
 │   │   └── impl/         # Implementación de consultas SQL y operaciones CRUD
 │   ├── services/         # Lógica de negocio y validaciones
 │   └── utils/            # Métodos auxiliares y utilidades
+```
 
 ### ⚙️ Características Principales
 
-- **CRUD Completo**: Implementado para las 6 entidades del sistema (Crear, Leer, Actualizar y Eliminar).
+- **CRUD Completo**: Implementado para las 6 entidades del sistema: clientes, usuarios, coches, ventas, detalle de venta e interacciones con clientes.
 - **Gestión con Maven**: Dependencia automatizada de `mysql-connector-j` en el archivo `pom.xml`.
-- **Exportación de Datos**: Capacidad de generar reportes en archivos de texto planos (ej. `clientes.txt`, `ventas.txt`) con formatos limpios de los listados de la base de datos.
+- **Exportación de Datos**: Capacidad de generar reportes en archivos de texto planos, como `clientes.txt`, con formatos limpios de los listados de la base de datos.
+- **Programación Orientada a Objetos**: Uso de encapsulación, clase abstracta `Persona`, herencia entre `Persona`, `Cliente` y `Usuario`, y polimorfismo mediante el método `mostrarInformacion()`.
 
 ### 🏁 Ejecución de la Aplicación
 
@@ -290,12 +296,12 @@ src/java/
 
     - Parámetros MySQL Workbench:
 
-    ```SQL
-    - Hostname: 127.0.0.1
-    - Port: 3306
-    - Username: root
-    - Password: contraseña configurada durante la instalación de MySQL
-    - Base de datos: crm_coches
+    ```text
+    Hostname: 127.0.0.1
+    Port: 3306
+    Username: root
+    Password: contraseña configurada durante la instalación de MySQL
+    Base de datos: crm_coches
     ```
 
     - En Java, la clase `DataBaseConnection` debe utilizar la misma configuración:
@@ -306,35 +312,56 @@ src/java/
     private static final String PASSWORD = "tu_contraseña";
     ```
 
-6. Localiza la clase principal (`Main.java`), haz clic derecho y selecciona *Run*.
+6. Localiza la clase principal `Main.java`, haz clic derecho y selecciona *Run*.
+
+---
 
 ## 🌐 Lenguaje de Marcas (Front-end Web)
 
 Representación visual y dinámica del CRM utilizando tecnologías estándar de desarrollo web.
 
+### 🔧 Herramientas necesarias
+
+Para ejecutar la parte de Lenguaje de Marcas se recomienda utilizar las siguientes herramientas:
+
+- **Visual Studio Code**: IDE recomendado para abrir y editar los archivos HTML, CSS y JavaScript del proyecto.
+- **Live Server**: extensión de Visual Studio Code utilizada para ejecutar la web en un servidor local y visualizar los cambios en el navegador.
+- **Navegador web**: necesario para visualizar la interfaz del CRM.
+
+### Instalación de Visual Studio Code y Live Server
+
+1. Descarga e instala **Visual Studio Code**.  
+   https://code.visualstudio.com/download
+
+2. Abre Visual Studio Code.
+
+3. Accede al apartado de extensiones.
+
+4. Busca la extensión **Live Server**.
+
+5. Selecciona la extensión y pulsa en **Instalar**.
+
 ### 🎨 Características de la Interfaz
 
-- **HTML5 Semántico**: Estructura limpia y accesible de los diferentes módulos (Dashboard, Clientes, Coches, Ventas).
-- **CSS3 Personalizado**: Diseño de interfaces, tablas de datos y paneles de control homogéneos y modernos.
-- **JavaScript (DOM & BOM)**: Manipulación dinámica de elementos de la interfaz, gestión de eventos de usuario y almacenamiento temporal utilizando `SessionStorage` y el objeto `Window`.
+- **HTML5 Semántico**: estructura limpia y accesible de los diferentes módulos, como dashboard, clientes, coches, ventas e interacciones.
+- **CSS3 Personalizado**: diseño de interfaces, tablas de datos, paneles de control y estilos responsive.
+- **JavaScript**: manipulación dinámica del DOM, gestión de eventos de usuario, uso de `SessionStorage` y utilización del objeto `Window`.
 
-### 🖥️ Cómo Visualizar el Front-end
+### 🖥️ Cómo visualizar el Front-end
 
 1. Abre Visual Studio Code y carga la carpeta `Lenguaje de Marcas/`.
-2. Se recomienda tener instalada la extensión **Live Server**.
-3. Haz clic derecho sobre el archivo HTML principal (ej: `index.html` o `dashboard.html`) y selecciona *Open with Live Server*.
-4. La aplicación se desplegará de forma automática en tu navegador web predeterminado (`http://127.0.0.1:5500`).
 
-### Instalación de Live Server
+2. Asegúrate de tener instalada la extensión **Live Server**.
 
-1. Abrir Visual Studio Code.
-2. Ir al apartado de extensiones.
-3. Buscar Live Server.
-4. Seleccionar la extensión.
-5. Pulsar en Instalar.
-6. Esperar a que termine la instalación.
+3. Haz clic derecho sobre el archivo HTML principal, por ejemplo `index.html` o `dashboard.html`.
 
----
+4. Selecciona **Open with Live Server**.
+
+5. La aplicación se desplegará de forma automática en tu navegador web predeterminado, normalmente en una dirección similar a:
+
+```text
+http://127.0.0.1:5500
+```
 
 ## ⚠️ Posibles Errores y Soluciones
 
