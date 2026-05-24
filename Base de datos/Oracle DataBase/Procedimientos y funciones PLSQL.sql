@@ -91,8 +91,15 @@ EXCEPTION
 END;
 /
 
+DECLARE
+    v_cliente_id clientes.id%TYPE;
 BEGIN
-    pr_resumen_cliente(1);
+    SELECT cliente_id
+    INTO v_cliente_id
+    FROM ventas
+    WHERE ROWNUM = 1;
+
+    pr_resumen_cliente(v_cliente_id);
 END;
 /
 
@@ -106,7 +113,11 @@ FROM clientes c
 LEFT JOIN ventas v ON c.id = v.cliente_id
 LEFT JOIN detalle_venta dv ON v.id = dv.venta_id
 LEFT JOIN interacciones_cliente i ON c.id = i.cliente_id
-WHERE c.id = 1
+WHERE c.id = (
+    SELECT cliente_id
+    FROM ventas
+    WHERE ROWNUM = 1
+)
 GROUP BY c.id, c.nombre;
 
 
@@ -162,17 +173,17 @@ BEGIN
         IF v_precio >= 50000 THEN
             v_coche := UPPER(v_coche) || ' [PREMIUM]';
         ELSIF v_precio >= 20000 THEN
-            v_coche := v_coche || ' [ESTÁNDAR]';
+            v_coche := v_coche || ' [ESTANDAR]';
         ELSE
-            v_coche := v_coche || ' [BÁSICO]';
+            v_coche := v_coche || ' [BASICO]';
         END IF;
 
         DBMS_OUTPUT.PUT_LINE('Marca    : ' || INITCAP(v_marca));
         DBMS_OUTPUT.PUT_LINE('Modelo   : ' || v_coche);
         DBMS_OUTPUT.PUT_LINE(
             'Cantidad : ' || v_cantidad ||
-            '  |  Precio unit.: ' || v_precio || ' €' ||
-            '  |  Subtotal: ' || v_subtotal || ' €'
+            '  |  Precio unit.: ' || v_precio || ' euros' ||
+            '  |  Subtotal: ' || v_subtotal || ' euros'
         );
         DBMS_OUTPUT.PUT_LINE('--------------------------------------------');
 
@@ -182,7 +193,7 @@ BEGIN
     IF v_total_lineas = 0 THEN
         DBMS_OUTPUT.PUT_LINE('La venta existe pero no tiene lineas de detalle.');
     ELSE
-        DBMS_OUTPUT.PUT_LINE('TOTAL VENTA: ' || v_total_lineas || ' €');
+        DBMS_OUTPUT.PUT_LINE('TOTAL VENTA: ' || v_total_lineas || ' euros');
     END IF;
 
 EXCEPTION
@@ -196,8 +207,15 @@ EXCEPTION
 END;
 /
 
+DECLARE
+    v_venta_id ventas.id%TYPE;
 BEGIN
-    coche_venta(1);
+    SELECT venta_id
+    INTO v_venta_id
+    FROM detalle_venta
+    WHERE ROWNUM = 1;
+
+    coche_venta(v_venta_id);
 END;
 /
 
@@ -211,7 +229,11 @@ SELECT
 FROM ventas v
 JOIN detalle_venta d ON v.id = d.venta_id
 JOIN coches c ON d.coche_id = c.id
-WHERE v.id = 1
+WHERE v.id = (
+    SELECT venta_id
+    FROM detalle_venta
+    WHERE ROWNUM = 1
+)
 ORDER BY c.modelo;
 
 
@@ -226,7 +248,6 @@ RETURN NUMBER
 IS
     v_total NUMBER := 0;
     v_cliente_existe NUMBER := 0;
-    v_interacciones NUMBER := 0;
 
     CURSOR c_ventas_cliente IS
         SELECT 
@@ -250,11 +271,6 @@ BEGIN
         RETURN -1;
     END IF;
 
-    SELECT COUNT(*)
-    INTO v_interacciones
-    FROM interacciones_cliente
-    WHERE cliente_id = p_cliente_id;
-
     FOR r IN c_ventas_cliente LOOP
         IF UPPER(r.estado) = 'COMPLETADA' THEN
             v_total := v_total + r.importe_venta;
@@ -269,8 +285,9 @@ EXCEPTION
 END;
 /
 
-SELECT fn_total_gastado_cliente(1) AS total_gastado
-FROM dual;
+SELECT fn_total_gastado_cliente(cliente_id) AS total_gastado
+FROM ventas
+WHERE ROWNUM = 1;
 
 SELECT 
     v.cliente_id,
@@ -279,7 +296,11 @@ SELECT
     NVL(SUM(dv.cantidad * dv.precio_unitario), 0) AS importe_venta
 FROM ventas v
 JOIN detalle_venta dv ON v.id = dv.venta_id
-WHERE v.cliente_id = 1
+WHERE v.cliente_id = (
+    SELECT cliente_id
+    FROM ventas
+    WHERE ROWNUM = 1
+)
 GROUP BY v.cliente_id, v.id, v.estado
 ORDER BY v.id;
 
@@ -342,8 +363,8 @@ BEGIN
 
     DBMS_OUTPUT.PUT_LINE('=== RESUMEN USUARIO ID: ' || v_id_usuario || ' ===');
     DBMS_OUTPUT.PUT_LINE('Numero de ventas   : ' || v_num_ventas);
-    DBMS_OUTPUT.PUT_LINE('Promedio por venta : ' || TO_CHAR(v_promedio, '99,999.99') || ' €');
-    DBMS_OUTPUT.PUT_LINE('Venta mas alta     : ' || TO_CHAR(v_max_venta, '99,999.99') || ' €');
+    DBMS_OUTPUT.PUT_LINE('Promedio por venta : ' || TO_CHAR(v_promedio, '99,999.99') || ' euros');
+    DBMS_OUTPUT.PUT_LINE('Venta mas alta     : ' || TO_CHAR(v_max_venta, '99,999.99') || ' euros');
     DBMS_OUTPUT.PUT_LINE('Primera venta      : ' || TO_CHAR(v_fecha_inicio, 'DD/MM/YYYY'));
     DBMS_OUTPUT.PUT_LINE('Ultima venta       : ' || TO_CHAR(v_fecha_fin, 'DD/MM/YYYY'));
 
@@ -356,8 +377,15 @@ EXCEPTION
 END;
 /
 
+DECLARE
+    v_usuario_id usuarios.id%TYPE;
 BEGIN
-    DBMS_OUTPUT.PUT_LINE('Total acumulado: ' || total_usuario(2) || ' €');
+    SELECT usuario_id
+    INTO v_usuario_id
+    FROM ventas
+    WHERE ROWNUM = 1;
+
+    DBMS_OUTPUT.PUT_LINE('Total acumulado: ' || total_usuario(v_usuario_id) || ' euros');
 END;
 /
 
@@ -370,5 +398,9 @@ SELECT
     MIN(fecha) AS primera_venta,
     MAX(fecha) AS ultima_venta
 FROM ventas
-WHERE usuario_id = 2
+WHERE usuario_id = (
+    SELECT usuario_id
+    FROM ventas
+    WHERE ROWNUM = 1
+)
 GROUP BY usuario_id;
