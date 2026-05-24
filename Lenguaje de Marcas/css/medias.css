@@ -342,6 +342,15 @@
         flex-direction: column;
         gap: 8px;
     }
+
+    .usu-page,
+    .int-page,
+    .dash-total,
+    .cli-page,
+    .table{
+        position: relative;
+        top: 50px;
+    }
 }
 
 /* #endregion */
