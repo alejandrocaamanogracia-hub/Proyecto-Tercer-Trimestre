@@ -1,16 +1,18 @@
----PROCEDIMIENTOS---
+SET SERVEROUTPUT ON;
+
+-- =========================
+-- PROCEDIMIENTO 1
+-- =========================
 
 CREATE OR REPLACE PROCEDURE pr_resumen_cliente (
     p_cliente_id IN NUMBER
 )
 IS
-    -- Variables
     v_total_ventas NUMBER := 0;
     v_num_ventas NUMBER := 0;
     v_num_interacciones NUMBER := 0;
     v_cliente_existe NUMBER := 0;
 
-    -- Cursor
     CURSOR c_resumen IS
         SELECT 
             INITCAP(c.nombre) AS nombre_cliente,
@@ -32,7 +34,6 @@ IS
         ORDER BY v.fecha;
 
 BEGIN
-    -- Comprobar si existe el cliente
     SELECT COUNT(*)
     INTO v_cliente_existe
     FROM clientes
@@ -42,7 +43,6 @@ BEGIN
         RAISE_APPLICATION_ERROR(-20001, 'No existe ningun cliente con ese ID.');
     END IF;
 
-    -- Contar interacciones del cliente
     SELECT COUNT(*)
     INTO v_num_interacciones
     FROM interacciones_cliente
@@ -53,7 +53,6 @@ BEGIN
     DBMS_OUTPUT.PUT_LINE('Numero de interacciones: ' || v_num_interacciones);
     DBMS_OUTPUT.PUT_LINE('-------------------------------');
 
-    -- Recorrer cursor
     FOR r IN c_resumen LOOP
         v_num_ventas := v_num_ventas + 1;
         v_total_ventas := v_total_ventas + r.importe_linea;
@@ -66,7 +65,6 @@ BEGIN
         DBMS_OUTPUT.PUT_LINE('Coche: ' || r.marca || ' ' || r.modelo);
         DBMS_OUTPUT.PUT_LINE('Importe: ' || r.importe_linea || ' euros');
 
-        -- Estructura de control
         IF UPPER(r.estado_venta) = 'COMPLETADA' THEN
             DBMS_OUTPUT.PUT_LINE('Venta finalizada correctamente.');
         ELSIF UPPER(r.estado_venta) = 'PENDIENTE' THEN
@@ -98,10 +96,26 @@ BEGIN
 END;
 /
 
+SELECT 
+    c.id AS cliente_id,
+    c.nombre AS cliente,
+    COUNT(DISTINCT v.id) AS numero_ventas,
+    COUNT(DISTINCT i.id) AS numero_interacciones,
+    NVL(SUM(dv.cantidad * dv.precio_unitario), 0) AS total_ventas
+FROM clientes c
+LEFT JOIN ventas v ON c.id = v.cliente_id
+LEFT JOIN detalle_venta dv ON v.id = dv.venta_id
+LEFT JOIN interacciones_cliente i ON c.id = i.cliente_id
+WHERE c.id = 1
+GROUP BY c.id, c.nombre;
+
+
+-- =========================
+-- PROCEDIMIENTO 2
+-- =========================
 
 CREATE OR REPLACE PROCEDURE coche_venta(v_id_venta ventas.id%TYPE)
 AS
-
     v_coche         coches.modelo%TYPE;
     v_marca         coches.marca%TYPE;
     v_precio        detalle_venta.precio_unitario%TYPE;
@@ -118,14 +132,13 @@ AS
                d.cantidad,
                d.precio_unitario,
                ROUND(d.cantidad * d.precio_unitario, 2) AS subtotal
-        FROM   coches        c
-        JOIN   detalle_venta d ON d.coche_id  = c.id
-        JOIN   ventas        v ON d.venta_id  = v.id
-        WHERE  v.id = v_id_venta
-        ORDER  BY c.modelo;
+        FROM coches c
+        JOIN detalle_venta d ON d.coche_id = c.id
+        JOIN ventas v ON d.venta_id = v.id
+        WHERE v.id = v_id_venta
+        ORDER BY c.modelo;
 
 BEGIN
-
     SELECT COUNT(*)
     INTO v_existe
     FROM ventas
@@ -154,16 +167,12 @@ BEGIN
             v_coche := v_coche || ' [BÁSICO]';
         END IF;
 
-        DBMS_OUTPUT.PUT_LINE(
-            'Marca    : ' || INITCAP(v_marca)
-        );
-        DBMS_OUTPUT.PUT_LINE(
-            'Modelo   : ' || v_coche
-        );
+        DBMS_OUTPUT.PUT_LINE('Marca    : ' || INITCAP(v_marca));
+        DBMS_OUTPUT.PUT_LINE('Modelo   : ' || v_coche);
         DBMS_OUTPUT.PUT_LINE(
             'Cantidad : ' || v_cantidad ||
             '  |  Precio unit.: ' || v_precio || ' €' ||
-            '  |  Subtotal: '     || v_subtotal || ' €'
+            '  |  Subtotal: ' || v_subtotal || ' €'
         );
         DBMS_OUTPUT.PUT_LINE('--------------------------------------------');
 
@@ -171,11 +180,9 @@ BEGIN
     CLOSE c_detalle;
 
     IF v_total_lineas = 0 THEN
-        DBMS_OUTPUT.PUT_LINE('⚠ La venta existe pero no tiene líneas de detalle.');
+        DBMS_OUTPUT.PUT_LINE('La venta existe pero no tiene lineas de detalle.');
     ELSE
-        DBMS_OUTPUT.PUT_LINE(
-            'TOTAL VENTA: ' || v_total_lineas || ' €'
-        );
+        DBMS_OUTPUT.PUT_LINE('TOTAL VENTA: ' || v_total_lineas || ' €');
     END IF;
 
 EXCEPTION
@@ -190,24 +197,37 @@ END;
 /
 
 BEGIN
-    coche_venta(41);
+    coche_venta(1);
 END;
 /
 
+SELECT 
+    v.id AS venta_id,
+    c.marca,
+    c.modelo,
+    d.cantidad,
+    d.precio_unitario,
+    ROUND(d.cantidad * d.precio_unitario, 2) AS subtotal
+FROM ventas v
+JOIN detalle_venta d ON v.id = d.venta_id
+JOIN coches c ON d.coche_id = c.id
+WHERE v.id = 1
+ORDER BY c.modelo;
 
------FUNCIONES------
+
+-- =========================
+-- FUNCION 1
+-- =========================
 
 CREATE OR REPLACE FUNCTION fn_total_gastado_cliente (
     p_cliente_id IN NUMBER
 )
 RETURN NUMBER
 IS
-    -- Variables
     v_total NUMBER := 0;
     v_cliente_existe NUMBER := 0;
     v_interacciones NUMBER := 0;
 
-    -- Cursor
     CURSOR c_ventas_cliente IS
         SELECT 
             v.id AS id_venta,
@@ -221,7 +241,6 @@ IS
         GROUP BY v.id, v.estado;
 
 BEGIN
-    -- Comprobar si existe el cliente
     SELECT COUNT(*)
     INTO v_cliente_existe
     FROM clientes
@@ -231,20 +250,15 @@ BEGIN
         RETURN -1;
     END IF;
 
-    -- Contar interacciones del cliente
     SELECT COUNT(*)
     INTO v_interacciones
     FROM interacciones_cliente
     WHERE cliente_id = p_cliente_id;
 
-    -- Recorrer ventas del cliente
     FOR r IN c_ventas_cliente LOOP
-
-        -- Solo sumamos ventas completadas
         IF UPPER(r.estado) = 'COMPLETADA' THEN
             v_total := v_total + r.importe_venta;
         END IF;
-
     END LOOP;
 
     RETURN ROUND(v_total, 2);
@@ -254,11 +268,25 @@ EXCEPTION
         RETURN -1;
 END;
 /
+
 SELECT fn_total_gastado_cliente(1) AS total_gastado
 FROM dual;
 
+SELECT 
+    v.cliente_id,
+    v.id AS venta_id,
+    v.estado,
+    NVL(SUM(dv.cantidad * dv.precio_unitario), 0) AS importe_venta
+FROM ventas v
+JOIN detalle_venta dv ON v.id = dv.venta_id
+WHERE v.cliente_id = 1
+GROUP BY v.cliente_id, v.id, v.estado
+ORDER BY v.id;
 
 
+-- =========================
+-- FUNCION 2
+-- =========================
 
 CREATE OR REPLACE FUNCTION total_usuario(v_id_usuario usuarios.id%TYPE)
 RETURN NUMBER
@@ -279,7 +307,6 @@ AS
     v_venta c_ventas%ROWTYPE;
 
 BEGIN
-
     BEGIN
         SELECT MIN(fecha), MAX(fecha)
         INTO v_fecha_inicio, v_fecha_fin
@@ -314,11 +341,11 @@ BEGIN
     v_promedio := ROUND(v_suma_dinero / NULLIF(v_num_ventas, 0), 2);
 
     DBMS_OUTPUT.PUT_LINE('=== RESUMEN USUARIO ID: ' || v_id_usuario || ' ===');
-    DBMS_OUTPUT.PUT_LINE('Número de ventas   : ' || v_num_ventas);
-    DBMS_OUTPUT.PUT_LINE('Promedio por venta : ' || TO_CHAR(v_promedio,    '99,999.99') || ' €');
-    DBMS_OUTPUT.PUT_LINE('Venta más alta     : ' || TO_CHAR(v_max_venta,   '99,999.99') || ' €');
+    DBMS_OUTPUT.PUT_LINE('Numero de ventas   : ' || v_num_ventas);
+    DBMS_OUTPUT.PUT_LINE('Promedio por venta : ' || TO_CHAR(v_promedio, '99,999.99') || ' €');
+    DBMS_OUTPUT.PUT_LINE('Venta mas alta     : ' || TO_CHAR(v_max_venta, '99,999.99') || ' €');
     DBMS_OUTPUT.PUT_LINE('Primera venta      : ' || TO_CHAR(v_fecha_inicio, 'DD/MM/YYYY'));
-    DBMS_OUTPUT.PUT_LINE('Última venta       : ' || TO_CHAR(v_fecha_fin,    'DD/MM/YYYY'));
+    DBMS_OUTPUT.PUT_LINE('Ultima venta       : ' || TO_CHAR(v_fecha_fin, 'DD/MM/YYYY'));
 
     RETURN v_suma_dinero;
 
@@ -330,6 +357,18 @@ END;
 /
 
 BEGIN
-    DBMS_OUTPUT.PUT_LINE('Total acumulado: ' || total_usuario(29) || ' €');
+    DBMS_OUTPUT.PUT_LINE('Total acumulado: ' || total_usuario(2) || ' €');
 END;
 /
+
+SELECT 
+    usuario_id,
+    COUNT(*) AS numero_ventas,
+    SUM(total) AS total_acumulado,
+    ROUND(AVG(total), 2) AS promedio_venta,
+    MAX(total) AS venta_mas_alta,
+    MIN(fecha) AS primera_venta,
+    MAX(fecha) AS ultima_venta
+FROM ventas
+WHERE usuario_id = 2
+GROUP BY usuario_id;
