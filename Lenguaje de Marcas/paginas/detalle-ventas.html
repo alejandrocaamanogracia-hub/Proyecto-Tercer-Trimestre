@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DriveFlow CRM | Detalle ventas</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/medias.css">
+</head>
+
+<body class="sales">
+
+    <div class="sd-section" id="sd-section">
+
+        <aside class="sidebar" id="sidebar">
+
+            <div class="sidebar__brand">
+                <div class="logo"><img src="../img/logo.png" alt="DriveFlow Logo"></div>
+                <div class="sidebar__brand-text">
+                    <span class="sidebar__brand-name">DriveFlow</span>
+                    <span class="sidebar__brand-sub">CRM</span>
+                </div>
+            </div>
+
+            <nav class="sidebar__nav">
+
+                <span class="sidebar__label">Principal</span>
+
+                <a class="sidebar__link" href="../dashboard.html" data-tooltip="Dashboard">
+                    <span class="material-symbols-rounded sidebar__icon">dashboard</span>
+                    <span class="sidebar__text">Dashboard</span>
+                </a>
+
+                <div class="sidebar__divider"></div>
+                <span class="sidebar__label">Gestión</span>
+
+                <a class="sidebar__link" href="clientes.html" data-tooltip="Clientes">
+                    <span class="material-symbols-rounded sidebar__icon">groups</span>
+                    <span class="sidebar__text">Clientes</span>
+                    <span id="badge-clientes" class="sidebar__badge">25</span>
+                </a>
+
+                <a class="sidebar__link" href="usuarios.html" data-tooltip="Usuarios">
+                    <span class="material-symbols-rounded sidebar__icon">badge</span>
+                    <span class="sidebar__text">Usuarios</span>
+                    <span id="badge-usuarios" class="sidebar__badge">8</span>
+                </a>
+
+                <a class="sidebar__link" href="coches.html" data-tooltip="Coches">
+                    <span class="material-symbols-rounded sidebar__icon">directions_car</span>
+                    <span class="sidebar__text">Coches</span>
+                    <span id="badge-coches" class="sidebar__badge">56</span>
+                </a>
+
+                <div class="sidebar__divider"></div>
+                <span class="sidebar__label">Comercial</span>
+
+                <a class="sidebar__link" href="ventas.html" data-tooltip="Ventas">
+                    <span class="material-symbols-rounded sidebar__icon">payments</span>
+                    <span class="sidebar__text">Ventas</span>
+                </a>
+
+                <a class="sidebar__link sidebar__link--active" href="detalle-ventas.html" data-tooltip="Detalle ventas">
+                    <span class="material-symbols-rounded sidebar__icon">receipt_long</span>
+                    <span class="sidebar__text">Detalle ventas</span>
+                </a>
+
+                <a class="sidebar__link" href="interacciones-cliente.html" data-tooltip="Interacciones">
+                    <span class="material-symbols-rounded sidebar__icon">forum</span>
+                    <span class="sidebar__text">Interacciones</span>
+                </a>
+
+                <div class="sidebar__divider"></div>
+                <button class="sidebar__link" type="button" id="themeToggle" data-tooltip="Cambiar tema">
+                    <span class="material-symbols-rounded sidebar__icon" id="themeIcon">light_mode</span>
+                    <span id="themeText" class="sidebar__text">Modo claro</span>
+                </button>
+
+                <button class="sidebar__link" type="button" id="logoutButton" data-tooltip="Cerrar sesión">
+                    <span class="material-symbols-rounded sidebar__icon">logout</span>
+                    <span class="sidebar__text">Cerrar sesión</span>
+                </button>
+
+            </nav>
+
+            <div class="sidebar__footer">
+                <div class="sidebar__profile">
+                    <div class="sidebar__avatar">AD</div>
+                    <div class="sidebar__profile-info">
+                        <div class="sidebar__profile-name">Admin Principal</div>
+                        <div class="sidebar__profile-role">Administrador</div>
+                    </div>
+                </div>
+            </div>
+
+        </aside>
+
+        <div class="table">
+
+            <div class="table__top">
+
+                <div class="table__text">
+                    <h2 class="heading">Detalles de venta</h2>
+                    <p class="text">Información detallada de la venta</p>
+                </div>
+
+                <div class="table__interaction">
+                    <input type="text" class="input" placeholder="Buscar detalle venta...">
+                </div>
+
+            </div>
+
+            <div class="table__data">
+                <div class="table__dataBox">
+                    <p class="text">No hay detalles de venta para mostrar</p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="creation" id="sd-creation">
+
+        <h2 class="heading headign--align">
+            Editar detalle
+            <span class="material-symbols-rounded sidebar__icon icon__close">close</span>
+        </h2>
+
+        <form class="form">
+            <div class="form__group">
+                <label class="text">Cantidad</label>
+                <input type="number" id="edit-cantidad" class="input" placeholder="Nueva cantidad" min="1">
+            </div>
+            <button type="button" class="button button--primary" id="btn--saveEdit">Guardar cambios</button>
+        </form>
+
+    </div>
+
+    <script src="../js/auth.js"></script>
+    <script type="module" src="../js/methods.js"></script>
+    <script type="module" src="../js/detalle-ventas.js"></script>
+    <script src="../js/barra.js"></script>
+
+</body>
+
+</html>
