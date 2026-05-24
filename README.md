@@ -152,16 +152,16 @@ La aplicación Java implementa la lógica de negocio del CRM utilizando una arqu
 Para separar las responsabilidades y aislar la lógica de negocio de las consultas SQL, se ha implementado el **Patrón Repository**:
 
 ```text
-src/main/java/
-├── database/         # Conexión JDBC con MySQL (Singleton)
-├── entities/         # Clases POJO que representan el modelo de datos
-├── repositories/     # Interfaces de acceso a datos
-│   └── impl/         # Implementación de las consultas SQL (CRUD)
-├── services/         # Lógica de negocio y validaciones
-├── controller/       # Orquestador entre la interfaz y los servicios
-├── interfaz/         # Menús interactivos por consola
-└── utils/            # Métodos auxiliares (lectura de datos, formateo)
-```
+src/java/
+├── com/concesionario/proyectoTercerTrimestre/
+│   ├── controllers/      # Controladores entre la interfaz y los servicios
+│   ├── database/         # Conexión JDBC con MySQL
+│   ├── entities/         # Clases entidad y enumeradores
+│   ├── interfaz/         # Menús interactivos por consola
+│   ├── repositories/     # Interfaces de acceso a datos
+│   │   └── impl/         # Implementación de consultas SQL y operaciones CRUD
+│   ├── services/         # Lógica de negocio y validaciones
+│   └── utils/            # Métodos auxiliares y utilidades
 
 ### ⚙️ Características Principales
 
@@ -171,14 +171,31 @@ src/main/java/
 
 ### 🏁 Ejecución de la Aplicación
 
-1. Asegúrate de que el servidor de MySQL esté encendido y con la base de datos `crm_coches` cargada seguiendo los pasos descritos previamente en el apartado de Base de Datos.
+1. Asegúrate de que el servidor de MySQL esté encendido y con la base de datos `crm_coches` cargada siguiendo los pasos descritos previamente en el apartado de Base de Datos.
+
 2. Abre IntelliJ IDEA y selecciona *Open* apuntando a la carpeta `Programacion/ProyectoTercerTrimestre`.
+
 3. Permite que Maven recargue y descargue las dependencias automáticas.
-4. Para que la aplicación Java pueda conectarse correctamente con MySQL, los datos de conexión configurados en MySQL Workbench deben coincidir con los datos utilizados en la clase DataBaseConnection.
+
+4. Comprueba que la carpeta `src/java` está marcada como **Sources Root**. Para ello, haz clic derecho sobre la carpeta `java` situada dentro de `src`, selecciona **Mark Directory as** y después **Sources Root**.
+
+    La estructura esperada es:
+
+    ```text
+    src/
+    └── java/
+        └── com/
+            └── concesionario/
+                └── proyectoTercerTrimestre/
+    ```
+
+    No se debe marcar como **Sources Root** la carpeta `src` ni la carpeta del paquete `com/concesionario/proyectoTercerTrimestre`, únicamente `src/java`.
+
+5. Para que la aplicación Java pueda conectarse correctamente con MySQL, los datos de conexión configurados en MySQL Workbench deben coincidir con los datos utilizados en la clase `DataBaseConnection`.
 
     Ejemplo:
 
-    - Parametros MySQL Workbench:
+    - Parámetros MySQL Workbench:
 
     ```SQL
     - Hostname: 127.0.0.1
@@ -188,16 +205,15 @@ src/main/java/
     - Base de datos: crm_coches
     ```
 
-    - En Java, la clase DataBaseConnection debe utilizar la misma configuración:
+    - En Java, la clase `DataBaseConnection` debe utilizar la misma configuración:
 
     ```java
     private static final String URL = "jdbc:mysql://127.0.0.1:3306/crm_coches";
     private static final String USER = "root";
     private static final String PASSWORD = "tu_contraseña";
     ```
-5. Localiza la clase principal (`Main.java`), haz clic derecho y selecciona *Run*.
 
----
+6. Localiza la clase principal (`Main.java`), haz clic derecho y selecciona *Run*.
 
 ## 🌐 Lenguaje de Marcas (Front-end Web)
 
